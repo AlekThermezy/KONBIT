@@ -53,6 +53,7 @@ export default function Navbar() {
     { href: '/nature', label: 'Nature', icon: '🌿' },
     { href: '/deals', label: 'Deals', icon: '💰' },
     { href: '/jobs', label: 'Jobs', icon: '💼' },
+    { href: '/refer', label: 'Refer', icon: '👥' },
   ]
 
   return (
