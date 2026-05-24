@@ -1,8 +1,9 @@
 'use client'
+import Navbar from '@/components/layout/Navbar'
+import Footer from '@/components/layout/Footer'
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Navbar from '@/components/layout/Navbar'
 
 const jobCategories = [
   { id: 'all', label: 'All Jobs', icon: '💼', count: 156 },
@@ -480,22 +481,7 @@ export default function JobsPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-6 bg-gray-950 border-t border-white/10">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-2xl font-black">
-            <span className="text-green-500">KON</span>BIT
-          </div>
-          <div className="text-gray-500 text-sm">
-            Konekte. Tèt ansanm. Pou nou vanse.
-          </div>
-          <div className="flex gap-6">
-            <a href="#" className="text-gray-400 hover:text-white transition">Twitter</a>
-            <a href="#" className="text-gray-400 hover:text-white transition">Instagram</a>
-            <a href="#" className="text-gray-400 hover:text-white transition">LinkedIn</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

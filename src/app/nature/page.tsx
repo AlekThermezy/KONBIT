@@ -1,4 +1,5 @@
 'use client'
+import Footer from '@/components/layout/Footer'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -249,22 +250,7 @@ export default function Nature() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-6 bg-stone-950 border-t border-stone-800">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="text-2xl font-bold">
-            <span className="text-green-500">KON</span>BIT
-          </div>
-          <div className="flex gap-6">
-            <Link href="/" className="text-stone-400 hover:text-stone-100 transition text-sm">Home</Link>
-            <a href="#" className="text-stone-400 hover:text-stone-100 transition text-sm">About</a>
-            <a href="#" className="text-stone-400 hover:text-stone-100 transition text-sm">Contact</a>
-          </div>
-          <div className="text-stone-600 text-sm">
-            © 2025 KONBIT. All rights reserved.
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
