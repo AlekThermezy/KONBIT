@@ -2,7 +2,8 @@
 
 import { useState, useEffect, createContext, useContext } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { getCurrentUser, signOut } from '@/lib/auth'
 
 interface NavContextType {
   isOpen: boolean
@@ -18,7 +19,17 @@ export function useNav() {
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [user, setUser] = useState<any>(null)
+  const [checking, setChecking] = useState(true)
   const pathname = usePathname()
+  const router = useRouter()
+
+  useEffect(() => {
+    getCurrentUser().then((u) => {
+      setUser(u)
+      setChecking(false)
+    })
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -29,6 +40,12 @@ export default function Navbar() {
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
+
+  const handleSignOut = async () => {
+    await signOut()
+    setUser(null)
+    router.push('/')
+  }
 
   const navLinks = [
     { href: '/growth', label: 'Growth', icon: '📈' },
@@ -78,12 +95,41 @@ export default function Navbar() {
 
             {/* Right Actions */}
             <div className="flex items-center gap-3">
-              <Link
-                href="/waitlist"
-                className="hidden sm:flex px-5 py-2.5 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 rounded-xl text-sm font-bold text-black transition-all duration-200 shadow-lg shadow-green-500/25 hover:shadow-green-500/40"
-              >
-                Get Started
-              </Link>
+              {!checking && (
+                <>
+                  {user ? (
+                    <>
+                      <Link
+                        href="/dashboard"
+                        className="hidden sm:flex px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-medium text-white transition"
+                      >
+                        Dashboard
+                      </Link>
+                      <button
+                        onClick={handleSignOut}
+                        className="hidden sm:flex px-4 py-2.5 bg-red-900/30 hover:bg-red-900/50 border border-red-500/30 rounded-xl text-sm font-medium text-red-400 transition"
+                      >
+                        Sign Out
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        href="/signin"
+                        className="hidden sm:flex px-4 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm font-medium text-white transition"
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        href="/waitlist"
+                        className="hidden sm:flex px-5 py-2.5 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 rounded-xl text-sm font-bold text-black transition-all duration-200 shadow-lg shadow-green-500/25 hover:shadow-green-500/40"
+                      >
+                        Get Started
+                      </Link>
+                    </>
+                  )}
+                </>
+              )}
 
               {/* Mobile Menu Button */}
               <button
@@ -121,12 +167,43 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/waitlist"
-              className="flex items-center justify-center gap-2 px-4 py-3.5 mt-4 bg-gradient-to-r from-green-600 to-green-500 rounded-xl text-base font-bold text-black"
-            >
-              Get Started →
-            </Link>
+            
+            {/* Mobile Auth Options */}
+            {!checking && (
+              <>
+                {user ? (
+                  <>
+                    <Link
+                      href="/dashboard"
+                      className="flex items-center justify-center gap-2 px-4 py-3.5 bg-white/5 rounded-xl text-base font-medium text-white"
+                    >
+                      Dashboard
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center justify-center gap-2 px-4 py-3.5 bg-red-900/30 border border-red-500/30 rounded-xl text-base font-medium text-red-400 w-full"
+                    >
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/signin"
+                      className="flex items-center justify-center gap-2 px-4 py-3.5 bg-white/5 rounded-xl text-base font-medium text-white"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/waitlist"
+                      className="flex items-center justify-center gap-2 px-4 py-3.5 mt-2 bg-gradient-to-r from-green-600 to-green-500 rounded-xl text-base font-bold text-black"
+                    >
+                      Get Started →
+                    </Link>
+                  </>
+                )}
+              </>
+            )}
           </div>
         </div>
       </nav>
