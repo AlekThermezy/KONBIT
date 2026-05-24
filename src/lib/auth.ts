@@ -55,6 +55,8 @@ export async function updateProfile(userId: string, updates: Partial<Profile>): 
 }
 
 export async function signUp(email: string, password: string, fullName: string, role: UserRole = 'both') {
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://konbit.io'
+  
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -63,6 +65,7 @@ export async function signUp(email: string, password: string, fullName: string, 
         full_name: fullName,
         role,
       },
+      emailRedirectTo: `${appUrl}/dashboard`,
     },
   })
 
