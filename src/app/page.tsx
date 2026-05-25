@@ -65,44 +65,60 @@ export default function Home() {
             <a href="#growth" className="text-sm text-gray-300 hover:text-white transition">Growth</a>
             <a href="#learn" className="text-sm text-gray-300 hover:text-white transition">Learn</a>
             <a href="#about" className="text-sm text-gray-300 hover:text-white transition">About</a>
-            {!user && (
-              <Link href="/waitlist" className="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm font-medium transition">
-                Join Waitlist
+            {!user ? (
+              <div className="flex items-center gap-3">
+                <Link href="/signin" className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition border border-white/20 rounded-lg hover:border-white/40">
+                  Sign In
+                </Link>
+                <Link href="/waitlist" className="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm font-medium transition">
+                  Join Waitlist
+                </Link>
+              </div>
+            ) : (
+              <Link href="/dashboard" className="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm font-medium transition">
+                Dashboard →
               </Link>
             )}
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
+"|      {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
-        {/* Background Image */}
+        {/* Background Image - lighter overlay for sophistication */}
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('/images/konbit-hero-port-au-prince-2050.png')"}} />
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-        {/* Glow Effects */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-[100px]" />
+        {/* Subtle gradient - image should be visible */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/50 to-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+        {/* Warm accent glow — adds panache */}
+        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-green-500/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 left-1/4 w-[300px] h-[300px] bg-amber-500/5 rounded-full blur-[80px]" />
         
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight">
+"|        <div className="max-w-5xl mx-auto text-center relative z-10">
+          {/* Elegant eyebrow */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 border border-green-500/30 rounded-full text-green-400/80 text-sm mb-8 backdrop-blur-sm">
+            <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+            <span>The Haitian Investment Platform</span>
+          </div>
+          
+          <h1 className="text-5xl md:text-7xl lg:text-[5rem] font-black mb-8 leading-[1.05] tracking-tight">
             <span className="text-green-500">Konekte.</span><br />
             <span className="text-white">T&#232;t ansanm.</span><br />
-            <span className="text-white/80">Pou nou vanse.</span>
+            <span className="text-white/60">Pou nou vanse.</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto">
-            Invest in Haitian businesses. Learn from Haitian experts. Build the future together &#8212; all on one platform.
+          <p className="text-lg md:text-xl text-gray-300/80 mb-14 max-w-xl mx-auto leading-relaxed">
+            Invest in Haitian businesses. Learn from Haitian experts. Build the future &#8212; all on one platform.
           </p>
 
-          {/* Platform Tabs */}
-          <div className="flex justify-center mb-8">
-            <div className="bg-white/5 rounded-xl p-1 flex gap-1">
+"|          {/* Platform Tabs */}
+          <div className="flex justify-center mb-10">
+            <div className="bg-white/5 backdrop-blur-sm rounded-full p-1 flex gap-1">
               <button
                 onClick={() => setActiveTab('growth')}
-                className={`px-8 py-4 rounded-lg font-semibold transition ${
+                className={`px-8 py-3 rounded-full font-semibold text-sm transition ${
                   activeTab === 'growth'
-                    ? 'bg-green-600 text-white'
+                    ? 'bg-green-600 text-white shadow-lg shadow-green-500/25'
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
@@ -110,9 +126,9 @@ export default function Home() {
               </button>
               <button
                 onClick={() => setActiveTab('learn')}
-                className={`px-8 py-4 rounded-lg font-semibold transition ${
+                className={`px-8 py-3 rounded-full font-semibold text-sm transition ${
                   activeTab === 'learn'
-                    ? 'bg-green-600 text-white'
+                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
@@ -123,7 +139,7 @@ export default function Home() {
 
           {/* Waitlist Form - hidden when logged in */}
           {!user && (
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
+            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
               {!submitted ? (
                 <form onSubmit={handleWaitlist} className="space-y-4">
                   <input
@@ -160,26 +176,28 @@ export default function Home() {
             </div>
           )}
 
-          {/* Stats */}
-          <div className="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
-            <div>
-              <div className="text-4xl font-bold text-green-500">12</div>
-              <div className="text-gray-500 text-sm">Sectors</div>
+"|          {/* Stats */}
+          <div className="mt-20 flex justify-center gap-16">
+            <div className="text-center">
+              <div className="text-4xl font-bold text-green-500 tracking-tight">12</div>
+              <div className="text-gray-500 text-sm mt-1">Sectors</div>
             </div>
-            <div>
-              <div className="text-4xl font-bold text-green-500">1</div>
-              <div className="text-gray-500 text-sm">Platform</div>
+            <div className="w-px bg-white/10 self-stretch" />
+            <div className="text-center">
+              <div className="text-4xl font-bold text-white tracking-tight">1</div>
+              <div className="text-gray-500 text-sm mt-1">Platform</div>
             </div>
-            <div>
-              <div className="text-4xl font-bold text-green-500">All</div>
-              <div className="text-gray-500 text-sm">Nations</div>
+            <div className="w-px bg-white/10 self-stretch" />
+            <div className="text-center">
+              <div className="text-4xl font-bold text-white tracking-tight">All</div>
+              <div className="text-gray-500 text-sm mt-1">Nations</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* KONBIT Growth Section */}
-      <section id="growth" className="py-24 px-6 bg-gradient-to-b from-black to-gray-950">
+      <section id="growth" className="py-28 px-6 bg-[#050807]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-block px-4 py-2 bg-green-900/30 border border-green-500/30 rounded-full text-green-400 text-sm mb-4">
@@ -193,17 +211,18 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Sectors */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+"|          {/* Sectors */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-20">
             {[
-              { title: 'Real Estate', desc: 'Vacation rentals, apartments, commercial' },
-              { title: 'Music', desc: 'Studios, venues, streaming' },
-              { title: 'Art', desc: 'Galleries, exhibitions, collectives' },
-              { title: 'Food', desc: 'Restaurants, artisanal products, exports' },
+              { title: 'Real Estate', desc: 'Vacation rentals, apartments, commercial', icon: '🏠' },
+              { title: 'Music', desc: 'Studios, venues, streaming', icon: '🎵' },
+              { title: 'Art', desc: 'Galleries, exhibitions, collectives', icon: '🎨' },
+              { title: 'Food', desc: 'Restaurants, artisanal products, exports', icon: '🍳' },
             ].map((sector) => (
-              <div key={sector.title} className="bg-white/5 border border-white/10 rounded-xl p-6 hover:border-green-500/50 transition">
-                <h3 className="text-xl font-bold mb-2">{sector.title}</h3>
-                <p className="text-gray-400 text-sm">{sector.desc}</p>
+              <div key={sector.title} className="group bg-white/[3%] border border-white/[8%] rounded-2xl p-6 hover:bg-white/[6%] hover:border-green-500/40 transition-all duration-300 cursor-pointer">
+                <div className="text-3xl mb-4">{sector.icon}</div>
+                <h3 className="text-lg font-bold mb-2">{sector.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{sector.desc}</p>
               </div>
             ))}
           </div>
@@ -233,7 +252,7 @@ export default function Home() {
       </section>
 
       {/* KONBIT Learn Section */}
-      <section id="learn" className="py-24 px-6 bg-gray-950">
+      <section id="learn" className="py-28 px-6 bg-[#020508]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-block px-4 py-2 bg-blue-900/30 border border-blue-500/30 rounded-full text-blue-400 text-sm mb-4">
@@ -275,7 +294,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 px-6 bg-black">
+      <section id="about" className="py-28 px-6 bg-black">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-8">
             Built for <span className="text-green-500">All Nations, All People</span>
