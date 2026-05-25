@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Navbar from '@/components/layout/Navbar'
+import SlideSidebar from '@/components/layout/SlideSidebar'
 import { getCurrentUser, signOut } from '@/lib/auth'
 import { createClient } from '@supabase/supabase-js'
 
@@ -276,6 +277,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
+      <SlideSidebar />
     </div>
   )
 }
