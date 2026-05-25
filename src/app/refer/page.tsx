@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import LeftSidebar from '@/components/layout/LeftSidebar'
 import { getCurrentUser } from '@/lib/auth'
 import { createInvite, getUserInvites, getInviteLink, getShareText, Invite } from '@/lib/referral'
 
@@ -202,10 +203,11 @@ export default function ReferPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <LeftSidebar />
       <Navbar />
 
       {/* Hero Section with Background Image */}
-      <div className="relative min-h-[40vh] flex items-center justify-center overflow-hidden">
+      <div className="relative min-h-[40vh] flex items-center justify-center overflow-hidden ml-64">
         {/* Background Image */}
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('/images/konbit-refer-solarpunk-horizon.png')"}} />
         {/* Dark Overlay */}
@@ -216,9 +218,9 @@ export default function ReferPage() {
         {/* Content */}
         <div className="relative z-10 text-center px-6 pt-24 pb-12">
           <div className="text-5xl mb-4">👥</div>
-          <h1 className="text-4xl font-black mb-3 text-white">Invite Friends</h1>
+          <h1 className="text-4xl font-black mb-3 text-white">Grow the Community</h1>
           <p className="text-gray-300 text-lg max-w-xl mx-auto">
-            Share KONBIT with your network. Grow together.
+            Share KONBIT with fellow Haitian professionals. Earn rewards for every verified member who joins.
           </p>
         </div>
       </div>
@@ -280,7 +282,7 @@ export default function ReferPage() {
 
           {/* Invite History */}
           <div>
-            <h2 className="text-xl font-bold text-white mb-6">Your Invites ({invites.length})</h2>
+            <h2 className="text-xl font-bold text-white mb-6">Your Referrals ({invites.length})</h2>
             {invites.length === 0 ? (
               <div className="text-center py-12 bg-white/5 border border-white/10 rounded-xl">
                 <div className="text-4xl mb-4">📬</div>

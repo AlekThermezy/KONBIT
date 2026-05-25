@@ -1,7 +1,7 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import SlideSidebar from '@/components/layout/SlideSidebar'
+import LeftSidebar from '@/components/layout/LeftSidebar'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -191,18 +191,18 @@ export default function LearnPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <LeftSidebar />
       <Navbar />
-      <SlideSidebar />
 
-      <main className="pt-24 pb-16 px-6">
+      <main className="ml-64 pt-16 pb-16 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-black mb-4">
-              Learn <span className="text-blue-400">Courses</span>
+              Learning <span className="text-blue-400">Center</span>
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Courses taught by Haitian experts. AI-powered learning tools to help you succeed.
+              Master new skills with courses taught by Haitian experts. AI-powered tools to accelerate your growth.
             </p>
           </div>
 
@@ -328,7 +328,7 @@ export default function LearnPage() {
                   <div className="flex items-center justify-between">
                     <span className="text-gray-400 text-sm">📚 {path.courses} courses</span>
                     <button className="px-4 py-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 rounded-lg text-sm font-medium transition">
-                      Start Path →
+                      Begin Your Journey →
                     </button>
                   </div>
                 </div>

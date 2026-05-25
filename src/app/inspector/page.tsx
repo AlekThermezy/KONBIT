@@ -2,6 +2,7 @@
 import Navbar from '@/components/layout/Navbar'
 import SlideSidebar from '@/components/layout/SlideSidebar'
 import Footer from '@/components/layout/Footer'
+import LeftSidebar from '@/components/layout/LeftSidebar'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'

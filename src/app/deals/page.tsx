@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import SlideSidebar from '@/components/layout/SlideSidebar'
+import LeftSidebar from '@/components/layout/LeftSidebar'
 import { getCurrentUser } from '@/lib/auth'
 import { User } from '@supabase/supabase-js'
 
@@ -152,18 +152,18 @@ export default function DealsPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <LeftSidebar />
       <Navbar />
-      <SlideSidebar />
 
-      <main className="pt-24 pb-16 px-6">
+      <main className="ml-64 pt-16 pb-16 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-black mb-4">
-              Pre-Fab <span className="text-green-500">Rewards</span> Pool
+              Your <span className="text-green-500">Portfolio</span>
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Back Haitian businesses and receive quality products at 25-40% below retail. No revenue share — just great deals.
+              Explore vetted investment opportunities and reward-based campaigns from Haitian entrepreneurs. Invest with confidence.
             </p>
           </div>
 
@@ -318,7 +318,7 @@ export default function DealsPage() {
                 href="/dashboard/onboard"
                 className="inline-block px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 rounded-xl font-bold text-lg text-black transition-all"
               >
-                Apply to List Your Product →
+                Launch Your Campaign →
               </Link>
             </div>
           )}

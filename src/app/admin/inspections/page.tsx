@@ -1,6 +1,7 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
 import SlideSidebar from '@/components/layout/SlideSidebar'
+import LeftSidebar from '@/components/layout/LeftSidebar'
 import Footer from '@/components/layout/Footer'
 
 import { useState, useEffect } from 'react'
@@ -133,7 +134,8 @@ export default function AdminInspections() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
-      <SlideSidebar />
+      <LeftSidebar />
+            <SlideSidebar />
 
       <main className="pt-24 pb-16 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">

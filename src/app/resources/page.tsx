@@ -1,27 +1,20 @@
 'use client'
 
 /**
- * RESOURCES PAGE — TODO/Future Features:
- * =======================================
- * - Video Translation Pipeline: download videos → translate to Kreyòl → AI avatar (Haitian voice/face) → class in Kreyòl
- *   This would enable: YouTube video lessons → Haitian Kreyòl dubbed courses
- *   Tech stack: yt-dlp → Whisper (transcribe) → OpenAI/LLaMA (translate to Kreyòl) → ElevenLabs (Kreyòl voice) → D-ID/Synthesia (avatar)
- *
- * CURRENT RESOURCES:
- * ==================
- * - Translator (AI-powered Haitian Kreyòl translation)
- * - Dictionary (Kreyòl word definitions & etymology)
- * - Law & Customs (Haitian legal framework, labor laws, business registration, property rights)
- * - Constitution (1987 Haitian Constitution summary and key articles)
- * - Business Guides ("How to start a business in Haiti", tax basics, etc.)
- * - Cultural Guides (holidays, etiquette, business culture)
+ * RESOURCES PAGE — Knowledge Hub
+ * ==============================
+ * Haitian business, culture, and law resources.
+ * AI-powered tools: Translator, Dictionary.
+ * Legal guides: ONAPI, labor laws, constitution.
+ * Business guides: registration, taxes, customs.
+ * Cultural guides: holidays, etiquette, business culture.
  */
 
 import { useState } from 'react'
 import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import SlideSidebar from '@/components/layout/SlideSidebar'
+import LeftSidebar from '@/components/layout/LeftSidebar'
 
 const resources = [
   {
@@ -193,9 +186,10 @@ export default function ResourcesPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <LeftSidebar />
       <Navbar />
 
-      <main className="pt-24 pb-16 px-4">
+      <main className="ml-64 pt-16 pb-16 px-4">
         <div className="max-w-5xl mx-auto">
 
           {/* Header */}
@@ -206,7 +200,7 @@ export default function ResourcesPage() {
             </div>
             <h1 className="text-3xl md:text-4xl font-black mb-3">
               <span className="text-white">KONBIT</span>
-              <span className="text-green-500"> Resources</span>
+              <span className="text-green-500"> Knowledge Hub</span>
             </h1>
             <p className="text-gray-400 text-lg max-w-2xl">
               Everything you need to navigate Haitian business, culture, and law — from AI translation to legal guides.
@@ -399,7 +393,6 @@ export default function ResourcesPage() {
         </div>
       </main>
 
-      <SlideSidebar />
       <Footer />
     </div>
   )

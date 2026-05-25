@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import LeftSidebar from '@/components/layout/LeftSidebar'
 
 const tiers = [
   { tier: 1, name: 'Pioneer', range: 'First 25%', discount: 40, color: 'green', desc: 'Best price — you believe early' },
@@ -65,8 +66,9 @@ export default function CampaignDetailPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
+      <LeftSidebar />
 
-      <main className="pt-20 pb-16 px-4">
+      <main className="pt-16 ml-64 pb-16 px-4">
         <div className="max-w-5xl mx-auto">
           {/* Back Link */}
           <Link href="/deals" className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition">

@@ -25,7 +25,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
-import SlideSidebar from '@/components/layout/SlideSidebar'
+import LeftSidebar from '@/components/layout/LeftSidebar'
 import { getCurrentUser } from '@/lib/auth'
 import { createClient } from '@supabase/supabase-js'
 
@@ -53,10 +53,10 @@ const SAMPLE_STORIES = [
 
 // Quick action cards — shown at top of feed for immediate engagement
 const QUICK_ACTIONS = [
-  { id: 'qa1', label: 'Back a Campaign', desc: 'Invest in Haitian businesses', icon: '💰', href: '/deals', color: 'green' },
+  { id: 'qa1', label: 'Explore Portfolio', desc: 'Invest in Haitian businesses', icon: '💰', href: '/deals', color: 'green' },
   { id: 'qa2', label: 'Continue Learning', desc: 'Pick up where you left off', icon: '🎓', href: '/learn', color: 'blue' },
-  { id: 'qa3', label: 'View Inspections', desc: 'Check your assigned jobs', icon: '🔍', href: '/jobs', color: 'amber' },
-  { id: 'qa4', label: 'Track Returns', desc: 'See your investment performance', icon: '📈', href: '/dashboard', color: 'purple' },
+  { id: 'qa3', label: 'Inspector Hub', desc: 'Check your assigned jobs', icon: '🔍', href: '/inspector', color: 'amber' },
+  { id: 'qa4', label: 'View Portfolio', desc: 'Track your investments', icon: '📈', href: '/dashboard', color: 'purple' },
 ]
 
 function timeAgo(date: string) {
@@ -212,17 +212,18 @@ export default function FeedPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <LeftSidebar />
       <Navbar />
 
-      <main className="pt-24 pb-16 px-4">
+      <main className="ml-64 pt-16 pb-16 px-4">
         <div className="max-w-2xl mx-auto">
 
           {/* Header */}
           <div className="mb-6">
             <h1 className="text-2xl font-black text-white">
-              {user ? `Welcome back, ${user.name?.split(' ')[0] || 'there'} 👋` : 'Feed'}
+              {user ? `Good to see you, ${user.name?.split(' ')[0] || 'there'} 👋` : 'Activity Feed'}
             </h1>
-            <p className="text-gray-400 text-sm mt-1">Your hub for all things KONBIT</p>
+            <p className="text-gray-400 text-sm mt-1">Track your investments, learning, and opportunities</p>
           </div>
 
           {/* Quick Actions — LinkedIn/Discord style shortcut bar */}
@@ -316,7 +317,7 @@ export default function FeedPage() {
                    `No ${tab} activity yet — check back soon`}
                 </div>
                 <Link href="/deals" className="inline-block mt-4 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-xl text-white text-sm font-medium transition">
-                  Browse Campaigns →
+                  Explore Portfolio →
                 </Link>
               </div>
             ) : (
@@ -328,8 +329,6 @@ export default function FeedPage() {
 
         </div>
       </main>
-
-      <SlideSidebar />
     </div>
   )
 }
@@ -379,7 +378,7 @@ function FeedCard({ item, user }: { item: FeedItem; user: any }) {
         {/* Action row */}
         <div className="flex items-center gap-2">
           <Link href={`/deals/${c.id}`} className="flex-1 text-center px-4 py-2.5 bg-green-600 hover:bg-green-700 rounded-xl text-white text-sm font-bold transition">
-            Back this Campaign →
+            Invest in this Campaign →
           </Link>
           <button className="w-10 h-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl flex items-center justify-center text-gray-400 hover:text-white transition">
             <span>🔖</span>

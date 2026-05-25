@@ -1,6 +1,5 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import Navbar from '@/components/layout/Navbar'
 
 export const metadata: Metadata = {
   title: 'KONBIT — Konekte, Tèt ansanm, Pou nou vanse',
@@ -53,13 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-green-600 focus:text-white focus:rounded-lg">
-          Skip to main content
-        </a>
-        <Navbar />
-        <main id="main-content">
-          {children}
-        </main>
+        {children}
       </body>
     </html>
   )

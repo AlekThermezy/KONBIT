@@ -1,7 +1,7 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import SlideSidebar from '@/components/layout/SlideSidebar'
+import LeftSidebar from '@/components/layout/LeftSidebar'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -46,18 +46,18 @@ export default function GrowthPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+      <LeftSidebar />
       <Navbar />
-      <SlideSidebar />
 
-      <main className="pt-24 pb-16 px-6">
+      <main className="ml-64 pt-16 pb-16 px-6">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-black mb-4">
-              Growth <span className="text-green-500">Campaigns</span>
+              Investment <span className="text-green-500">Campaigns</span>
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Invest in Haitian businesses. Browse active campaigns and revenue-sharing opportunities.
+              Discover high-growth investment opportunities in Haitian businesses. Browse vetted campaigns and become a part of their story.
             </p>
           </div>
 
