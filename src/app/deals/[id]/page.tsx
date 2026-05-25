@@ -27,7 +27,7 @@ const sampleCampaign = {
   quantitySold: 18,
   shipping: 450,
   deliveryTimeline: '3-4 months',
-  images: ['/api/placeholder/800/400'],
+  images: ['https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&h=400&fit=crop'],
   businessStory: 'Kay Ix Construction has been building quality homes in Haiti for 15 years. This pre-fab line allows us to scale our operations and bring affordable housing to more families.',
   founder: 'Jean Marc Toussaint',
   launchedAt: '2026-05-01',

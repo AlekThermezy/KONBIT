@@ -10,7 +10,7 @@ export type UserRole = 'investor' | 'learner' | 'both'
 export interface Profile {
   id: string
   email: string
-  full_name: string
+  name: string
   role: UserRole
   avatar_url?: string
   created_at: string
@@ -62,8 +62,8 @@ export async function signUp(email: string, password: string, fullName: string, 
     password,
     options: {
       data: {
-        full_name: fullName,
-        role,
+        name: fullName,
+        role: 'user',
       },
       emailRedirectTo: `${appUrl}/dashboard`,
     },
@@ -75,8 +75,8 @@ export async function signUp(email: string, password: string, fullName: string, 
     await createProfile({
       id: data.user.id,
       email,
-      full_name: fullName,
-      role,
+      name: fullName,
+      role: "both" as UserRole,
     })
   }
 

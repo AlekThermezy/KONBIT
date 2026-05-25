@@ -98,7 +98,7 @@ export async function acceptInvite(referralCode: string, userId: string): Promis
 }
 
 export function getInviteLink(referralCode: string): string {
-  return `https://konbit.io/invite/${referralCode}`
+  return `${process.env.NEXT_PUBLIC_APP_URL || "https://konbit.io"}/invite/${referralCode}`
 }
 
 export function getShareText(referralCode: string): string {
