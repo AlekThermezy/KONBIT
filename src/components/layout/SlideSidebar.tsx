@@ -141,6 +141,13 @@ export default function SlideSidebar() {
               <span className="text-lg">🔗</span>
               <span className="text-gray-300">My Referral Code</span>
             </Link>
+            <Link
+              href="/inspector"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 transition text-sm"
+            >
+              <span className="text-lg">🔍</span>
+              <span className="text-gray-300">Inspector Hub</span>
+            </Link>
           </div>
 
           {/* Divider */}
@@ -175,7 +182,10 @@ export default function SlideSidebar() {
               <span className="text-lg">⚙️</span>
               <span className="text-gray-300">Settings</span>
             </button>
-            <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 transition text-sm text-left text-gray-400">
+            <button
+              onClick={handleSignOut}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 transition text-sm text-left text-gray-400"
+            >
               <span className="text-lg">🚪</span>
               <span>Sign Out</span>
             </button>
