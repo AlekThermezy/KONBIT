@@ -1,13 +1,21 @@
 'use client'
+import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import SlideSidebar from '@/components/layout/SlideSidebar'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { getCurrentUser } from '@/lib/auth'
 
 export default function LearnPage() {
   const [activeFeature, setActiveFeature] = useState<string | null>(null)
   const [streak, setStreak] = useState(7)
   const [coursesCompleted, setCoursesCompleted] = useState(3)
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    getCurrentUser().then(u => setUser(u))
+  }, [])
 
   const features = [
     {
@@ -114,7 +122,8 @@ export default function LearnPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Hero Section */}
+      <Navbar />
+      <SlideSidebar />
       <section className="pt-32 pb-20 px-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-transparent" />
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px]" />
@@ -152,21 +161,23 @@ export default function LearnPage() {
             </div>
           </div>
 
-          {/* CTA */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/learn"
-              className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-xl font-bold text-lg text-white transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
-            >
-              Start Learning Free
-            </Link>
-            <Link
-              href="#paths"
-              className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-medium transition"
-            >
-              Browse Learning Paths
-            </Link>
-          </div>
+          {/* CTA — hidden once signed in */}
+          {!user && (
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/learn"
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-xl font-bold text-lg text-white transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
+              >
+                Start Learning Free
+              </Link>
+              <Link
+                href="#paths"
+                className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl font-medium transition"
+              >
+                Browse Learning Paths
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
@@ -297,44 +308,48 @@ export default function LearnPage() {
         </div>
       </section>
 
-      {/* Gift Section */}
-      <section className="py-24 px-6 bg-gradient-to-b from-black to-blue-950/30">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-900/30 to-blue-800/10 border border-blue-500/30 rounded-2xl p-8 md:p-12 text-center">
-            <div className="text-5xl mb-6">🎁</div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Gift Knowledge, Build Community
+      {/* Gift Section — hidden when signed in */}
+      {!user && (
+        <section className="py-24 px-6 bg-gradient-to-b from-black to-blue-950/30">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-to-r from-blue-900/30 to-blue-800/10 border border-blue-500/30 rounded-2xl p-8 md:p-12 text-center">
+              <div className="text-5xl mb-6">🎁</div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Gift Knowledge, Build Community
+              </h2>
+              <p className="text-xl text-gray-300 mb-8 max-w-xl mx-auto">
+                Sponsor someone in Haiti (or anywhere) to take a course. They learn, you track their progress, and together we build stronger communities.
+              </p>
+              <Link
+                href="/waitlist"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-xl font-bold text-lg text-white transition-all duration-200 shadow-lg shadow-blue-500/25"
+              >
+                Gift a Course Today
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Section — hidden when signed in */}
+      {!user && (
+        <section className="py-24 px-6 bg-black">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Ready to Start Your <span className="text-blue-400">Journey</span>?
             </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-xl mx-auto">
-              Sponsor someone in Haiti (or anywhere) to take a course. They learn, you track their progress, and together we build stronger communities.
+            <p className="text-xl text-gray-400 mb-8">
+              Join thousands learning from Haitian experts. Start free, learn at your own pace.
             </p>
             <Link
               href="/waitlist"
-              className="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-xl font-bold text-lg text-white transition-all duration-200 shadow-lg shadow-blue-500/25"
+              className="inline-block px-10 py-5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-xl font-bold text-xl text-white transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
             >
-              Gift a Course Today
+              Join the Waitlist →
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-6 bg-black">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Ready to Start Your <span className="text-blue-400">Journey</span>?
-          </h2>
-          <p className="text-xl text-gray-400 mb-8">
-            Join thousands learning from Haitian experts. Start free, learn at your own pace.
-          </p>
-          <Link
-            href="/waitlist"
-            className="inline-block px-10 py-5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-xl font-bold text-xl text-white transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
-          >
-            Join the Waitlist →
-          </Link>
-        </div>
-      </section>
+        </section>
+      )}
 
       <Footer />
     </div>

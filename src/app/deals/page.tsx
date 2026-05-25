@@ -1,9 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import SlideSidebar from '@/components/layout/SlideSidebar'
+import { getCurrentUser } from '@/lib/auth'
+import { User } from '@supabase/supabase-js'
 
 const sectors = [
   { id: 'all', label: 'All', icon: '🌐' },
@@ -137,6 +140,11 @@ const batchInvestments = [
 export default function DealsPage() {
   const [activeSector, setActiveSector] = useState('all')
   const [sortBy, setSortBy] = useState('popular')
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    getCurrentUser().then(u => setUser(u))
+  }, [])
 
   const filteredCampaigns = activeSector === 'all'
     ? campaigns
@@ -145,6 +153,7 @@ export default function DealsPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
+      <SlideSidebar />
 
       <main className="pt-24 pb-16 px-6">
         <div className="max-w-7xl mx-auto">
@@ -298,19 +307,21 @@ export default function DealsPage() {
             </div>
           </div>
 
-          {/* CTA */}
-          <div className="bg-gradient-to-br from-green-900/20 to-green-950/50 border border-green-500/30 rounded-2xl p-8 text-center">
-            <h2 className="text-2xl font-bold text-white mb-4">Have a Product to Offer?</h2>
-            <p className="text-gray-400 mb-6 max-w-xl mx-auto">
-              Haitian businesses can apply to list their products on Konbit Pool. We handle vetting, payment processing, and delivery coordination.
-            </p>
-            <Link
-              href="/dashboard/onboard"
-              className="inline-block px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 rounded-xl font-bold text-lg text-black transition-all"
-            >
-              Apply to List Your Product →
-            </Link>
-          </div>
+          {/* CTA — hidden once signed in */}
+          {!user && (
+            <div className="bg-gradient-to-br from-green-900/20 to-green-950/50 border border-green-500/30 rounded-2xl p-8 text-center">
+              <h2 className="text-2xl font-bold text-white mb-4">Have a Product to Offer?</h2>
+              <p className="text-gray-400 mb-6 max-w-xl mx-auto">
+                Haitian businesses can apply to list their products on Konbit Pool. We handle vetting, payment processing, and delivery coordination.
+              </p>
+              <Link
+                href="/dashboard/onboard"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 rounded-xl font-bold text-lg text-black transition-all"
+              >
+                Apply to List Your Product →
+              </Link>
+            </div>
+          )}
         </div>
       </main>
 

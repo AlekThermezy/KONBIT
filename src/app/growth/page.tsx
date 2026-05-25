@@ -1,9 +1,11 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import SlideSidebar from '@/components/layout/SlideSidebar'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { getCurrentUser } from '@/lib/auth'
 
 const sectors = [
   {
@@ -154,6 +156,11 @@ export default function GrowthPage() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [selectedSector, setSelectedSector] = useState<string | null>(null)
+  const [user, setUser] = useState<any>(null)
+
+  useEffect(() => {
+    getCurrentUser().then(u => setUser(u))
+  }, [])
 
   const filteredCampaigns = selectedSector
     ? campaigns.filter(c => c.sector === selectedSector)
@@ -193,6 +200,7 @@ export default function GrowthPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
+      <SlideSidebar />
 
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
@@ -214,20 +222,22 @@ export default function GrowthPage() {
             Invest in vetted Haitian businesses. Earn revenue shares. Build communities — all on-chain.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <a 
-              href="#sectors"
-              className="px-8 py-4 bg-green-600 hover:bg-green-500 rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-green-500/25 hover:shadow-green-500/40"
-            >
-              Explore Sectors
-            </a>
-            <a 
-              href="#campaigns"
-              className="px-8 py-4 bg-white/5 border border-white/20 hover:border-green-500/50 rounded-xl font-bold text-lg transition-all duration-200"
-            >
-              View Campaigns
-            </a>
-          </div>
+          {!user && (
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+              <a 
+                href="#sectors"
+                className="px-8 py-4 bg-green-600 hover:bg-green-500 rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-green-500/25 hover:shadow-green-500/40"
+              >
+                Explore Sectors
+              </a>
+              <a 
+                href="#campaigns"
+                className="px-8 py-4 bg-white/5 border border-white/20 hover:border-green-500/50 rounded-xl font-bold text-lg transition-all duration-200"
+              >
+                View Campaigns
+              </a>
+            </div>
+          )}
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
@@ -448,7 +458,7 @@ export default function GrowthPage() {
               Join the waitlist to get early access to campaigns before they go live. Be among the first investors.
             </p>
 
-            {!submitted ? (
+            {!user && !submitted ? (
               <form onSubmit={handleWaitlist} className="max-w-md mx-auto space-y-4">
                 <input
                   type="text"

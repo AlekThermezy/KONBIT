@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { getCurrentUser } from '@/lib/auth'
+import { useRouter } from 'next/navigation'
+import { getCurrentUser, signOut } from '@/lib/auth'
 import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(
@@ -41,6 +42,13 @@ export default function SlideSidebar() {
 
   const userName = user?.user_metadata?.name || user?.email?.split('@')[0] || 'there'
   const firstInitial = userName.charAt(0).toUpperCase()
+
+  const router = useRouter()
+
+  const handleSignOut = () => {
+    signOut()
+    router.push('/')
+  }
 
   return (
     <>

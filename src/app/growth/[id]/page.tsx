@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import SlideSidebar from '@/components/layout/SlideSidebar'
 import { getCurrentUser } from '@/lib/auth'
 
 // Mock campaign data (would come from Supabase in production)
@@ -187,6 +188,7 @@ export default function CampaignPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
+      <SlideSidebar />
 
       <main className="pt-24 pb-16 px-6">
         <div className="max-w-4xl mx-auto">
