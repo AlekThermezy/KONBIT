@@ -11,7 +11,7 @@ export interface Profile {
   id: string
   email: string
   name: string
-  role: UserRole
+user_role: string
   avatar_url?: string
   created_at: string
   updated_at: string
@@ -63,7 +63,7 @@ export async function signUp(email: string, password: string, fullName: string, 
     options: {
       data: {
         name: fullName,
-        role: 'user',
+        user_role: 'user',
       },
       emailRedirectTo: `${appUrl}/dashboard`,
     },
@@ -76,7 +76,7 @@ export async function signUp(email: string, password: string, fullName: string, 
       id: data.user.id,
       email,
       name: fullName,
-      role: "both" as UserRole,
+      user_role: "both",
     })
   }
 
