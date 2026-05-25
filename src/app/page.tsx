@@ -1,8 +1,10 @@
 'use client'
 import Footer from '@/components/layout/Footer'
+import { supabase } from '@/lib/auth'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { User } from '@supabase/supabase-js'
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'growth' | 'learn'>('growth')
@@ -10,6 +12,15 @@ export default function Home() {
   const [name, setName] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data.user))
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, _session) => {
+      supabase.auth.getUser().then(({ data }) => setUser(data.user))
+    })
+    return () => subscription.unsubscribe()
+  }, [])
 
   const handleWaitlist = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -54,9 +65,11 @@ export default function Home() {
             <a href="#growth" className="text-sm text-gray-300 hover:text-white transition">Growth</a>
             <a href="#learn" className="text-sm text-gray-300 hover:text-white transition">Learn</a>
             <a href="#about" className="text-sm text-gray-300 hover:text-white transition">About</a>
-            <Link href="/waitlist" className="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm font-medium transition">
-              Join Waitlist
-            </Link>
+            {!user && (
+              <Link href="/waitlist" className="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm font-medium transition">
+                Join Waitlist
+              </Link>
+            )}
           </div>
         </div>
       </nav>
@@ -108,42 +121,44 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Waitlist Form */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
-            {!submitted ? (
-              <form onSubmit={handleWaitlist} className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-green-500 transition"
-                />
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-green-500 transition"
-                />
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full py-4 bg-green-600 hover:bg-green-500 rounded-lg font-bold text-lg transition disabled:opacity-50"
-                >
-                  {loading ? 'Joining...' : `Join the ${activeTab === 'growth' ? 'Growth' : 'Learn'} Waitlist`}
-                </button>
-              </form>
-            ) : (
-              <div className="text-center py-8">
-                <div className="text-5xl mb-4">&#127881;</div>
-                <h3 className="text-2xl font-bold text-green-500 mb-2">You&apos;re on the list!</h3>
-                <p className="text-gray-400">We&apos;ll notify you when KONBIT launches.</p>
-              </div>
-            )}
-          </div>
+          {/* Waitlist Form - hidden when logged in */}
+          {!user && (
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
+              {!submitted ? (
+                <form onSubmit={handleWaitlist} className="space-y-4">
+                  <input
+                    type="text"
+                    placeholder="Your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-green-500 transition"
+                  />
+                  <input
+                    type="email"
+                    placeholder="Your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-green-500 transition"
+                  />
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-4 bg-green-600 hover:bg-green-500 rounded-lg font-bold text-lg transition disabled:opacity-50"
+                  >
+                    {loading ? 'Joining...' : `Join the ${activeTab === 'growth' ? 'Growth' : 'Learn'} Waitlist`}
+                  </button>
+                </form>
+              ) : (
+                <div className="text-center py-8">
+                  <div className="text-5xl mb-4">&#127881;</div>
+                  <h3 className="text-2xl font-bold text-green-500 mb-2">You're on the list!</h3>
+                  <p className="text-gray-400">We'll notify you when KONBIT launches.</p>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Stats */}
           <div className="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
