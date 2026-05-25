@@ -57,7 +57,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/10">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="text-2xl font-bold">
             <span className="text-green-500">KON</span>BIT
@@ -65,7 +65,8 @@ export default function Home() {
           <div className="flex items-center gap-6">
             <a href="#growth" className="text-sm text-gray-300 hover:text-white transition">Growth</a>
             <a href="#learn" className="text-sm text-gray-300 hover:text-white transition">Learn</a>
-            <a href="#about" className="text-sm text-gray-300 hover:text-white transition">About</a>
+            <a href="/mission" className="text-sm text-gray-300 hover:text-white transition">Mission</a>
+            <a href="/about" className="text-sm text-gray-300 hover:text-white transition">About</a>
             {!user ? (
               <div className="flex items-center gap-3">
                 <Link href="/signin" className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition border border-white/20 rounded-lg hover:border-white/40">
@@ -84,9 +85,12 @@ export default function Home() {
         </div>
       </nav>
 
-"|      {/* Hero Section */}
+      {/* Hero Section - BRIGHT and Vibrant */}
       <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
-        {/* Background Image - optimized with next/image */}
+        {/* Bright gradient background - not dark */}
+        <div className="absolute inset-0 bg-gradient-to-br from-green-900/30 via-emerald-900/20 to-amber-900/20" />
+        
+        {/* Bright image - much more visible */}
         <div className="absolute inset-0">
           <Image
             src="/images/konbit-hero-port-au-prince-2050.png"
@@ -98,49 +102,51 @@ export default function Home() {
             quality={85}
           />
         </div>
-        {/* Subtle gradient - image should be visible */}
-        <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/50 to-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-        {/* Warm accent glow — adds panache */}
-        <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-green-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 left-1/4 w-[300px] h-[300px] bg-amber-500/5 rounded-full blur-[80px]" />
+        {/* Light overlay - image should be bright and visible */}
+        <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-transparent to-amber-900/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
         
-"|        <div className="max-w-5xl mx-auto text-center relative z-10">
+        {/* Glowing orb effects - vibrant and alive */}
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-green-400/20 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/3 left-1/4 w-[500px] h-[500px] bg-amber-400/15 rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-500/10 rounded-full blur-[200px]" />
+        
+        <div className="max-w-5xl mx-auto text-center relative z-10">
           {/* Elegant eyebrow */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 border border-green-500/30 rounded-full text-green-400/80 text-sm mb-8 backdrop-blur-sm">
-            <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500/20 border border-green-400/40 rounded-full text-green-300 text-sm mb-8 backdrop-blur-sm">
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
             <span>The Haitian Investment Platform</span>
           </div>
           
           <h1 className="text-5xl md:text-7xl lg:text-[5rem] font-black mb-8 leading-[1.05] tracking-tight">
-            <span className="text-green-500">Konekte.</span><br />
+            <span className="text-green-400">Konekte.</span><br />
             <span className="text-white">T&#232;t ansanm.</span><br />
-            <span className="text-white/60">Pou nou vanse.</span>
+            <span className="text-amber-300/80">Pou nou vanse.</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-300/80 mb-14 max-w-xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-200/80 mb-14 max-w-xl mx-auto leading-relaxed">
             Invest in Haitian businesses. Learn from Haitian experts. Build the future &#8212; all on one platform.
           </p>
 
-"|          {/* Platform Tabs */}
+          {/* Platform Tabs - vibrant and pop */}
           <div className="flex justify-center mb-10">
-            <div className="bg-white/5 backdrop-blur-sm rounded-full p-1 flex gap-1">
+            <div className="bg-white/10 backdrop-blur-md rounded-full p-1.5 flex gap-1.5 border border-white/20">
               <button
                 onClick={() => setActiveTab('growth')}
-                className={`px-8 py-3 rounded-full font-semibold text-sm transition ${
+                className={`px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-200 ${
                   activeTab === 'growth'
-                    ? 'bg-green-600 text-white shadow-lg shadow-green-500/25'
-                    : 'text-gray-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-400 text-black shadow-lg shadow-green-500/40'
+                    : 'text-gray-300 hover:text-white hover:bg-white/10'
                 }`}
               >
                 KONBIT Growth
               </button>
               <button
                 onClick={() => setActiveTab('learn')}
-                className={`px-8 py-3 rounded-full font-semibold text-sm transition ${
+                className={`px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-200 ${
                   activeTab === 'learn'
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/25'
-                    : 'text-gray-400 hover:text-white'
+                    ? 'bg-gradient-to-r from-blue-500 to-cyan-400 text-black shadow-lg shadow-blue-500/40'
+                    : 'text-gray-300 hover:text-white hover:bg-white/10'
                 }`}
               >
                 KONBIT Learn
@@ -150,7 +156,7 @@ export default function Home() {
 
           {/* Waitlist Form - hidden when logged in */}
           {!user && (
-            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto">
+            <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-8 max-w-md mx-auto shadow-2xl shadow-green-500/10">
               {!submitted ? (
                 <form onSubmit={handleWaitlist} className="space-y-4">
                   <input
@@ -159,7 +165,7 @@ export default function Home() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-green-500 transition"
+                    className="w-full px-4 py-3.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-green-400 focus:bg-white/15 transition"
                   />
                   <input
                     type="email"
@@ -167,12 +173,12 @@ export default function Home() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-green-500 transition"
+                    className="w-full px-4 py-3.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-green-400 focus:bg-white/15 transition"
                   />
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-4 bg-green-600 hover:bg-green-500 rounded-lg font-bold text-lg transition disabled:opacity-50"
+                    className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-400 hover:from-green-400 hover:to-emerald-300 rounded-lg font-bold text-lg text-black transition-all shadow-lg shadow-green-500/30 hover:shadow-green-500/50 disabled:opacity-50"
                   >
                     {loading ? 'Joining...' : `Join the ${activeTab === 'growth' ? 'Growth' : 'Learn'} Waitlist`}
                   </button>
@@ -180,28 +186,28 @@ export default function Home() {
               ) : (
                 <div className="text-center py-8">
                   <div className="text-5xl mb-4">&#127881;</div>
-                  <h3 className="text-2xl font-bold text-green-500 mb-2">You're on the list!</h3>
-                  <p className="text-gray-400">We'll notify you when KONBIT launches.</p>
+                  <h3 className="text-2xl font-bold text-green-400 mb-2">You're on the list!</h3>
+                  <p className="text-gray-300">We'll notify you when KONBIT launches.</p>
                 </div>
               )}
             </div>
           )}
 
-"|          {/* Stats */}
+          {/* Stats - elegant and visible */}
           <div className="mt-20 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-16">
             <div className="text-center">
-              <div className="text-4xl font-bold text-green-500 tracking-tight">12</div>
-              <div className="text-gray-500 text-sm mt-1">Sectors</div>
+              <div className="text-4xl font-bold text-green-400 tracking-tight">12</div>
+              <div className="text-gray-300 text-sm mt-1">Sectors</div>
             </div>
-            <div className="hidden sm:block w-px bg-white/10 self-stretch h-12" />
+            <div className="hidden sm:block w-px bg-white/20 self-stretch h-12" />
             <div className="text-center">
               <div className="text-4xl font-bold text-white tracking-tight">1</div>
-              <div className="text-gray-500 text-sm mt-1">Platform</div>
+              <div className="text-gray-300 text-sm mt-1">Platform</div>
             </div>
-            <div className="hidden sm:block w-px bg-white/10 self-stretch h-12" />
+            <div className="hidden sm:block w-px bg-white/20 self-stretch h-12" />
             <div className="text-center">
-              <div className="text-4xl font-bold text-white tracking-tight">All</div>
-              <div className="text-gray-500 text-sm mt-1">Nations</div>
+              <div className="text-4xl font-bold text-amber-400 tracking-tight">All</div>
+              <div className="text-gray-300 text-sm mt-1">Nations</div>
             </div>
           </div>
         </div>
@@ -222,7 +228,7 @@ export default function Home() {
             </p>
           </div>
 
-"|          {/* Sectors */}
+          {/* Sectors */}
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-20">
             {[
               { title: 'Real Estate', desc: 'Vacation rentals, apartments, commercial', icon: '🏠' },
