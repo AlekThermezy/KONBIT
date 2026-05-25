@@ -1,6 +1,7 @@
 'use client'
 import Footer from '@/components/layout/Footer'
 import { supabase } from '@/lib/auth'
+import Image from 'next/image'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -85,8 +86,18 @@ export default function Home() {
 
 "|      {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
-        {/* Background Image - lighter overlay for sophistication */}
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('/images/konbit-hero-port-au-prince-2050.png')"}} />
+        {/* Background Image - optimized with next/image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/images/konbit-hero-port-au-prince-2050.png"
+            alt="Port-au-Prince, Haiti 2050"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+            quality={85}
+          />
+        </div>
         {/* Subtle gradient - image should be visible */}
         <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-black/50 to-black/70" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
@@ -177,17 +188,17 @@ export default function Home() {
           )}
 
 "|          {/* Stats */}
-          <div className="mt-20 flex justify-center gap-16">
+          <div className="mt-20 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-16">
             <div className="text-center">
               <div className="text-4xl font-bold text-green-500 tracking-tight">12</div>
               <div className="text-gray-500 text-sm mt-1">Sectors</div>
             </div>
-            <div className="w-px bg-white/10 self-stretch" />
+            <div className="hidden sm:block w-px bg-white/10 self-stretch h-12" />
             <div className="text-center">
               <div className="text-4xl font-bold text-white tracking-tight">1</div>
               <div className="text-gray-500 text-sm mt-1">Platform</div>
             </div>
-            <div className="w-px bg-white/10 self-stretch" />
+            <div className="hidden sm:block w-px bg-white/10 self-stretch h-12" />
             <div className="text-center">
               <div className="text-4xl font-bold text-white tracking-tight">All</div>
               <div className="text-gray-500 text-sm mt-1">Nations</div>
