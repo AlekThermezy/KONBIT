@@ -16,6 +16,15 @@ const sectors = [
     invested: '$2.4M'
   },
   {
+    title: 'Agriculture',
+    icon: '🌱',
+    desc: 'Farms, cooperatives, coffee, cacao & export crops',
+    color: 'from-emerald-500/20 to-emerald-600/5',
+    borderColor: 'hover:border-emerald-500/50',
+    returns: '10-16%',
+    invested: '$1.8M'
+  },
+  {
     title: 'Music',
     icon: '🎵',
     desc: 'Recording studios, venues & streaming rights',
@@ -23,6 +32,15 @@ const sectors = [
     borderColor: 'hover:border-purple-500/50',
     returns: '12-22%',
     invested: '$890K'
+  },
+  {
+    title: 'Film & Media',
+    icon: '🎬',
+    desc: 'Film production, documentaries & content studios',
+    color: 'from-red-500/20 to-red-600/5',
+    borderColor: 'hover:border-red-500/50',
+    returns: '15-25%',
+    invested: '$620K'
   },
   {
     title: 'Art',
@@ -41,6 +59,60 @@ const sectors = [
     borderColor: 'hover:border-orange-500/50',
     returns: '10-16%',
     invested: '$1.1M'
+  },
+  {
+    title: 'Reforestation',
+    icon: '🌳',
+    desc: 'Tree planting, carbon credits & sustainable forestry',
+    color: 'from-teal-500/20 to-teal-600/5',
+    borderColor: 'hover:border-teal-500/50',
+    returns: '8-12%',
+    invested: '$340K'
+  },
+  {
+    title: 'Tech',
+    icon: '💻',
+    desc: 'SaaS, fintech, e-commerce & digital services',
+    color: 'from-cyan-500/20 to-cyan-600/5',
+    borderColor: 'hover:border-cyan-500/50',
+    returns: '20-35%',
+    invested: '$780K'
+  },
+  {
+    title: 'Tourism',
+    icon: '✈️',
+    desc: 'Eco-lodges, tour operators & travel experiences',
+    color: 'from-sky-500/20 to-sky-600/5',
+    borderColor: 'hover:border-sky-500/50',
+    returns: '12-18%',
+    invested: '$920K'
+  },
+  {
+    title: 'Health',
+    icon: '🏥',
+    desc: 'Clinics, telemedicine & health tech solutions',
+    color: 'from-rose-500/20 to-rose-600/5',
+    borderColor: 'hover:border-rose-500/50',
+    returns: '10-15%',
+    invested: '$560K'
+  },
+  {
+    title: 'Education',
+    icon: '📚',
+    desc: 'Schools, edtech & vocational training centers',
+    color: 'from-indigo-500/20 to-indigo-600/5',
+    borderColor: 'hover:border-indigo-500/50',
+    returns: '9-14%',
+    invested: '$430K'
+  },
+  {
+    title: 'Infrastructure',
+    icon: '🏗️',
+    desc: 'Logistics, transport & energy projects',
+    color: 'from-slate-500/20 to-slate-600/5',
+    borderColor: 'hover:border-slate-500/50',
+    returns: '8-16%',
+    invested: '$1.2M'
   }
 ]
 
@@ -160,7 +232,7 @@ export default function GrowthPage() {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
             {[
-              { value: '4', label: 'Sectors' },
+              { value: '12', label: 'Sectors' },
               { value: '$4.8M', label: 'Total Raised' },
               { value: '2,400+', label: 'Investors' },
               { value: '12%', label: 'Avg Returns' }
@@ -182,14 +254,14 @@ export default function GrowthPage() {
               Investment Sectors
             </div>
             <h2 className="text-4xl md:text-5xl font-black mb-4">
-              Four Ways to <span className="text-green-500">Grow Haiti</span>
+              12 Ways to <span className="text-green-500">Grow Haiti</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              From vacation rentals to recording studios — invest in real Haitian businesses across these sectors.
+              From farms to film studios — invest in real Haitian businesses across these sectors.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {sectors.map((sector) => (
               <div 
                 key={sector.title} 
