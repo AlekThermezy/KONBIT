@@ -14,7 +14,6 @@ const supabase = createClient(
 const navItems = [
   { href: '/feed', label: 'Activity', icon: '🔥' },
   { href: '/deals', label: 'Portfolio', icon: '💰' },
-  { href: '/growth', label: 'Campaigns', icon: '📈' },
   { href: '/learn', label: 'Courses', icon: '🎓' },
   { href: '/resources', label: 'Library', icon: '📚' },
   { href: '/jobs', label: 'Opportunities', icon: '💼' },

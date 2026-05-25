@@ -6,22 +6,27 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import LeftSidebar from '@/components/layout/LeftSidebar'
 import { getCurrentUser } from '@/lib/auth'
-import { User } from '@supabase/supabase-js'
 
-const sectors = [
-  { id: 'all', label: 'All', icon: '🌐' },
+const filterTabs = [
+  { id: 'All', label: 'All', icon: '🌐' },
   { id: 'Real Estate', label: 'Real Estate', icon: '🏠' },
-  { id: 'Agriculture', label: 'Agriculture', icon: '🌱' },
   { id: 'Music', label: 'Music', icon: '🎵' },
-  { id: 'Film & Media', label: 'Film', icon: '🎬' },
   { id: 'Art', label: 'Art', icon: '🎨' },
   { id: 'Food', label: 'Food', icon: '🍳' },
-  { id: 'Reforestation', label: 'Nature', icon: '🌳' },
+  { id: 'Artisan', label: 'Artisan', icon: '🧵' },
   { id: 'Tech', label: 'Tech', icon: '💻' },
-  { id: 'Tourism', label: 'Tourism', icon: '✈️' },
 ]
 
-const campaigns = [
+const sortOptions = [
+  { id: 'popular', label: 'Most Popular' },
+  { id: 'newest', label: 'Newest' },
+  { id: 'ending', label: 'Ending Soon' },
+  { id: 'price_low', label: 'Price: Low to High' },
+  { id: 'price_high', label: 'Price: High to Low' },
+]
+
+// Combined campaigns from deals and growth pages
+const dealsCampaigns = [
   {
     id: 'kay-ix-prefab',
     name: 'Pre-fab Housing Kit (2-room)',
@@ -114,31 +119,139 @@ const campaigns = [
   },
 ]
 
-const batchInvestments = [
+const growthCampaigns = [
   {
-    id: 'agri-batch-001',
-    title: 'Agriculture Batch A',
-    desc: 'Coffee, cacao, and mango projects across 3 farms',
-    retailPrice: 5000,
-    discount: 30,
-    currentPrice: 3500,
-    filled: 45,
-    icon: '🌱',
+    id: 'kay-ix-growth',
+    name: 'Kay Ix',
+    business: 'Kay Ix Construction',
+    sector: 'Real Estate',
+    location: 'Jacmel, Haiti',
+    retailPrice: 125000,
+    currentPrice: 87500,
+    target: '$125,000',
+    raised: '$87,500',
+    percentage: 70,
+    tokens: 'KAY001',
+    returns: '11%',
+    daysLeft: 14,
+    image: '🏠',
+    status: 'live',
   },
   {
-    id: 'art-batch-001',
-    title: 'Artisan Collective Batch',
-    desc: 'Textiles, paintings, and crafts from 12 Haitian artists',
-    retailPrice: 2000,
-    discount: 35,
-    currentPrice: 1300,
-    filled: 62,
-    icon: '🎨',
+    id: 'mzero-growth',
+    name: 'Mzero Studios',
+    business: 'Mzero Studios',
+    sector: 'Music',
+    location: 'Port-au-Prince',
+    retailPrice: 75000,
+    currentPrice: 52500,
+    target: '$75,000',
+    raised: '$52,500',
+    percentage: 70,
+    tokens: 'MZS001',
+    returns: '15%',
+    daysLeft: 21,
+    image: '🎵',
+    status: 'live',
+  },
+  {
+    id: 'atis-growth',
+    name: 'Atis Rezistans',
+    business: 'Atis Rezistans',
+    sector: 'Art',
+    location: 'Savann Pist',
+    retailPrice: 40000,
+    currentPrice: 24000,
+    target: '$40,000',
+    raised: '$24,000',
+    percentage: 60,
+    tokens: 'AR001',
+    returns: '9%',
+    daysLeft: 28,
+    image: '🎨',
+    status: 'live',
+  },
+  {
+    id: 'manje-growth',
+    name: 'Manje Lakay',
+    business: 'Manje Lakay',
+    sector: 'Food',
+    location: 'Delmas, PAP',
+    retailPrice: 60000,
+    currentPrice: 42000,
+    target: '$60,000',
+    raised: '$42,000',
+    percentage: 70,
+    tokens: 'MLK001',
+    returns: '12%',
+    daysLeft: 18,
+    image: '🍳',
+    status: 'live',
+  },
+  {
+    id: 'bassins-growth',
+    name: 'Bassins Potagers',
+    business: 'Bassins Potagers',
+    sector: 'Agriculture',
+    location: 'MIDI, Haiti',
+    retailPrice: 45000,
+    currentPrice: 31500,
+    target: '$45,000',
+    raised: '$31,500',
+    percentage: 70,
+    tokens: 'BP001',
+    returns: '14%',
+    daysLeft: 12,
+    image: '🌱',
+    status: 'live',
+  },
+  {
+    id: 'eco-lodges-growth',
+    name: 'Eco Lodges HT',
+    business: 'Eco Lodges HT',
+    sector: 'Tourism',
+    location: 'Cayes, Haiti',
+    retailPrice: 200000,
+    currentPrice: 140000,
+    target: '$200,000',
+    raised: '$140,000',
+    percentage: 70,
+    tokens: 'ELH001',
+    returns: '13%',
+    daysLeft: 35,
+    image: '✈️',
+    status: 'live',
   },
 ]
 
+// Normalize campaigns to a common format
+const normalizeCampaign = (campaign: any, source: 'deals' | 'growth') => {
+  if (source === 'deals') {
+    return {
+      ...campaign,
+      type: 'deals' as const,
+      returns: campaign.discount ? `${campaign.discount}% OFF` : undefined,
+      daysLeft: campaign.delivery,
+      percentage: Math.round((campaign.sold / campaign.quantity) * 100),
+    }
+  }
+  return {
+    ...campaign,
+    type: 'growth' as const,
+    sold: undefined,
+    quantity: undefined,
+    discount: undefined,
+    delivery: campaign.daysLeft ? `${campaign.daysLeft} days left` : undefined,
+  }
+}
+
+const allCampaigns = [
+  ...dealsCampaigns.map(c => normalizeCampaign(c, 'deals')),
+  ...growthCampaigns.map(c => normalizeCampaign(c, 'growth')),
+]
+
 export default function DealsPage() {
-  const [activeSector, setActiveSector] = useState('all')
+  const [activeFilter, setActiveFilter] = useState('All')
   const [sortBy, setSortBy] = useState('popular')
   const [user, setUser] = useState<any>(null)
 
@@ -146,9 +259,25 @@ export default function DealsPage() {
     getCurrentUser().then(u => setUser(u))
   }, [])
 
-  const filteredCampaigns = activeSector === 'all'
-    ? campaigns
-    : campaigns.filter(c => c.sector === activeSector)
+  const filteredCampaigns = activeFilter === 'All'
+    ? allCampaigns
+    : allCampaigns.filter(c => c.sector === activeFilter)
+
+  const sortedCampaigns = [...filteredCampaigns].sort((a, b) => {
+    switch (sortBy) {
+      case 'newest':
+        return 0 // maintain original order for now
+      case 'ending':
+        return (a.daysLeft || '').localeCompare(b.daysLeft || '')
+      case 'price_low':
+        return (a.currentPrice || 0) - (b.currentPrice || 0)
+      case 'price_high':
+        return (b.currentPrice || 0) - (a.currentPrice || 0)
+      case 'popular':
+      default:
+        return (b.percentage || 0) - (a.percentage || 0)
+    }
+  })
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -170,7 +299,7 @@ export default function DealsPage() {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
             {[
-              { label: 'Active Campaigns', value: '6' },
+              { label: 'Active Campaigns', value: String(allCampaigns.length) },
               { label: 'Products Delivered', value: '847' },
               { label: 'Backers', value: '2.4K' },
               { label: 'Money Saved', value: '$42K' },
@@ -182,132 +311,119 @@ export default function DealsPage() {
             ))}
           </div>
 
-          {/* Sector Filters */}
-          <div className="flex gap-2 overflow-x-auto pb-4 mb-8 scrollbar-hide">
-            {sectors.map((s) => (
+          {/* Filter Tabs */}
+          <div className="flex gap-2 overflow-x-auto pb-4 mb-6 scrollbar-hide">
+            {filterTabs.map((tab) => (
               <button
-                key={s.id}
-                onClick={() => setActiveSector(s.id)}
+                key={tab.id}
+                onClick={() => setActiveFilter(tab.id)}
                 className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition ${
-                  activeSector === s.id
+                  activeFilter === tab.id
                     ? 'bg-green-600 text-white'
                     : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
                 }`}
               >
-                <span className="mr-2">{s.icon}</span>
-                {s.label}
+                <span className="mr-2">{tab.icon}</span>
+                {tab.label}
               </button>
             ))}
           </div>
 
-          {/* Campaign Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {filteredCampaigns.map((campaign) => {
-              const progress = Math.round((campaign.sold / campaign.quantity) * 100)
-              const tier = progress < 25 ? 1 : progress < 50 ? 2 : progress < 75 ? 3 : 4
-              const discount = progress < 25 ? 40 : progress < 50 ? 25 : progress < 75 ? 15 : 10
-
-              return (
-                <Link
-                  key={campaign.id}
-                  href={`/deals/${campaign.id}`}
-                  className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-green-500/30 transition-all"
-                >
-                  {/* Image Area */}
-                  <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-                    <span className="text-6xl">{campaign.image}</span>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-5">
-                    {/* Header */}
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="px-2 py-0.5 bg-green-900/30 text-green-400 text-xs rounded-full">
-                        {campaign.sector}
-                      </span>
-                      <span className="px-2 py-0.5 bg-white/10 text-gray-400 text-xs rounded-full">
-                        {campaign.location}
-                      </span>
-                    </div>
-
-                    <h3 className="text-lg font-bold text-white mb-1 group-hover:text-green-400 transition">
-                      {campaign.name}
-                    </h3>
-                    <p className="text-gray-400 text-sm mb-4">by {campaign.business}</p>
-
-                    {/* Progress */}
-                    <div className="mb-4">
-                      <div className="flex justify-between text-xs mb-1">
-                        <span className="text-gray-400">{campaign.sold}/{campaign.quantity} claimed</span>
-                        <span className="text-green-400 font-bold">{discount}% OFF</span>
-                      </div>
-                      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-green-600 to-green-400 rounded-full"
-                          style={{ width: `${progress}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Price */}
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="text-gray-500 text-sm line-through">${campaign.retailPrice}</span>
-                        <span className="text-2xl font-black text-white ml-2">${campaign.currentPrice}</span>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-gray-400 text-xs">Est. delivery</div>
-                        <div className="text-white text-sm font-medium">{campaign.delivery}</div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              )
-            })}
+          {/* Sort Options */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="text-gray-400 text-sm">
+              Showing <span className="text-white font-medium">{sortedCampaigns.length}</span> campaigns
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="text-gray-400 text-sm">Sort by:</label>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-green-500"
+              >
+                {sortOptions.map((opt) => (
+                  <option key={opt.id} value={opt.id}>{opt.label}</option>
+                ))}
+              </select>
+            </div>
           </div>
 
-          {/* Batch Investments Section */}
-          <div className="border-t border-white/10 pt-12 mb-12">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h2 className="text-2xl font-bold text-white">QuickStarter Batches</h2>
-                <p className="text-gray-400">Bundled opportunities — lower risk, diversified exposure</p>
-              </div>
-              <span className="px-4 py-2 bg-amber-900/30 border border-amber-500/30 rounded-full text-amber-400 text-sm font-bold">
-                BETA
-              </span>
-            </div>
+          {/* Campaign Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {sortedCampaigns.map((campaign) => (
+              <Link
+                key={campaign.id}
+                href={`/deals/${campaign.id}`}
+                className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-green-500/30 transition-all"
+              >
+                {/* Image Area */}
+                <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                  <span className="text-6xl">{campaign.image}</span>
+                </div>
 
-            <div className="grid md:grid-cols-2 gap-6">
-              {batchInvestments.map((batch) => (
-                <div key={batch.id} className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-16 h-16 bg-green-900/30 rounded-xl flex items-center justify-center text-3xl">
-                      {batch.icon}
+                {/* Content */}
+                <div className="p-5">
+                  {/* Header */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2 py-0.5 bg-green-900/30 text-green-400 text-xs rounded-full">
+                      {campaign.sector}
+                    </span>
+                    <span className="px-2 py-0.5 bg-white/10 text-gray-400 text-xs rounded-full">
+                      {campaign.type === 'deals' ? 'Deal' : 'Growth'}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-green-400 transition">
+                    {campaign.name}
+                  </h3>
+                  <p className="text-gray-400 text-sm mb-4">by {campaign.business}</p>
+
+                  {/* Progress */}
+                  <div className="mb-4">
+                    <div className="flex justify-between text-xs mb-1">
+                      {campaign.type === 'deals' ? (
+                        <span className="text-gray-400">{campaign.sold}/{campaign.quantity} claimed</span>
+                      ) : (
+                        <span className="text-gray-400">{campaign.raised} raised</span>
+                      )}
+                      <span className="text-green-400 font-bold">
+                        {campaign.type === 'deals' ? campaign.returns : `${campaign.percentage}%`}
+                      </span>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white mb-1">{batch.title}</h3>
-                      <p className="text-gray-400 text-sm mb-3">{batch.desc}</p>
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <span className="text-gray-500 text-sm line-through">${batch.retailPrice}</span>
-                          <span className="text-2xl font-black text-green-400 ml-2">${batch.currentPrice}</span>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-gray-400 text-xs">{batch.filled}% filled</div>
-                          <div className="w-24 h-2 bg-white/10 rounded-full overflow-hidden mt-1">
-                            <div className="h-full bg-amber-500 rounded-full" style={{ width: `${batch.filled}%` }} />
-                          </div>
-                        </div>
-                      </div>
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-green-600 to-green-400 rounded-full"
+                        style={{ width: `${campaign.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Price */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-gray-500 text-sm line-through">${campaign.retailPrice?.toLocaleString()}</span>
+                      <span className="text-2xl font-black text-white ml-2">${campaign.currentPrice?.toLocaleString()}</span>
+                    </div>
+                    <div className="text-right">
+                      {campaign.type === 'deals' ? (
+                        <>
+                          <div className="text-gray-400 text-xs">Est. delivery</div>
+                          <div className="text-white text-sm font-medium">{campaign.delivery}</div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="text-gray-400 text-xs">Returns</div>
+                          <div className="text-green-400 text-sm font-bold">{campaign.returns}</div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </Link>
+            ))}
           </div>
 
-          {/* CTA — hidden once signed in */}
+          {/* CTA */}
           {!user && (
             <div className="bg-gradient-to-br from-green-900/20 to-green-950/50 border border-green-500/30 rounded-2xl p-8 text-center">
               <h2 className="text-2xl font-bold text-white mb-4">Have a Product to Offer?</h2>
