@@ -286,6 +286,83 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Haiti Trust Layer - Diaspora Organizations & Partners */}
+      <section className="py-24 px-6 bg-black border-t border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-block px-4 py-2 bg-green-900/30 border border-green-500/30 rounded-full text-green-400 text-sm mb-4">
+              🇨🇩 Trusted by the Diaspora
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Built with <span className="text-green-500">Haitian Expertise</span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              KONBIT is advisor-backed by Haitian diaspora leaders, community organizers, and economic development professionals who understand both sides of the bridge.
+            </p>
+          </div>
+
+          {/* Partner/Organization Logos */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+            {[
+              { name: 'Haitian American Caucus', desc: 'Economic Development', initial: 'HAC' },
+              { name: 'HPA Network', desc: 'Professional Diaspora Org', initial: 'HPA' },
+              { name: 'Haitian Bridge Alliance', desc: 'Advocacy & Community', initial: 'HBA' },
+              { name: 'Konbit Sante', desc: 'Healthcare Investment', initial: 'KS' },
+            ].map((partner) => (
+              <div key={partner.name}
+                className="bg-white/[3%] border border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:border-green-500/30 transition group">
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-green-600 to-emerald-700 flex items-center justify-center text-white font-black text-lg mb-3 group-hover:scale-110 transition">
+                  {partner.initial}
+                </div>
+                <p className="font-semibold text-white text-sm">{partner.name}</p>
+                <p className="text-gray-500 text-xs mt-1">{partner.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Three Pillars of Trust */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="bg-white/[3%] border border-white/10 rounded-2xl p-8 text-center">
+              <div className="text-4xl mb-4">⚖️</div>
+              <h3 className="text-xl font-bold mb-2">Regulated Infrastructure</h3>
+              <p className="text-gray-400 text-sm">Compliant with SEC regulations, blockchain-verified smart contracts, and transparent on-chain distributions.</p>
+            </div>
+            <div className="bg-white/[3%] border border-white/10 rounded-2xl p-8 text-center">
+              <div className="text-4xl mb-4">🏛️</div>
+              <h3 className="text-xl font-bold mb-2">Haitian Advisory Council</h3>
+              <p className="text-gray-400 text-sm">Board of diaspora economists, entrepreneurs, and community leaders guiding every investment decision.</p>
+            </div>
+            <div className="bg-white/[3%] border border-white/10 rounded-2xl p-8 text-center">
+              <div className="text-4xl mb-4">📊</div>
+              <h3 className="text-xl font-bold mb-2">Verified Impact Metrics</h3>
+              <p className="text-gray-400 text-sm">Every campaign tracks jobs created, capital deployed, and community impact — not just financial returns.</p>
+            </div>
+          </div>
+
+          {/* Press / Media Mentions */}
+          <div className="text-center mb-12">
+            <p className="text-gray-500 text-sm uppercase tracking-widest mb-8">Featured In</p>
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16">
+              {['Haiti Libre', 'The Haitian Times', 'Miami Herald', 'Le Nouvelliste', 'PRI'].map((pub) => (
+                <span key={pub} className="text-gray-600 text-lg font-medium hover:text-gray-400 transition cursor-default">
+                  {pub}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Partnership CTA */}
+          <div className="bg-gradient-to-r from-green-900/40 via-green-800/20 to-green-900/40 border border-green-500/30 rounded-2xl p-8 text-center">
+            <h3 className="text-2xl font-bold mb-2">Are you a Haitian diaspora organization?</h3>
+            <p className="text-gray-400 mb-6">Partner with KONBIT to bring exclusive investment opportunities to your community.</p>
+            <a href="mailto:partnerships@konbit.io"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-green-600 hover:bg-green-500 rounded-xl text-base font-bold text-black transition">
+              Request Partnership →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* KONBIT Growth Section */}
       <section id="growth" className="py-28 px-6 bg-[#050807]">
         <div className="max-w-6xl mx-auto">
