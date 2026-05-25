@@ -204,15 +204,47 @@ export default function ReferPage() {
     <div className="min-h-screen bg-black text-white">
       <Navbar />
 
-      <main className="pt-24 pb-16 px-6">
+      {/* Hero Section with Background Image */}
+      <div className="relative min-h-[40vh] flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('/images/konbit-refer-solarpunk-horizon.png')"}} />
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-green-500/20 rounded-full blur-[80px]" />
+        
+        {/* Content */}
+        <div className="relative z-10 text-center px-6 pt-24 pb-12">
+          <div className="text-5xl mb-4">👥</div>
+          <h1 className="text-4xl font-black mb-3 text-white">Invite Friends</h1>
+          <p className="text-gray-300 text-lg max-w-xl mx-auto">
+            Share KONBIT with your network. Grow together.
+          </p>
+        </div>
+      </div>
+
+      <main className="pb-16 px-6 -mt-8 relative z-10">
         <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <div className="text-5xl mb-4">👥</div>
-            <h1 className="text-4xl font-black mb-3">Invite Friends</h1>
-            <p className="text-gray-400 text-lg max-w-xl mx-auto">
-              Share KONBIT with your network. You'll earn $25 for each friend who joins and invests.
-            </p>
+          {/* Share Link Section */}
+          <div className="bg-gradient-to-br from-green-900/30 to-green-950/50 border border-green-500/20 rounded-2xl p-8 mb-8">
+            <h2 className="text-xl font-bold text-white mb-4">Your Referral Link</h2>
+            <div className="flex gap-3 mb-6">
+              <input
+                type="text"
+                value={inviteLink}
+                readOnly
+                className="flex-1 px-4 py-3 bg-black/50 border border-white/10 rounded-xl text-green-400 font-mono text-sm"
+              />
+              <button
+                onClick={() => navigator.clipboard.writeText(inviteLink)}
+                className="px-6 py-3 bg-green-600 hover:bg-green-500 rounded-xl text-sm font-bold text-black transition"
+              >
+                Copy
+              </button>
+            </div>
+
+            <h3 className="text-sm font-medium text-gray-300 mb-3">Share via</h3>
+            <ShareButtons referralCode={referralCode} />
           </div>
 
           {/* Share Link Section */}
@@ -239,7 +271,10 @@ export default function ReferPage() {
 
           {/* Invite Form */}
           <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-8">
-            <h2 className="text-xl font-bold text-white mb-6">Send Email Invite</h2>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="text-3xl">✉️</div>
+              <h2 className="text-xl font-bold text-white">Send Email Invite</h2>
+            </div>
             <InviteForm onSuccess={() => setRefreshKey((k) => k + 1)} />
           </div>
 
