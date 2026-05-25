@@ -63,7 +63,12 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-transparent to-transparent" />
+        {/* Background Image */}
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('/images/konbit-hero-port-au-prince-2050.png')"}} />
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+        {/* Glow Effects */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-[100px]" />
         
         <div className="max-w-5xl mx-auto text-center relative z-10">
@@ -73,7 +78,7 @@ export default function Home() {
             <span className="text-white/80">Pou nou vanse.</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-2xl mx-auto">
             Invest in Haitian businesses. Learn from Haitian experts. Build the future together &#8212; all on one platform.
           </p>
 
@@ -143,7 +148,7 @@ export default function Home() {
           {/* Stats */}
           <div className="mt-16 grid grid-cols-3 gap-8 max-w-2xl mx-auto">
             <div>
-              <div className="text-4xl font-bold text-green-500">4</div>
+              <div className="text-4xl font-bold text-green-500">12</div>
               <div className="text-gray-500 text-sm">Sectors</div>
             </div>
             <div>
