@@ -52,7 +52,7 @@ export default function Navbar() {
     { href: '/translate', label: 'Translate', icon: '🌍' },
     { href: '/growth', label: 'Growth', icon: '📈' },
     { href: '/learn', label: 'Learn', icon: '🎓' },
-    { href: '/nature', label: 'Nature', icon: '🌿' },
+    { href: '/resources', label: 'Resources', icon: '📚' },
     { href: '/deals', label: 'Deals', icon: '💰' },
     { href: '/jobs', label: 'Jobs', icon: '💼' },
     { href: '/refer', label: 'Refer', icon: '👥' },
