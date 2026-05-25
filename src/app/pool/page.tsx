@@ -19,13 +19,13 @@ export default function KonbitPoolPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-block px-4 py-2 bg-green-900/30 border border-green-500/30 rounded-full text-green-400 text-sm mb-6">
-              Pool
+              Konbit Pool
             </div>
             <h1 className="text-4xl md:text-5xl font-black mb-4">
-              Dynamic Pricing for <span className="text-green-500">Better Campaigns</span>
+              Pre-Fab <span className="text-green-500">Rewards</span> Pool
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Our Konbit Pool pricing automatically adjusts token prices as funding grows — rewarding early investors and creating momentum.
+              Back projects at discounted prices and receive real products when campaigns complete. No revenue share — just great deals on quality goods.
             </p>
           </div>
 
@@ -33,7 +33,7 @@ export default function KonbitPoolPage() {
           <div className="flex justify-center gap-3 mb-12">
             {[
               { id: 'how' as PoolTab, label: 'How It Works' },
-              { id: 'calculator' as PoolTab, label: 'Pricing Calculator' },
+              { id: 'calculator' as PoolTab, label: 'Pricing Tiers' },
               { id: 'faq' as PoolTab, label: 'FAQ' },
             ].map((tab) => (
               <button
@@ -53,15 +53,50 @@ export default function KonbitPoolPage() {
           {/* How It Works */}
           {activeTab === 'how' && (
             <div className="space-y-8">
-              {/* The 4 Tiers */}
+              {/* How it works */}
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+                <h2 className="text-2xl font-bold text-white mb-6">How Pre-Fab Rewards Work</h2>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {[
+                    {
+                      step: 1,
+                      icon: '🔍',
+                      title: 'Browse Projects',
+                      desc: 'Explore pre-fab products from accredited Haitian businesses. Every product is vetted and verified.',
+                    },
+                    {
+                      step: 2,
+                      icon: '💰',
+                      title: 'Back at Discount',
+                      desc: 'Secure your reward at 20-40% below retail price. Early backers get the best deals.',
+                    },
+                    {
+                      step: 3,
+                      icon: '📦',
+                      title: 'Receive Product',
+                      desc: 'When campaign hits its goal, your product ships directly to you. No ongoing fees.',
+                    },
+                  ].map((s) => (
+                    <div key={s.step} className="p-5 bg-white/5 rounded-xl text-center">
+                      <div className="text-3xl mb-3">{s.icon}</div>
+                      <div className="text-green-400 text-sm font-bold mb-1">STEP {s.step}</div>
+                      <div className="text-white font-bold mb-2">{s.title}</div>
+                      <div className="text-gray-400 text-sm">{s.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* The 4 Pricing Tiers */}
               <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
                 <h2 className="text-2xl font-bold text-white mb-6">Four Pricing Tiers</h2>
+                <p className="text-gray-400 mb-6">Prices increase as more people back — reward early supporters</p>
                 <div className="space-y-4">
                   {[
-                    { tier: 1, name: 'Pioneer', range: 'First 25%', color: 'green', price: 'Base Price', icon: '🚀' },
-                    { tier: 2, name: 'Growth', range: '25-50%', color: 'amber', price: '+20%', icon: '📈' },
-                    { tier: 3, name: 'Acceleration', range: '50-75%', color: 'orange', price: '+40%', icon: '⚡' },
-                    { tier: 4, name: 'Final Push', range: 'Last 25%', color: 'red', price: '+60%', icon: '🔥' },
+                    { tier: 1, name: 'Pioneer', range: 'First 25%', color: 'green', discount: '40% OFF', icon: '🚀' },
+                    { tier: 2, name: 'Growth', range: '25-50%', color: 'amber', discount: '25% OFF', icon: '📈' },
+                    { tier: 3, name: 'Acceleration', range: '50-75%', color: 'orange', discount: '15% OFF', icon: '⚡' },
+                    { tier: 4, name: 'Final Push', range: 'Last 25%', color: 'red', discount: '10% OFF', icon: '🔥' },
                   ].map((t) => (
                     <div key={t.tier} className={`p-5 rounded-xl border ${
                       t.color === 'green' ? 'border-green-500/30 bg-green-900/20' :
@@ -80,7 +115,7 @@ export default function KonbitPoolPage() {
                               'text-red-400'
                             }`}>TIER {t.tier}</span>
                             <div className="text-white font-bold">{t.name}</div>
-                            <div className="text-gray-500 text-sm">{t.range} of raise</div>
+                            <div className="text-gray-500 text-sm">{t.range} of backers</div>
                           </div>
                         </div>
                         <div className={`text-2xl font-black ${
@@ -88,56 +123,99 @@ export default function KonbitPoolPage() {
                           t.color === 'amber' ? 'text-amber-400' :
                           t.color === 'orange' ? 'text-orange-400' :
                           'text-red-400'
-                        }`}>{t.price}</div>
+                        }`}>{t.discount}</div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Stable Process */}
-              <div className="bg-blue-900/20 border border-blue-500/30 rounded-2xl p-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-3xl">🛡️</span>
-                  <h2 className="text-2xl font-bold text-white">Stable Process</h2>
-                </div>
+              {/* Product Examples */}
+              <div className="bg-gradient-to-br from-green-900/20 to-green-950/50 border border-green-500/30 rounded-2xl p-8">
+                <h2 className="text-2xl font-bold text-white mb-6">What You Can Back</h2>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-black/50 rounded-xl">
-                    <div className="text-green-400 font-bold mb-2">📊 Konbit Pool</div>
-                    <div className="text-gray-400 text-sm">Dynamic 4-tier pricing. Creates urgency and higher final valuations.</div>
-                  </div>
-                  <div className="p-4 bg-black/50 rounded-xl">
-                    <div className="text-blue-400 font-bold mb-2">🏁 Fixed Price</div>
-                    <div className="text-gray-400 text-sm">Same price throughout. Best for established businesses.</div>
-                  </div>
+                  {[
+                    { name: 'Pre-fab Coffee Farm Share', biz: 'Haitian Brew Co.', retail: '$120', backing: '$72', savings: '40%' },
+                    { name: 'Artisan Cacao Box', biz: 'Ixora Collective', retail: '$85', backing: '$51', savings: '40%' },
+                    { name: 'Handwoven Textile Set', biz: 'Se文本 Artisans', retail: '$200', backing: '$130', savings: '35%' },
+                    { name: 'Pre-fab Housing Materials', biz: 'Kay Lakay Const.', retail: '$5000', backing: '$3500', savings: '30%' },
+                  ].map((p, i) => (
+                    <div key={i} className="p-4 bg-black/50 rounded-xl">
+                      <div className="text-white font-bold mb-1">{p.name}</div>
+                      <div className="text-gray-500 text-sm mb-3">by {p.biz}</div>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-gray-400 text-xs line-through">Retail ${p.retail}</div>
+                          <div className="text-green-400 font-bold text-lg">${p.backing}</div>
+                        </div>
+                        <div className="text-green-400 text-sm font-bold">Save {p.savings}</div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
               {/* CTA */}
               <div className="text-center">
                 <Link href="/dashboard/onboard" className="inline-block px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 rounded-xl font-bold text-lg text-black transition-all">
-                  List Your Business →
+                  List Your Product →
                 </Link>
               </div>
             </div>
           )}
 
-          {/* Calculator */}
+          {/* Pricing Tiers */}
           {activeTab === 'calculator' && (
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-white mb-6">Estimate Your Campaign</h2>
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm text-gray-300 mb-2">Funding Goal (USD)</label>
-                  <input type="number" placeholder="50,000" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50" />
-                </div>
-                <div>
-                  <label className="block text-sm text-gray-300 mb-2">Token Base Price (USD)</label>
-                  <input type="number" placeholder="10" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50" />
+            <div className="space-y-8">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+                <h2 className="text-2xl font-bold text-white mb-6">Product Pricing Calculator</h2>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm text-gray-300 mb-2">Product Retail Price (USD)</label>
+                    <input type="number" placeholder="100" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50" />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-300 mb-2">Production Cost (USD)</label>
+                    <input type="number" placeholder="45" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50" />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-300 mb-2">Minimum Backers Needed</label>
+                    <input type="number" placeholder="50" className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50" />
+                  </div>
                 </div>
               </div>
-              <div className="mt-6 p-4 bg-green-900/20 border border-green-500/30 rounded-xl text-center">
-                <p className="text-green-400 font-medium">Enter values above to see tier pricing breakdown</p>
+
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+                <h3 className="text-white font-bold mb-4">Your Tier Pricing</h3>
+                <div className="space-y-3">
+                  {[
+                    { tier: 'Pioneer (40% off)', price: '$60' },
+                    { tier: 'Growth (25% off)', price: '$75' },
+                    { tier: 'Acceleration (15% off)', price: '$85' },
+                    { tier: 'Final Push (10% off)', price: '$90' },
+                  ].map((t, i) => (
+                    <div key={i} className="flex justify-between items-center p-3 bg-white/5 rounded-lg">
+                      <span className="text-gray-300">{t.tier}</span>
+                      <span className="text-green-400 font-bold">{t.price}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Avg Price</span>
+                    <span className="text-white font-bold">$78.75</span>
+                  </div>
+                  <div className="flex justify-between mt-2">
+                    <span className="text-gray-400">Margin (avg)</span>
+                    <span className="text-green-400 font-bold">42%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <Link href="/dashboard/onboard" className="inline-block px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 rounded-xl font-bold text-lg text-black transition-all">
+                  Create Your Campaign →
+                </Link>
               </div>
             </div>
           )}
@@ -146,9 +224,13 @@ export default function KonbitPoolPage() {
           {activeTab === 'faq' && (
             <div className="space-y-4">
               {[
-                { q: 'Why does price increase as more people invest?', a: 'It creates urgency and rewards early supporters. When investors see the price rising, they are more likely to commit sooner.' },
-                { q: 'What if my campaign does not reach 100%?', a: 'You keep whatever you raise. With dynamic pricing, campaigns tend to perform better because the structure motivates earlier commitment.' },
-                { q: 'How are tiers calculated?', a: 'Based on percentage of funding goal reached. Tier 1 = 0-25%, Tier 2 = 25-50%, Tier 3 = 50-75%, Tier 4 = 75-100%.' },
+                { q: 'How is this different from revenue share?', a: 'Instead of owning a piece of the business and receiving ongoing revenue, you simply buy products at a discount. When the campaign succeeds, you receive your product. No ongoing financial relationship.' },
+                { q: 'What happens if a campaign does not reach its goal?', a: 'You are not charged. Campaigns must hit 100% of their target to unlock. If they fall short, all backers are automatically refunded — no credit card charges.' },
+                { q: 'When do I get charged?', a: 'Your card is authorized when you back, but only charged when the campaign succeeds. If it fails, the authorization is released.' },
+                { q: 'How do I know the products are quality?', a: 'All products come from accredited Haitian businesses. We verify business registration, quality standards, and shipping capability before allowing campaigns.' },
+                { q: 'What if the product never ships?', a: 'We hold funds in escrow until delivery confirmation. If a business fails to deliver, backers get full refunds. We also have a dispute resolution team.' },
+                { q: 'Can I back multiple tiers?', a: 'Yes. You can back at multiple price points if you want to secure more products or give gifts to friends and family.' },
+                { q: 'Is there a maximum number of backers?', a: 'Yes. Each product has a maximum capacity based on the businesses production capability. Once that is reached, the campaign closes.' },
               ].map((faq, i) => (
                 <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-6">
                   <h3 className="text-white font-bold mb-2">{faq.q}</h3>

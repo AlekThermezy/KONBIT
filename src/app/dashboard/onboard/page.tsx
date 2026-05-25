@@ -43,13 +43,16 @@ export default function BusinessOnboardPage() {
   const [fundingStage, setFundingStage] = useState('')
   const [website, setWebsite] = useState('')
 
-  // Step 2: Financials
-  const [fundingGoal, setFundingGoal] = useState('')
-  const [minInvestment, setMinInvestment] = useState('25')
-  const [targetReturns, setTargetReturns] = useState('')
-  const [revenueShare, setRevenueShare] = useState('')
+  // Step 2: Product Details
+  const [productName, setProductName] = useState('')
+  const [productDescription, setProductDescription] = useState('')
+  const [retailPrice, setRetailPrice] = useState('')
+  const [productionCost, setProductionCost] = useState('')
+  const [quantityAvailable, setQuantityAvailable] = useState('')
+  const [shippingEstimate, setShippingEstimate] = useState('')
+  const [deliveryTimeline, setDeliveryTimeline] = useState('')
   const [useOfFunds, setUseOfFunds] = useState<string[]>([])
-  const [monthlyRevenue, setMonthlyRevenue] = useState('')
+  const [accreditationDoc, setAccreditationDoc] = useState('')
 
   // Step 3: Team
   const [founderName, setFounderName] = useState('')
@@ -235,119 +238,139 @@ export default function BusinessOnboardPage() {
               </div>
             )}
 
-            {/* Step 2: Financials */}
+            {/* Step 2: Product Details */}
             {currentStep === 'financials' && (
               <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-white">Financial Details</h2>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm text-gray-300 mb-2">Funding Goal (USD) *</label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
-                      <input
-                        type="number"
-                        value={fundingGoal}
-                        onChange={(e) => setFundingGoal(e.target.value)}
-                        placeholder="50,000"
-                        className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-300 mb-2">Minimum Investment (USD)</label>
-                    <div className="relative">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
-                      <input
-                        type="number"
-                        value={minInvestment}
-                        onChange={(e) => setMinInvestment(e.target.value)}
-                        placeholder="25"
-                        className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm text-gray-300 mb-2">Target Returns (%)</label>
-                    <input
-                      type="number"
-                      value={targetReturns}
-                      onChange={(e) => setTargetReturns(e.target.value)}
-                      placeholder="12"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-300 mb-2">Revenue Share (%)</label>
-                    <input
-                      type="number"
-                      value={revenueShare}
-                      onChange={(e) => setRevenueShare(e.target.value)}
-                      placeholder="8"
-                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition"
-                    />
-                  </div>
-                </div>
+                <h2 className="text-2xl font-bold text-white">Product Details</h2>
 
                 <div>
-                  <label className="block text-sm text-gray-300 mb-2">Monthly Revenue (USD) — Approximate</label>
+                  <label className="block text-sm text-gray-300 mb-2">Product Name *</label>
                   <input
-                    type="number"
-                    value={monthlyRevenue}
-                    onChange={(e) => setMonthlyRevenue(e.target.value)}
-                    placeholder="10,000"
+                    type="text"
+                    value={productName}
+                    onChange={(e) => setProductName(e.target.value)}
+                    placeholder="e.g. Artisan Coffee Bundle"
                     className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm text-gray-300 mb-2">Use of Funds *</label>
-                  <p className="text-gray-500 text-sm mb-3">Select all that apply</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    {useOfFundsOptions.map(option => (
-                      <button
-                        key={option}
-                        onClick={() => toggleUseOfFunds(option)}
-                        className={`p-3 rounded-xl border text-left text-sm transition ${
-                          useOfFunds.includes(option)
-                            ? 'border-green-500 bg-green-900/20 text-green-400'
-                            : 'border-white/10 bg-white/5 text-gray-300 hover:border-white/20'
-                        }`}
-                      >
-                        {option}
-                      </button>
-                    ))}
+                  <label className="block text-sm text-gray-300 mb-2">Product Description *</label>
+                  <textarea
+                    value={productDescription}
+                    onChange={(e) => setProductDescription(e.target.value)}
+                    placeholder="Describe your product — what it is, what makes it special, what the backer will receive..."
+                    rows={3}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition resize-none"
+                  />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-gray-300 mb-2">Retail Price (USD) *</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                      <input
+                        type="number"
+                        value={retailPrice}
+                        onChange={(e) => setRetailPrice(e.target.value)}
+                        placeholder="100"
+                        className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-300 mb-2">Production Cost (USD)</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                      <input
+                        type="number"
+                        value={productionCost}
+                        onChange={(e) => setProductionCost(e.target.value)}
+                        placeholder="45"
+                        className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                {/* Pool Pricing Preview */}
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-gray-300 mb-2">Quantity Available *</label>
+                    <input
+                      type="number"
+                      value={quantityAvailable}
+                      onChange={(e) => setQuantityAvailable(e.target.value)}
+                      placeholder="100"
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-300 mb-2">Shipping Estimate (USD)</label>
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                      <input
+                        type="number"
+                        value={shippingEstimate}
+                        onChange={(e) => setShippingEstimate(e.target.value)}
+                        placeholder="15"
+                        className="w-full pl-8 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-green-500/50 transition"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm text-gray-300 mb-2">Estimated Delivery Timeline</label>
+                  <select
+                    value={deliveryTimeline}
+                    onChange={(e) => setDeliveryTimeline(e.target.value)}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-green-500/50 transition"
+                  >
+                    <option value="">Select timeline</option>
+                    <option value="2-4 weeks">2-4 weeks</option>
+                    <option value="1-2 months">1-2 months</option>
+                    <option value="2-3 months">2-3 months</option>
+                    <option value="3-6 months">3-6 months</option>
+                    <option value="6+ months">6+ months</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm text-gray-300 mb-2">Accreditation Proof *</label>
+                  <p className="text-gray-500 text-sm mb-3">Upload business registration or quality certification</p>
+                  <div className="border-2 border-dashed border-white/20 rounded-xl p-6 text-center hover:border-green-500/30 transition cursor-pointer">
+                    <div className="text-2xl mb-2">📄</div>
+                    <div className="text-white font-medium mb-1">Upload Document</div>
+                    <div className="text-gray-500 text-sm">Business registration, tax ID, quality cert, or heritage designation</div>
+                  </div>
+                </div>
+
+                {/* Pre-Fab Pool Pricing Preview */}
                 <div className="p-6 bg-gradient-to-br from-green-900/20 to-green-950/50 border border-green-500/30 rounded-xl">
                   <div className="flex items-center gap-2 text-green-400 mb-4">
-                    <span>📊</span>
-                    <span className="font-bold">Konbit Pool Pricing</span>
+                    <span>💧</span>
+                    <span className="font-bold">Konbit Pre-Fab Pool Pricing</span>
                   </div>
                   <p className="text-gray-400 text-sm mb-4">
-                    Your tokens will be priced in tiers — early investors get lower prices, creating momentum for your campaign.
+                    Backers get discounts based on when they join. Early backers get the best deals — creating momentum for your campaign.
                   </p>
                   <div className="bg-black/50 rounded-lg p-4 space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Tier 1 (First 25%)</span>
-                      <span className="text-green-400 font-mono">Base Price</span>
+                      <span className="text-gray-400">Pioneer (First 25%)</span>
+                      <span className="text-green-400 font-mono">40% OFF</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Tier 2 (25-50%)</span>
-                      <span className="text-amber-400 font-mono">+20%</span>
+                      <span className="text-gray-400">Growth (25-50%)</span>
+                      <span className="text-amber-400 font-mono">25% OFF</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Tier 3 (50-75%)</span>
-                      <span className="text-orange-400 font-mono">+40%</span>
+                      <span className="text-gray-400">Acceleration (50-75%)</span>
+                      <span className="text-orange-400 font-mono">15% OFF</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Tier 4 (Final 25%)</span>
-                      <span className="text-red-400 font-mono">+60%</span>
+                      <span className="text-gray-400">Final Push (Last 25%)</span>
+                      <span className="text-red-400 font-mono">10% OFF</span>
                     </div>
                   </div>
                 </div>
@@ -440,31 +463,31 @@ export default function BusinessOnboardPage() {
                 <h2 className="text-2xl font-bold text-white">Review & Submit</h2>
 
                 <div className="bg-white/5 border border-white/10 rounded-xl p-6 space-y-4">
-                  <h3 className="text-lg font-bold text-white">Business Summary</h3>
+                  <h3 className="text-lg font-bold text-white">Product Campaign Summary</h3>
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div>
-                      <span className="text-gray-400">Name</span>
-                      <div className="text-white font-medium">{businessName || '—'}</div>
+                      <span className="text-gray-400">Product</span>
+                      <div className="text-white font-medium">{productName || '—'}</div>
                     </div>
                     <div>
-                      <span className="text-gray-400">Sector</span>
-                      <div className="text-white font-medium">{businessSector}</div>
+                      <span className="text-gray-400">Retail Price</span>
+                      <div className="text-green-400 font-bold">${parseInt(retailPrice || '0').toLocaleString()}</div>
                     </div>
                     <div>
-                      <span className="text-gray-400">Location</span>
-                      <div className="text-white font-medium">{businessLocation || '—'}</div>
+                      <span className="text-gray-400">Quantity</span>
+                      <div className="text-white font-medium">{quantityAvailable || '—'}</div>
                     </div>
                     <div>
-                      <span className="text-gray-400">Funding Goal</span>
-                      <div className="text-green-400 font-bold">${parseInt(fundingGoal || '0').toLocaleString()}</div>
+                      <span className="text-gray-400">Delivery</span>
+                      <div className="text-white font-medium">{deliveryTimeline || '—'}</div>
                     </div>
                     <div>
-                      <span className="text-gray-400">Revenue Share</span>
-                      <div className="text-white font-medium">{revenueShare || '—'}%</div>
+                      <span className="text-gray-400">Shipping</span>
+                      <div className="text-white font-medium">${shippingEstimate || '0'}</div>
                     </div>
                     <div>
-                      <span className="text-gray-400">Min Investment</span>
-                      <div className="text-white font-medium">${minInvestment}</div>
+                      <span className="text-gray-400">Production Cost</span>
+                      <div className="text-white font-medium">${productionCost || '—'}</div>
                     </div>
                   </div>
                 </div>
