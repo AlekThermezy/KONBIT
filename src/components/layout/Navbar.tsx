@@ -49,6 +49,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/feed', label: 'Feed', icon: '🔥' },
+    { href: '/translate', label: 'Translate', icon: '🌍' },
     { href: '/growth', label: 'Growth', icon: '📈' },
     { href: '/learn', label: 'Learn', icon: '🎓' },
     { href: '/nature', label: 'Nature', icon: '🌿' },
