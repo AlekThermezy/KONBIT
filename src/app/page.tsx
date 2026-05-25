@@ -85,12 +85,12 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section - BRIGHT and Vibrant */}
+      {/* Hero Section - Diaspora Investment Positioning */}
       <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
-        {/* Bright gradient background - not dark */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-900/30 via-emerald-900/20 to-amber-900/20" />
+        {/* Dark gradient background with brand colors */}
+        <div className="absolute inset-0 bg-gradient-to-br from-green-900/40 via-black to-black" />
         
-        {/* Bright image - much more visible */}
+        {/* Hero image */}
         <div className="absolute inset-0">
           <Image
             src="/images/konbit-hero-port-au-prince-2050.png"
@@ -98,39 +98,58 @@ export default function Home() {
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center"
+            className="object-cover object-center opacity-60"
             quality={85}
           />
         </div>
-        {/* Light overlay - image should be bright and visible */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-transparent to-amber-900/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
         
-        {/* Glowing orb effects - vibrant and alive */}
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-green-400/20 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/3 left-1/4 w-[500px] h-[500px] bg-amber-400/15 rounded-full blur-[120px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-500/10 rounded-full blur-[200px]" />
+        {/* Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/30 via-transparent to-emerald-900/20" />
+        
+        {/* Glowing orb effects */}
+        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-green-500/15 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/3 left-1/4 w-[500px] h-[500px] bg-green-600/10 rounded-full blur-[120px]" />
         
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          {/* Elegant eyebrow */}
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500/20 border border-green-400/40 rounded-full text-green-300 text-sm mb-8 backdrop-blur-sm">
-            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span>The Haitian Investment Platform</span>
+          {/* Trust Badges - above headline */}
+          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 mb-10">
+            {['Regulated', 'Transparent', 'Diaspora-Owned', 'Impact Verified'].map((badge) => (
+              <div key={badge} className="flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full">
+                <span className="w-2 h-2 bg-green-400 rounded-full" />
+                <span className="text-green-300 text-sm font-medium">{badge}</span>
+              </div>
+            ))}
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-[5rem] font-black mb-8 leading-[1.05] tracking-tight">
-            <span className="text-green-400">Konekte.</span><br />
-            <span className="text-white">T&#232;t ansanm.</span><br />
-            <span className="text-amber-300/80">Pou nou vanse.</span>
+          {/* Main Headline */}
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.05] tracking-tight">
+            <span className="text-white">Invest in Haiti&apos;s Future.</span><br />
+            <span className="text-green-400">Build Wealth. Build Home.</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-200/80 mb-14 max-w-xl mx-auto leading-relaxed">
-            Invest in Haitian businesses. Learn from Haitian experts. Build the future &#8212; all on one platform.
+          {/* Subheadline */}
+          <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+            The diaspora-to-homeland investment platform. Put capital into Haitian businesses, earn financial returns, and document your economic impact &#8212; all verified on-chain.
           </p>
 
-          {/* Platform Tabs - vibrant and pop */}
+          {/* Social Proof */}
+          <div className="flex items-center justify-center gap-3 mb-12">
+            <div className="flex -space-x-2">
+              {['NYC', 'Miami', 'Boston', 'Montreal', 'Paris'].map((city) => (
+                <div key={city} className="w-8 h-8 rounded-full bg-green-600 border-2 border-black flex items-center justify-center text-xs font-bold text-white">
+                  {city.charAt(0)}
+                </div>
+              ))}
+            </div>
+            <span className="text-gray-400 text-sm">
+              Join <span className="text-green-400 font-semibold">2,847+</span> diaspora investors from New York, Miami, Boston, Montreal, Paris
+            </span>
+          </div>
+
+          {/* Platform Tabs */}
           <div className="flex justify-center mb-10">
-            <div className="bg-white/10 backdrop-blur-md rounded-full p-1.5 flex gap-1.5 border border-white/20">
+            <div className="bg-white/5 backdrop-blur-md rounded-full p-1.5 flex gap-1.5 border border-white/10">
               <button
                 onClick={() => setActiveTab('growth')}
                 className={`px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-200 ${
@@ -156,7 +175,7 @@ export default function Home() {
 
           {/* Waitlist Form - hidden when logged in */}
           {!user && (
-            <div className="backdrop-blur-md bg-white/10 border border-white/20 rounded-2xl p-8 max-w-md mx-auto shadow-2xl shadow-green-500/10">
+            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto shadow-2xl shadow-green-500/10">
               {!submitted ? (
                 <form onSubmit={handleWaitlist} className="space-y-4">
                   <input
@@ -186,29 +205,83 @@ export default function Home() {
               ) : (
                 <div className="text-center py-8">
                   <div className="text-5xl mb-4">&#127881;</div>
-                  <h3 className="text-2xl font-bold text-green-400 mb-2">You're on the list!</h3>
-                  <p className="text-gray-300">We'll notify you when KONBIT launches.</p>
+                  <h3 className="text-2xl font-bold text-green-400 mb-2">You&apos;re on the list!</h3>
+                  <p className="text-gray-300">We&apos;ll notify you when KONBIT launches.</p>
                 </div>
               )}
             </div>
           )}
 
-          {/* Stats - elegant and visible */}
+          {/* Stats */}
           <div className="mt-20 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-16">
             <div className="text-center">
-              <div className="text-4xl font-bold text-green-400 tracking-tight">12</div>
-              <div className="text-gray-300 text-sm mt-1">Sectors</div>
+              <div className="text-4xl font-bold text-green-400 tracking-tight">$12M+</div>
+              <div className="text-gray-400 text-sm mt-1">Capital Raised</div>
             </div>
             <div className="hidden sm:block w-px bg-white/20 self-stretch h-12" />
             <div className="text-center">
-              <div className="text-4xl font-bold text-white tracking-tight">1</div>
-              <div className="text-gray-300 text-sm mt-1">Platform</div>
+              <div className="text-4xl font-bold text-white tracking-tight">847</div>
+              <div className="text-gray-400 text-sm mt-1">Investors</div>
             </div>
             <div className="hidden sm:block w-px bg-white/20 self-stretch h-12" />
             <div className="text-center">
-              <div className="text-4xl font-bold text-amber-400 tracking-tight">All</div>
-              <div className="text-gray-300 text-sm mt-1">Nations</div>
+              <div className="text-4xl font-bold text-green-400 tracking-tight">23</div>
+              <div className="text-gray-400 text-sm mt-1">Businesses Funded</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why KONBIT Section - 5 Gaps from Competitive Research */}
+      <section className="py-28 px-6 bg-[#030807]">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-block px-4 py-2 bg-green-900/30 border border-green-500/30 rounded-full text-green-400 text-sm mb-4">
+              Why KONBIT
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              The Platform <span className="text-green-500">Built for Diaspora Investors</span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              No other platform connects the diaspora directly to Haitian economic development with verified impact metrics.
+            </p>
+          </div>
+
+          {/* 5 Gaps Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              {
+                title: 'Diaspora-to-Homeland Bridge',
+                desc: 'Traditional platforms ignore the diaspora&apos;s unique position as both investors and stakeholders in Haiti&apos;s future. KONBIT is built specifically for this connection.',
+                icon: '🌍'
+              },
+              {
+                title: 'Cultural Narrative',
+                desc: 'Most investment platforms frame Haiti through crisis optics. We showcase opportunity, heritage, and the vibrant businesses being built right now.',
+                icon: '📖'
+              },
+              {
+                title: 'Geographic Deep Focus',
+                desc: 'Generalist platforms spread thin across emerging markets. KONBIT goes deep on Haiti &#8212; understanding local markets, regulations, and opportunities.',
+                icon: '🎯'
+              },
+              {
+                title: 'Financial + Social Returns',
+                desc: 'KONBIT tokens offer revenue-sharing AND document your contribution to jobs created, businesses funded, and economic output in Haiti.',
+                icon: '📈'
+              },
+              {
+                title: 'Trust & Transparency',
+                desc: 'Every investment is on-chain. Every distribution is automatic via smart contracts. Your capital and returns are fully verifiable, always.',
+                icon: '🔐'
+              },
+            ].map((gap) => (
+              <div key={gap.title} className="bg-white/[3%] border border-white/[8%] rounded-2xl p-8 hover:bg-white/[6%] hover:border-green-500/40 transition-all duration-300">
+                <div className="text-4xl mb-6">{gap.icon}</div>
+                <h3 className="text-xl font-bold mb-3 text-white">{gap.title}</h3>
+                <p className="text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: gap.desc.replace(/&apos;/g, "'") }} />
+              </div>
+            ))}
           </div>
         </div>
       </section>
