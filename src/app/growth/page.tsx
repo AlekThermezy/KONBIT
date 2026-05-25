@@ -44,51 +44,18 @@ const sectors = [
   }
 ]
 
+const campaignIds: Record<string, string> = {
+  'Kay Ix': 'kay-ix',
+  'Mzero Studios': 'mzero',
+  'Atis Rezistans': 'atis',
+  'Manje Lakay': 'manje',
+}
+
 const campaigns = [
-  {
-    name: 'Kay Ix是一个人',
-    sector: 'Real Estate',
-    location: 'Jacmel, Haiti',
-    target: '$125,000',
-    raised: '$87,500',
-    percentage: 70,
-    tokens: 'KAY001',
-    returns: '11%',
-    daysLeft: 14
-  },
-  {
-    name: 'Mzero Studios',
-    sector: 'Music',
-    location: 'Port-au-Prince',
-    target: '$75,000',
-    raised: '$52,500',
-    percentage: 70,
-    tokens: 'MZS001',
-    returns: '15%',
-    daysLeft: 21
-  },
-  {
-    name: 'Atis Rezistans',
-    sector: 'Art',
-    location: 'Savann Pist',
-    target: '$40,000',
-    raised: '$24,000',
-    percentage: 60,
-    tokens: 'AR001',
-    returns: '9%',
-    daysLeft: 28
-  },
-  {
-    name: 'Manje Lakay',
-    sector: 'Food',
-    location: 'Delmas, PAP',
-    target: '$60,000',
-    raised: '$42,000',
-    percentage: 70,
-    tokens: 'MLK001',
-    returns: '12%',
-    daysLeft: 18
-  }
+  { name: 'Kay Ix', sector: 'Real Estate', location: 'Jacmel, Haiti', target: '$125,000', raised: '$87,500', percentage: 70, tokens: 'KAY001', returns: '11%', daysLeft: 14 },
+  { name: 'Mzero Studios', sector: 'Music', location: 'Port-au-Prince', target: '$75,000', raised: '$52,500', percentage: 70, tokens: 'MZS001', returns: '15%', daysLeft: 21 },
+  { name: 'Atis Rezistans', sector: 'Art', location: 'Savann Pist', target: '$40,000', raised: '$24,000', percentage: 60, tokens: 'AR001', returns: '9%', daysLeft: 28 },
+  { name: 'Manje Lakay', sector: 'Food', location: 'Delmas, PAP', target: '$60,000', raised: '$42,000', percentage: 70, tokens: 'MLK001', returns: '12%', daysLeft: 18 },
 ]
 
 const steps = [
@@ -335,7 +302,7 @@ export default function GrowthPage() {
                 </div>
 
                 <Link
-                  href={`/growth/campaign/${campaign.tokens.toLowerCase()}`}
+                  href={`/growth/${campaignIds[campaign.name]}`}
                   className="block w-full py-3 bg-green-600 hover:bg-green-500 rounded-xl font-semibold text-center transition"
                 >
                   View Campaign

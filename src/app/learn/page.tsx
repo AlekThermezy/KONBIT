@@ -155,7 +155,7 @@ export default function LearnPage() {
           {/* CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/waitlist"
+              href="/learn"
               className="px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 rounded-xl font-bold text-lg text-white transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
             >
               Start Learning Free

@@ -128,7 +128,7 @@ const profitReturns = [
 ]
 
 const topPerformers = [
-  { name: 'Kay Ix是一个人', returns: '+18.4%', tokens: 'KAY001', sector: 'Real Estate' },
+  { name: 'Kay Ix', returns: '+18.4%', tokens: 'KAY001', sector: 'Real Estate' },
   { name: 'Mzero Studios', returns: '+22.1%', tokens: 'MZS001', sector: 'Music' },
   { name: 'Atis Rezistans', returns: '+14.7%', tokens: 'AR001', sector: 'Art' },
   { name: 'Manje Lakay', returns: '+16.2%', tokens: 'MLK001', sector: 'Food' },
