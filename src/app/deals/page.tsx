@@ -1,508 +1,318 @@
 'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 
-import { useState } from 'react'
+const sectors = [
+  { id: 'all', label: 'All', icon: '🌐' },
+  { id: 'Real Estate', label: 'Real Estate', icon: '🏠' },
+  { id: 'Agriculture', label: 'Agriculture', icon: '🌱' },
+  { id: 'Music', label: 'Music', icon: '🎵' },
+  { id: 'Film & Media', label: 'Film', icon: '🎬' },
+  { id: 'Art', label: 'Art', icon: '🎨' },
+  { id: 'Food', label: 'Food', icon: '🍳' },
+  { id: 'Reforestation', label: 'Nature', icon: '🌳' },
+  { id: 'Tech', label: 'Tech', icon: '💻' },
+  { id: 'Tourism', label: 'Tourism', icon: '✈️' },
+]
 
-const quickDeals = [
+const campaigns = [
   {
-    id: 'QD001',
-    name: 'Prime Jacmel Lots',
-    type: 'Real Estate',
+    id: 'kay-ix-prefab',
+    name: 'Pre-fab Housing Kit (2-room)',
+    business: 'Kay Ix Construction',
+    sector: 'Real Estate',
     location: 'Jacmel, Haiti',
-    price: 5000,
-    returns: '14%',
-    term: '12 mo',
-    filled: 78,
-    icon: '🏠'
+    retailPrice: 5000,
+    discount: 40,
+    currentPrice: 3000,
+    quantity: 50,
+    sold: 18,
+    delivery: '3-4 months',
+    image: '🏠',
+    status: 'live',
   },
   {
-    id: 'QD002',
-    name: 'Studio Recording Package',
-    type: 'Music',
-    location: 'Port-au-Prince',
-    price: 2500,
-    returns: '18%',
-    term: '6 mo',
-    filled: 92,
-    icon: '🎵'
+    id: 'coffee-batch',
+    name: 'Haitian Premium Coffee Bundle',
+    business: 'Haitian Brew Co.',
+    sector: 'Agriculture',
+    location: 'Thiotte, Haiti',
+    retailPrice: 120,
+    discount: 40,
+    currentPrice: 72,
+    quantity: 200,
+    sold: 85,
+    delivery: '2-3 months',
+    image: '☕',
+    status: 'live',
   },
   {
-    id: 'QD003',
-    name: 'Artisan Collective Batch',
-    type: 'Art',
+    id: 'artisan-textiles',
+    name: 'Handwoven Textile Collection',
+    business: 'SeText Artisans',
+    sector: 'Art',
     location: 'Savann Pist',
-    price: 1000,
-    returns: '12%',
-    term: '9 mo',
-    filled: 45,
-    icon: '🎨'
+    retailPrice: 200,
+    discount: 35,
+    currentPrice: 130,
+    quantity: 75,
+    sold: 42,
+    delivery: '1-2 months',
+    image: '🧵',
+    status: 'live',
   },
   {
-    id: 'QD004',
-    name: 'Mango Export Series',
-    type: 'Food',
-    location: 'Léogâne',
-    price: 3500,
-    returns: '16%',
-    term: '8 mo',
-    filled: 66,
-    icon: '🍳'
+    id: 'cacao-box',
+    name: 'Artisan Cacao Gift Box',
+    business: 'Ixora Collective',
+    sector: 'Food',
+    location: 'Damascin, Haiti',
+    retailPrice: 85,
+    discount: 40,
+    currentPrice: 51,
+    quantity: 150,
+    sold: 67,
+    delivery: '2-4 weeks',
+    image: '🍫',
+    status: 'live',
   },
   {
-    id: 'QD005',
-    name: 'Boutique Hotel Rooms',
-    type: 'Real Estate',
-    location: 'Cap-Haïtien',
-    price: 7500,
-    returns: '11%',
-    term: '18 mo',
-    filled: 34,
-    icon: '🏨'
+    id: 'film-doc',
+    name: 'Haiti Rising Documentary',
+    business: 'Mzero Studios',
+    sector: 'Film & Media',
+    location: 'Port-au-Prince',
+    retailPrice: 75,
+    discount: 25,
+    currentPrice: 56,
+    quantity: 500,
+    sold: 180,
+    delivery: 'Digital delivery',
+    image: '🎬',
+    status: 'live',
   },
   {
-    id: 'QD006',
-    name: 'Fashion Line Expansion',
-    type: 'Art',
-    location: 'Delmas, PAP',
-    price: 4000,
-    returns: '15%',
-    term: '10 mo',
-    filled: 55,
-    icon: '👗'
-  }
+    id: 'reforestation',
+    name: 'Reforest Haiti Bundle (10 trees)',
+    business: 'Green Haiti Initiative',
+    sector: 'Reforestation',
+    location: 'MIDI, Haiti',
+    retailPrice: 150,
+    discount: 30,
+    currentPrice: 105,
+    quantity: 300,
+    sold: 95,
+    delivery: 'Certificate delivery',
+    image: '🌳',
+    status: 'live',
+  },
 ]
 
 const batchInvestments = [
   {
-    title: 'Real Estate Pool A',
-    desc: 'Diversified across 5 vacation rental properties',
-    minimum: 500,
-    apy: '10-14%',
-    investors: 234,
-    volume: '$1.2M',
-    icon: '🏠'
+    id: 'agri-batch-001',
+    title: 'Agriculture Batch A',
+    desc: 'Coffee, cacao, and mango projects across 3 farms',
+    retailPrice: 5000,
+    discount: 30,
+    currentPrice: 3500,
+    filled: 45,
+    icon: '🌱',
   },
   {
-    title: 'Music Rights Bundle',
-    desc: 'Streaming royalties from 12 Haitian artists',
-    minimum: 250,
-    apy: '15-22%',
-    investors: 412,
-    volume: '$890K',
-    icon: '🎵'
+    id: 'art-batch-001',
+    title: 'Artisan Collective Batch',
+    desc: 'Textiles, paintings, and crafts from 12 Haitian artists',
+    retailPrice: 2000,
+    discount: 35,
+    currentPrice: 1300,
+    filled: 62,
+    icon: '🎨',
   },
-  {
-    title: 'Art Gallery Network',
-    desc: 'Collective gallery exhibitions and sales',
-    minimum: 100,
-    apy: '8-16%',
-    investors: 189,
-    volume: '$420K',
-    icon: '🎨'
-  },
-  {
-    title: 'Agri-Food Export',
-    desc: 'Mango, coffee, and cocoa export contracts',
-    minimum: 750,
-    apy: '12-18%',
-    investors: 156,
-    volume: '$1.5M',
-    icon: '🍳'
-  }
-]
-
-const profitReturns = [
-  { month: 'Jan', return: 2.4 },
-  { month: 'Feb', return: 1.8 },
-  { month: 'Mar', return: 3.2 },
-  { month: 'Apr', return: 2.9 },
-  { month: 'May', return: 4.1 },
-  { month: 'Jun', return: 3.7 },
-  { month: 'Jul', return: 3.5 },
-  { month: 'Aug', return: 2.1 },
-  { month: 'Sep', return: 4.8 },
-  { month: 'Oct', return: 3.9 },
-  { month: 'Nov', return: 2.7 },
-  { month: 'Dec', return: 5.2 }
-]
-
-const topPerformers = [
-  { name: 'Kay Ix', returns: '+18.4%', tokens: 'KAY001', sector: 'Real Estate' },
-  { name: 'Mzero Studios', returns: '+22.1%', tokens: 'MZS001', sector: 'Music' },
-  { name: 'Atis Rezistans', returns: '+14.7%', tokens: 'AR001', sector: 'Art' },
-  { name: 'Manje Lakay', returns: '+16.2%', tokens: 'MLK001', sector: 'Food' },
-  { name: 'Café Kokoye', returns: '+19.8%', tokens: 'CK001', sector: 'Food' }
 ]
 
 export default function DealsPage() {
-  const [filter, setFilter] = useState<string | null>(null)
-  const [investmentAmount, setInvestmentAmount] = useState('')
-  const [selectedDeal, setSelectedDeal] = useState<string | null>(null)
+  const [activeSector, setActiveSector] = useState('all')
+  const [sortBy, setSortBy] = useState('popular')
 
-  const filteredDeals = filter
-    ? quickDeals.filter(d => d.type === filter)
-    : quickDeals
-
-  const maxReturn = Math.max(...profitReturns.map(r => r.return))
+  const filteredCampaigns = activeSector === 'all'
+    ? campaigns
+    : campaigns.filter(c => c.sector === activeSector)
 
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 via-black to-transparent" />
-        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-yellow-600/10 rounded-full blur-[100px]" />
-        
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <div className="inline-block px-4 py-2 bg-amber-900/30 border border-amber-500/30 rounded-full text-amber-400 text-sm mb-6">
-            💰 KONBIT Deals — Marketplace
-          </div>
-          
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-            <span className="text-amber-500">Quick Deals,</span><br />
-            <span className="text-white">Batch Investments</span>
-          </h1>
-          
-          <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl mx-auto">
-            Browse flash deals, join batch investment pools, and track profit returns — all in one marketplace.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <a 
-              href="#deals"
-              className="px-8 py-4 bg-amber-600 hover:bg-amber-500 rounded-xl font-bold text-lg transition-all duration-200 shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40"
-            >
-              Browse Deals
-            </a>
-            <a 
-              href="#pools"
-              className="px-8 py-4 bg-white/5 border border-white/20 hover:border-amber-500/50 rounded-xl font-bold text-lg transition-all duration-200"
-            >
-              Investment Pools
-            </a>
-          </div>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
-            {[
-              { value: '24', label: 'Active Deals' },
-              { value: '$4.2M', label: 'Total Volume' },
-              { value: '1,800+', label: 'Investors' },
-              { value: '15.3%', label: 'Avg Returns' }
-            ].map((stat) => (
-              <div key={stat.label} className="bg-white/5 border border-white/10 rounded-xl p-6">
-                <div className="text-3xl md:text-4xl font-black text-amber-500 mb-1">{stat.value}</div>
-                <div className="text-gray-500 text-sm">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Deals Section */}
-      <section id="deals" className="py-24 px-6 bg-gradient-to-b from-black to-gray-950">
+      <main className="pt-24 pb-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-amber-900/30 border border-amber-500/30 rounded-full text-amber-400 text-sm mb-4">
-              Flash Deals
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black mb-4">
-              <span className="text-amber-500">Quick</span> Deals
-            </h2>
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-black mb-4">
+              Pre-Fab <span className="text-green-500">Rewards</span> Pool
+            </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Time-sensitive opportunities with fixed returns. Act fast — these fill up quickly.
+              Back Haitian businesses and receive quality products at 25-40% below retail. No revenue share — just great deals.
             </p>
           </div>
 
-          {/* Filter */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            <button
-              onClick={() => setFilter(null)}
-              className={`px-5 py-2.5 rounded-xl text-sm font-medium transition ${
-                filter === null
-                  ? 'bg-amber-600 text-white'
-                  : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
-              }`}
-            >
-              All
-            </button>
-            {['Real Estate', 'Music', 'Art', 'Food'].map((type) => (
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            {[
+              { label: 'Active Campaigns', value: '6' },
+              { label: 'Products Delivered', value: '847' },
+              { label: 'Backers', value: '2.4K' },
+              { label: 'Money Saved', value: '$42K' },
+            ].map((stat) => (
+              <div key={stat.label} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+                <div className="text-3xl font-black text-green-400 mb-1">{stat.value}</div>
+                <div className="text-gray-400 text-sm">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Sector Filters */}
+          <div className="flex gap-2 overflow-x-auto pb-4 mb-8 scrollbar-hide">
+            {sectors.map((s) => (
               <button
-                key={type}
-                onClick={() => setFilter(type)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-medium transition ${
-                  filter === type
-                    ? 'bg-amber-600 text-white'
+                key={s.id}
+                onClick={() => setActiveSector(s.id)}
+                className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition ${
+                  activeSector === s.id
+                    ? 'bg-green-600 text-white'
                     : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
                 }`}
               >
-                {type}
+                <span className="mr-2">{s.icon}</span>
+                {s.label}
               </button>
             ))}
           </div>
 
-          {/* Deals Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredDeals.map((deal) => (
-              <div 
-                key={deal.id}
-                className="bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-amber-500/50 transition-all duration-300"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-amber-900/30 rounded-xl flex items-center justify-center text-2xl">
-                      {deal.icon}
-                    </div>
-                    <div>
-                      <h3 className="font-bold">{deal.name}</h3>
-                      <p className="text-gray-500 text-sm">📍 {deal.location}</p>
-                    </div>
-                  </div>
-                  <div className="bg-amber-900/30 border border-amber-500/30 rounded-lg px-2 py-1">
-                    <span className="text-amber-400 text-xs font-mono">{deal.id}</span>
-                  </div>
-                </div>
+          {/* Campaign Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {filteredCampaigns.map((campaign) => {
+              const progress = Math.round((campaign.sold / campaign.quantity) * 100)
+              const tier = progress < 25 ? 1 : progress < 50 ? 2 : progress < 75 ? 3 : 4
+              const discount = progress < 25 ? 40 : progress < 50 ? 25 : progress < 75 ? 15 : 10
 
-                <div className="mb-4">
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-gray-400">{deal.filled}% filled</span>
-                    <span className="text-amber-500 font-medium">{deal.returns} returns</span>
-                  </div>
-                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-amber-600 to-yellow-500 rounded-full transition-all duration-500"
-                      style={{ width: `${deal.filled}%` }}
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 gap-4 mb-4">
-                  <div>
-                    <div className="text-xs text-gray-500 mb-1">Price</div>
-                    <div className="text-white font-bold">${deal.price.toLocaleString()}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-500 mb-1">Returns</div>
-                    <div className="text-amber-500 font-medium">{deal.returns}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-500 mb-1">Term</div>
-                    <div className="text-white font-medium">{deal.term}</div>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setSelectedDeal(deal.id)}
-                  className="w-full py-3 bg-amber-600 hover:bg-amber-500 rounded-xl font-semibold transition"
-                >
-                  Invest Now
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Batch Investment Pools */}
-      <section id="pools" className="py-24 px-6 bg-gray-950">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-block px-4 py-2 bg-amber-900/30 border border-amber-500/30 rounded-full text-amber-400 text-sm mb-4">
-              Batch Investments
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black mb-4">
-              Investment <span className="text-amber-500">Pools</span>
-            </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Diversified batch investments across multiple deals. Lower risk, steady returns.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {batchInvestments.map((pool, index) => (
-              <div 
-                key={pool.title}
-                className="bg-gradient-to-br from-amber-900/20 to-amber-950/20 border border-amber-500/30 rounded-2xl p-8 hover:border-amber-500/60 transition-all duration-300"
-              >
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="w-16 h-16 bg-amber-600/20 rounded-2xl flex items-center justify-center text-3xl">
-                    {pool.icon}
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold mb-1">{pool.title}</h3>
-                    <p className="text-gray-400 text-sm">{pool.desc}</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                  <div className="bg-black/40 rounded-xl p-3 text-center">
-                    <div className="text-xs text-gray-500 mb-1">Min</div>
-                    <div className="text-amber-500 font-bold">${pool.minimum}</div>
-                  </div>
-                  <div className="bg-black/40 rounded-xl p-3 text-center">
-                    <div className="text-xs text-gray-500 mb-1">APY</div>
-                    <div className="text-amber-500 font-bold">{pool.apy}</div>
-                  </div>
-                  <div className="bg-black/40 rounded-xl p-3 text-center">
-                    <div className="text-xs text-gray-500 mb-1">Investors</div>
-                    <div className="text-white font-bold">{pool.investors}</div>
-                  </div>
-                  <div className="bg-black/40 rounded-xl p-3 text-center">
-                    <div className="text-xs text-gray-500 mb-1">Volume</div>
-                    <div className="text-white font-bold">{pool.volume}</div>
-                  </div>
-                </div>
-
-                <button className="w-full py-3 bg-amber-600 hover:bg-amber-500 rounded-xl font-semibold transition">
-                  Join Pool
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Profit Returns Chart */}
-      <section id="returns" className="py-24 px-6 bg-gradient-to-b from-gray-950 to-black">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-block px-4 py-2 bg-amber-900/30 border border-amber-500/30 rounded-full text-amber-400 text-sm mb-4">
-              Performance
-            </div>
-            <h2 className="text-4xl md:text-5xl font-black mb-4">
-              Profit <span className="text-amber-500">Returns</span>
-            </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Monthly returns across the KONBIT ecosystem. Consistent growth through all sectors.
-            </p>
-          </div>
-
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-12">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <div className="text-gray-500 text-sm mb-1">Total Annual Return</div>
-                <div className="text-4xl font-black text-amber-500">+38.3%</div>
-              </div>
-              <div className="flex gap-6">
-                <div className="text-right">
-                  <div className="text-gray-500 text-sm">Best Month</div>
-                  <div className="text-white font-bold">December (+5.2%)</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-gray-500 text-sm">Avg Monthly</div>
-                  <div className="text-white font-bold">+3.2%</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Simple Bar Chart */}
-            <div className="flex items-end justify-between h-48 gap-2">
-              {profitReturns.map((r) => (
-                <div key={r.month} className="flex-1 flex flex-col items-center gap-2">
-                  <div className="w-full flex items-end justify-center h-36">
-                    <div 
-                      className="w-full max-w-8 bg-gradient-to-t from-amber-600 to-yellow-500 rounded-t-lg transition-all duration-500"
-                      style={{ height: `${(r.return / maxReturn) * 100}%` }}
-                    />
-                  </div>
-                  <span className="text-gray-500 text-xs">{r.month}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Top Performers */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
-            <h3 className="text-xl font-bold mb-6">Top Performing Investments</h3>
-            <div className="space-y-4">
-              {topPerformers.map((item, index) => (
-                <div 
-                  key={item.tokens}
-                  className="flex items-center justify-between p-4 bg-white/5 rounded-xl hover:bg-white/10 transition"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 bg-amber-600/20 rounded-lg flex items-center justify-center text-amber-500 font-bold">
-                      {index + 1}
-                    </div>
-                    <div>
-                      <div className="font-medium">{item.name}</div>
-                      <div className="text-gray-500 text-sm">{item.tokens} · {item.sector}</div>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-green-500 font-bold text-lg">{item.returns}</div>
-                    <div className="text-gray-500 text-sm">all time</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Investment Modal */}
-      {selectedDeal && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-6">
-          <div className="bg-gray-900 border border-white/20 rounded-2xl p-8 max-w-md w-full">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold">Invest in Deal</h3>
-              <button 
-                onClick={() => setSelectedDeal(null)}
-                className="text-gray-400 hover:text-white"
-              >
-                ✕
-              </button>
-            </div>
-            
-            {(() => {
-              const deal = quickDeals.find(d => d.id === selectedDeal)
-              if (!deal) return null
               return (
-                <>
-                  <div className="bg-white/5 rounded-xl p-4 mb-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-2xl">{deal.icon}</span>
-                      <div>
-                        <div className="font-bold">{deal.name}</div>
-                        <div className="text-gray-500 text-sm">{deal.id} · {deal.type}</div>
+                <Link
+                  key={campaign.id}
+                  href={`/deals/${campaign.id}`}
+                  className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-green-500/30 transition-all"
+                >
+                  {/* Image Area */}
+                  <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                    <span className="text-6xl">{campaign.image}</span>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-5">
+                    {/* Header */}
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-0.5 bg-green-900/30 text-green-400 text-xs rounded-full">
+                        {campaign.sector}
+                      </span>
+                      <span className="px-2 py-0.5 bg-white/10 text-gray-400 text-xs rounded-full">
+                        {campaign.location}
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg font-bold text-white mb-1 group-hover:text-green-400 transition">
+                      {campaign.name}
+                    </h3>
+                    <p className="text-gray-400 text-sm mb-4">by {campaign.business}</p>
+
+                    {/* Progress */}
+                    <div className="mb-4">
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="text-gray-400">{campaign.sold}/{campaign.quantity} claimed</span>
+                        <span className="text-green-400 font-bold">{discount}% OFF</span>
+                      </div>
+                      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-green-600 to-green-400 rounded-full"
+                          style={{ width: `${progress}%` }}
+                        />
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
+
+                    {/* Price */}
+                    <div className="flex items-center justify-between">
                       <div>
-                        <span className="text-gray-500">Returns</span>
-                        <div className="text-amber-500 font-bold">{deal.returns}</div>
+                        <span className="text-gray-500 text-sm line-through">${campaign.retailPrice}</span>
+                        <span className="text-2xl font-black text-white ml-2">${campaign.currentPrice}</span>
                       </div>
-                      <div>
-                        <span className="text-gray-500">Term</span>
-                        <div className="text-white font-bold">{deal.term}</div>
+                      <div className="text-right">
+                        <div className="text-gray-400 text-xs">Est. delivery</div>
+                        <div className="text-white text-sm font-medium">{campaign.delivery}</div>
                       </div>
                     </div>
                   </div>
-
-                  <div className="mb-6">
-                    <label className="block text-gray-400 text-sm mb-2">Investment Amount</label>
-                    <input
-                      type="number"
-                      value={investmentAmount}
-                      onChange={(e) => setInvestmentAmount(e.target.value)}
-                      placeholder={`Min $${deal.price}`}
-                      min={deal.price}
-                      className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 transition"
-                    />
-                  </div>
-
-                  <button className="w-full py-4 bg-amber-600 hover:bg-amber-500 rounded-xl font-bold text-lg transition">
-                    Confirm Investment
-                  </button>
-                </>
+                </Link>
               )
-            })()}
+            })}
+          </div>
+
+          {/* Batch Investments Section */}
+          <div className="border-t border-white/10 pt-12 mb-12">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="text-2xl font-bold text-white">QuickStarter Batches</h2>
+                <p className="text-gray-400">Bundled opportunities — lower risk, diversified exposure</p>
+              </div>
+              <span className="px-4 py-2 bg-amber-900/30 border border-amber-500/30 rounded-full text-amber-400 text-sm font-bold">
+                BETA
+              </span>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {batchInvestments.map((batch) => (
+                <div key={batch.id} className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-16 h-16 bg-green-900/30 rounded-xl flex items-center justify-center text-3xl">
+                      {batch.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-white mb-1">{batch.title}</h3>
+                      <p className="text-gray-400 text-sm mb-3">{batch.desc}</p>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <span className="text-gray-500 text-sm line-through">${batch.retailPrice}</span>
+                          <span className="text-2xl font-black text-green-400 ml-2">${batch.currentPrice}</span>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-gray-400 text-xs">{batch.filled}% filled</div>
+                          <div className="w-24 h-2 bg-white/10 rounded-full overflow-hidden mt-1">
+                            <div className="h-full bg-amber-500 rounded-full" style={{ width: `${batch.filled}%` }} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="bg-gradient-to-br from-green-900/20 to-green-950/50 border border-green-500/30 rounded-2xl p-8 text-center">
+            <h2 className="text-2xl font-bold text-white mb-4">Have a Product to Offer?</h2>
+            <p className="text-gray-400 mb-6 max-w-xl mx-auto">
+              Haitian businesses can apply to list their products on Konbit Pool. We handle vetting, payment processing, and delivery coordination.
+            </p>
+            <Link
+              href="/dashboard/onboard"
+              className="inline-block px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 rounded-xl font-bold text-lg text-black transition-all"
+            >
+              Apply to List Your Product →
+            </Link>
           </div>
         </div>
-      )}
+      </main>
 
       <Footer />
     </div>
