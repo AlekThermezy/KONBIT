@@ -76,7 +76,7 @@ export default function LearnPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-black mb-4">
-              Learn <span className="text-blue-400">Courses</span>
+              Learn <span className="gradient-text-gold">Courses</span>
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               Courses taught by Haitian experts. AI-powered learning tools to help you succeed.
@@ -90,9 +90,9 @@ export default function LearnPage() {
               { label: 'Students Enrolled', value: totalStudents > 0 ? totalStudents : '6.2K' },
               { label: 'Course Hours', value: '150+' },
             ].map((stat) => (
-              <div key={stat.label} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-                <div className="text-3xl font-black text-blue-400 mb-1">{stat.value}</div>
-                <div className="text-gray-400 text-sm">{stat.label}</div>
+              <div key={stat.label} className="glass-card rounded-xl p-4 text-center border border-[var(--border-subtle)]">
+                <div className="text-3xl font-black text-glow-green mb-1 font-mono">{stat.value}</div>
+                <div className="text-[var(--text-secondary)] text-sm">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -102,10 +102,10 @@ export default function LearnPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveFilter(tab.id)}
-                className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition ${
+                className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all duration-200 ${
                   activeFilter === tab.id
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+                    ? 'bg-[#15803d] text-white shadow-[0_0_20px_rgba(34,197,94,0.35)] border border-green-500/40'
+                    : 'bg-[rgba(255,255,255,0.03)] text-[var(--text-secondary)] hover:text-white hover:bg-[rgba(255,255,255,0.08)] border border-transparent'
                 }`}
               >
                 <span className="mr-2">{tab.icon}</span>
@@ -138,7 +138,7 @@ export default function LearnPage() {
                 <Link
                   key={course.id}
                   href={`/learn/courses/${course.id}`}
-                  className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-blue-500/30 transition-all"
+                  className="group glass-card rounded-2xl overflow-hidden hover:border-[var(--border-glow)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,197,94,0.2)]"
                 >
                   <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center relative">
                     <span className="text-6xl">{categoryEmojis[course.category] || '🌍'}</span>
@@ -146,7 +146,7 @@ export default function LearnPage() {
 
                   <div className="p-5">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="px-2 py-0.5 bg-blue-900/30 text-blue-400 text-xs rounded-full">
+                      <span className="px-2 py-0.5 bg-[rgba(34,197,94,0.15)] text-[var(--green-primary)] text-xs rounded-full border border-[rgba(34,197,94,0.25)]">
                         {course.category}
                       </span>
                     </div>
