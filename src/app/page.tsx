@@ -138,87 +138,72 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#030808] text-white overflow-x-hidden">
 
-      {/* ── HERO SECTION ────────────────────────────────────────────── */}
-      <section className="relative" style={{ height: '100vh', minHeight: '680px' }}>
+      {/* ══ HERO ══════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden" style={{ height: '100vh', minHeight: '700px' }}>
         <StarField />
 
-        {/* Ambient glow layers */}
+        {/* Ambient bg glow */}
         <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 1 }}>
           <div style={{
-            position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)',
-            width: '800px', height: '500px',
-            background: 'radial-gradient(ellipse, rgba(34,197,94,0.07) 0%, transparent 65%)',
-            filter: 'blur(60px)',
-          }} />
-          <div style={{
-            position: 'absolute', bottom: '20%', right: '10%',
-            width: '400px', height: '400px',
-            background: 'radial-gradient(circle, rgba(245,158,11,0.05) 0%, transparent 70%)',
-            filter: 'blur(50px)',
+            position: 'absolute', top: '-10%', left: '30%',
+            width: '900px', height: '600px',
+            background: 'radial-gradient(ellipse, rgba(34,197,94,0.06) 0%, transparent 65%)',
+            filter: 'blur(80px)',
           }} />
         </div>
 
-        {/* GLOBE — right side, large, overlapping */}
-        <div
-          className="absolute"
-          style={{
-            zIndex: 2,
-            right: '-5%',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            width: '60vw',
-            maxWidth: '780px',
-            aspectRatio: '1/1',
-          }}
-        >
+        {/* ── GLOBE: full right half, vertically centered ── */}
+        <div className="absolute pointer-events-auto" style={{
+          zIndex: 2,
+          right: '-8%',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: 'min(68vw, 860px)',
+          aspectRatio: '1/1',
+        }}>
           <HaitiGlobe />
         </div>
 
-        {/* Left gradient fade over globe */}
+        {/* Left-to-center gradient — lets globe bleed through but text stays readable */}
         <div className="absolute inset-0 pointer-events-none" style={{
           zIndex: 3,
-          background: 'linear-gradient(to right, #030808 35%, rgba(3,8,8,0.6) 55%, transparent 75%)',
+          background: 'linear-gradient(100deg, #030808 30%, rgba(3,8,8,0.75) 50%, rgba(3,8,8,0.15) 70%, transparent 85%)',
         }} />
         {/* Bottom fade */}
         <div className="absolute inset-0 pointer-events-none" style={{
           zIndex: 3,
-          background: 'linear-gradient(to top, #030808 0%, transparent 30%)',
+          background: 'linear-gradient(to top, #030808 0%, transparent 25%)',
         }} />
 
-        {/* Navbar */}
-        <nav className="absolute top-0 left-0 right-0 z-20 px-6 pt-6">
+        {/* ── NAVBAR ── */}
+        <nav className="absolute top-0 left-0 right-0 px-6 pt-5" style={{ zIndex: 20 }}>
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="text-2xl font-black tracking-tight select-none">
-              <span style={{ color: '#22c55e' }}>KON</span><span className="text-white">BIT</span>
+              <span style={{ color: '#22c55e', textShadow: '0 0 20px rgba(34,197,94,0.4)' }}>KON</span>
+              <span className="text-white">BIT</span>
             </div>
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#growth" className="text-sm text-white/60 hover:text-white transition-colors">Growth</a>
-              <a href="#learn" className="text-sm text-white/60 hover:text-white transition-colors">Learn</a>
-              <a href="/about" className="text-sm text-white/60 hover:text-white transition-colors">About</a>
+            <div className="hidden md:flex items-center gap-7">
+              <a href="#growth" className="text-sm text-white/50 hover:text-white transition-colors font-medium">Growth</a>
+              <a href="#learn"  className="text-sm text-white/50 hover:text-white transition-colors font-medium">Learn</a>
+              <a href="/about"  className="text-sm text-white/50 hover:text-white transition-colors font-medium">About</a>
             </div>
             <div className="flex items-center gap-3">
               {!user ? (
                 <>
-                  <Link
-                    href="/signin"
-                    className="px-4 py-2 text-sm font-medium text-white/60 hover:text-white border border-white/15 hover:border-white/30 rounded-lg transition-all"
-                  >
+                  <Link href="/signin"
+                    className="px-4 py-2 text-sm font-medium text-white/55 hover:text-white border border-white/12 hover:border-white/25 rounded-lg transition-all">
                     Sign In
                   </Link>
-                  <Link
-                    href="/waitlist"
-                    className="px-4 py-2 text-sm font-bold rounded-lg transition-all text-black"
-                    style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)', boxShadow: '0 0 20px rgba(34,197,94,0.3)' }}
-                  >
+                  <Link href="/waitlist"
+                    className="px-5 py-2 text-sm font-bold rounded-lg text-black transition-all hover:scale-105"
+                    style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)', boxShadow: '0 0 20px rgba(34,197,94,0.35)' }}>
                     Join Waitlist
                   </Link>
                 </>
               ) : (
-                <Link
-                  href="/dashboard"
-                  className="px-4 py-2 text-sm font-bold rounded-lg text-black transition-all"
-                  style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)', boxShadow: '0 0 20px rgba(34,197,94,0.3)' }}
-                >
+                <Link href="/dashboard"
+                  className="px-5 py-2 text-sm font-bold rounded-lg text-black transition-all hover:scale-105"
+                  style={{ background: 'linear-gradient(135deg, #22c55e, #16a34a)', boxShadow: '0 0 20px rgba(34,197,94,0.35)' }}>
                   Dashboard →
                 </Link>
               )}
@@ -226,29 +211,30 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* Hero copy — left column */}
-        <div className="absolute inset-0 z-10 flex items-center">
+        {/* ── HERO COPY — left column ── */}
+        <div className="absolute inset-0 flex items-center" style={{ zIndex: 10 }}>
           <div className="max-w-7xl mx-auto px-6 w-full">
-            <div className="max-w-[560px]">
+            <div style={{ maxWidth: 520 }}>
 
               {/* Live badge + diaspora ticker */}
-              <div className="flex flex-wrap items-center gap-2 mb-7">
+              <div className="flex flex-wrap items-center gap-2 mb-6">
                 <Badge glow="green">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                  Live Map
+                  Live Globe
                 </Badge>
-                <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-xs text-white/50">
-                  <span className="text-base" style={{ lineHeight: 1 }}>{city.flag}</span>
-                  <span className="font-medium text-white/70">{city.name}</span>
-                  <span>{city.pop} diaspora</span>
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-black/40 backdrop-blur-sm text-xs">
+                  <span style={{ lineHeight: 1 }}>{city.flag}</span>
+                  <span className="font-semibold text-white/75">{city.name}</span>
+                  <span className="text-white/40">{city.pop} diaspora</span>
                 </div>
               </div>
 
               {/* Headline */}
-              <h1 className="font-black leading-[1.03] tracking-tight mb-6" style={{ fontSize: 'clamp(2.6rem, 5vw, 4.5rem)' }}>
+              <h1 className="font-black leading-[1.02] tracking-tight mb-5"
+                style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4.2rem)' }}>
                 <span className="text-white">Invest in Haiti.</span><br />
                 <span style={{
-                  background: 'linear-gradient(135deg, #22c55e 0%, #4ade80 50%, #f59e0b 100%)',
+                  background: 'linear-gradient(125deg, #22c55e 0%, #4ade80 40%, #f59e0b 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
@@ -257,124 +243,96 @@ export default function Home() {
                 </span>
               </h1>
 
-              {/* Sub */}
-              <p className="text-white/55 leading-relaxed mb-9" style={{ fontSize: 'clamp(1rem, 1.5vw, 1.15rem)' }}>
-                The diaspora-to-homeland investment platform. Watch Haitian businesses come alive on the globe — every pin a story, every investment a future built together.
+              {/* Subheadline */}
+              <p className="text-white/50 leading-relaxed mb-8"
+                style={{ fontSize: 'clamp(0.95rem, 1.3vw, 1.1rem)', maxWidth: 420 }}>
+                The diaspora-to-homeland investment platform. Every arc on that globe is a real connection — every city, a community ready to invest in Haiti&apos;s future.
               </p>
 
-              {/* CTA tabs + form */}
-              <div className="mb-8">
-                {/* Tab switcher */}
-                <div className="inline-flex rounded-full p-1 mb-5 border border-white/10" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                  <button
-                    onClick={() => setActiveTab('growth')}
-                    className="px-6 py-2.5 rounded-full text-sm font-bold transition-all"
-                    style={activeTab === 'growth'
-                      ? { background: 'linear-gradient(135deg, #22c55e, #16a34a)', color: '#000', boxShadow: '0 0 16px rgba(34,197,94,0.4)' }
-                      : { color: 'rgba(255,255,255,0.5)' }
-                    }
-                  >
-                    KONBIT Growth
+              {/* Platform tabs */}
+              <div className="inline-flex rounded-full p-1 mb-5 border border-white/10"
+                style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(10px)' }}>
+                {(['growth', 'learn'] as const).map(tab => (
+                  <button key={tab} onClick={() => setActiveTab(tab)}
+                    className="px-6 py-2.5 rounded-full text-sm font-bold transition-all capitalize"
+                    style={activeTab === tab ? {
+                      background: tab === 'growth'
+                        ? 'linear-gradient(135deg, #22c55e, #16a34a)'
+                        : 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                      color: '#000',
+                      boxShadow: tab === 'growth'
+                        ? '0 0 18px rgba(34,197,94,0.45)'
+                        : '0 0 18px rgba(59,130,246,0.45)',
+                    } : { color: 'rgba(255,255,255,0.45)' }}>
+                    KONBIT {tab.charAt(0).toUpperCase() + tab.slice(1)}
                   </button>
-                  <button
-                    onClick={() => setActiveTab('learn')}
-                    className="px-6 py-2.5 rounded-full text-sm font-bold transition-all"
-                    style={activeTab === 'learn'
-                      ? { background: 'linear-gradient(135deg, #3b82f6, #2563eb)', color: '#000', boxShadow: '0 0 16px rgba(59,130,246,0.4)' }
-                      : { color: 'rgba(255,255,255,0.5)' }
-                    }
-                  >
-                    KONBIT Learn
-                  </button>
-                </div>
-
-                {/* Form / success / dashboard */}
-                {user ? (
-                  <div />
-                ) : !submitted ? (
-                  <form onSubmit={handleWaitlist} className="flex flex-col gap-2.5 max-w-sm">
-                    <input
-                      type="text"
-                      placeholder="Your name"
-                      value={name}
-                      onChange={e => setName(e.target.value)}
-                      required
-                      className="px-4 py-3 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none transition-all border"
-                      style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.1)' }}
-                      onFocus={e => { e.target.style.borderColor = '#22c55e'; e.target.style.boxShadow = '0 0 0 3px rgba(34,197,94,0.12)' }}
-                      onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none' }}
-                    />
-                    <input
-                      type="email"
-                      placeholder="Your email"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      required
-                      className="px-4 py-3 rounded-xl text-sm text-white placeholder-white/30 focus:outline-none transition-all border"
-                      style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.1)' }}
-                      onFocus={e => { e.target.style.borderColor = '#22c55e'; e.target.style.boxShadow = '0 0 0 3px rgba(34,197,94,0.12)' }}
-                      onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.boxShadow = 'none' }}
-                    />
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="py-3.5 rounded-xl font-bold text-sm text-black transition-all disabled:opacity-50"
-                      style={{
-                        background: activeTab === 'growth'
-                          ? 'linear-gradient(135deg, #22c55e, #16a34a)'
-                          : 'linear-gradient(135deg, #3b82f6, #2563eb)',
-                        boxShadow: activeTab === 'growth'
-                          ? '0 0 24px rgba(34,197,94,0.35)'
-                          : '0 0 24px rgba(59,130,246,0.35)',
-                      }}
-                    >
-                      {loading ? 'Joining...' : `Join the ${activeTab === 'growth' ? 'Growth' : 'Learn'} Waitlist`}
-                    </button>
-                  </form>
-                ) : (
-                  <div className="flex items-center gap-3 px-5 py-4 rounded-xl border border-green-500/30 bg-green-950/40">
-                    <div className="text-2xl">🎉</div>
-                    <div>
-                      <p className="font-bold text-green-400 text-sm">You&apos;re on the list!</p>
-                      <p className="text-white/40 text-xs mt-0.5">We&apos;ll notify you at launch.</p>
-                    </div>
-                  </div>
-                )}
+                ))}
               </div>
 
-              {/* Stats row */}
-              <div className="flex items-center gap-8 pt-2">
-                <div>
-                  <div className="text-2xl font-black font-mono" style={{ color: '#22c55e', textShadow: '0 0 20px rgba(34,197,94,0.5)' }}>
-                    <Counter end={12} prefix="$" suffix="M+" />
+              {/* Waitlist form */}
+              {!user && !submitted && (
+                <form onSubmit={handleWaitlist} className="flex flex-col gap-2.5" style={{ maxWidth: 360 }}>
+                  <input type="text" placeholder="Your name" value={name}
+                    onChange={e => setName(e.target.value)} required
+                    className="px-4 py-3 rounded-xl text-sm text-white placeholder-white/25 focus:outline-none border transition-all"
+                    style={{ background: 'rgba(0,0,0,0.5)', borderColor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)' }}
+                    onFocus={e => { e.target.style.borderColor='#22c55e'; e.target.style.boxShadow='0 0 0 3px rgba(34,197,94,0.12)' }}
+                    onBlur={e => { e.target.style.borderColor='rgba(255,255,255,0.1)'; e.target.style.boxShadow='none' }} />
+                  <input type="email" placeholder="Your email" value={email}
+                    onChange={e => setEmail(e.target.value)} required
+                    className="px-4 py-3 rounded-xl text-sm text-white placeholder-white/25 focus:outline-none border transition-all"
+                    style={{ background: 'rgba(0,0,0,0.5)', borderColor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)' }}
+                    onFocus={e => { e.target.style.borderColor='#22c55e'; e.target.style.boxShadow='0 0 0 3px rgba(34,197,94,0.12)' }}
+                    onBlur={e => { e.target.style.borderColor='rgba(255,255,255,0.1)'; e.target.style.boxShadow='none' }} />
+                  <button type="submit" disabled={loading}
+                    className="py-3.5 rounded-xl font-bold text-sm text-black transition-all disabled:opacity-50 hover:scale-[1.02]"
+                    style={{
+                      background: activeTab === 'growth'
+                        ? 'linear-gradient(135deg, #22c55e, #16a34a)'
+                        : 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                      boxShadow: activeTab === 'growth'
+                        ? '0 0 28px rgba(34,197,94,0.4)'
+                        : '0 0 28px rgba(59,130,246,0.4)',
+                    }}>
+                    {loading ? 'Joining...' : `Join the ${activeTab === 'growth' ? 'Growth' : 'Learn'} Waitlist`}
+                  </button>
+                </form>
+              )}
+
+              {submitted && (
+                <div className="flex items-center gap-3 px-5 py-4 rounded-xl border border-green-500/25 bg-green-950/30 backdrop-blur-sm">
+                  <span className="text-2xl">🎉</span>
+                  <div>
+                    <p className="font-bold text-green-400 text-sm">You&apos;re on the list!</p>
+                    <p className="text-white/35 text-xs mt-0.5">We&apos;ll notify you at launch.</p>
                   </div>
-                  <div className="text-white/35 text-xs mt-0.5">Capital Raised</div>
                 </div>
-                <div className="w-px h-8 bg-white/10" />
-                <div>
-                  <div className="text-2xl font-black font-mono text-white">
-                    <Counter end={2847} />
+              )}
+
+              {/* Stats */}
+              <div className="flex items-center gap-7 mt-8">
+                {[
+                  { val: <Counter end={12} prefix="$" suffix="M+" />, label: 'Capital Raised', color: '#22c55e', glow: 'rgba(34,197,94,0.5)' },
+                  { val: <Counter end={2847} />,                      label: 'Investors',      color: '#ffffff', glow: 'none' },
+                  { val: <Counter end={23} />,                        label: 'Funded',         color: '#f59e0b', glow: 'rgba(245,158,11,0.4)' },
+                ].map((s, i) => (
+                  <div key={i} className="text-center">
+                    <div className="text-xl font-black font-mono" style={{ color: s.color, textShadow: `0 0 16px ${s.glow}` }}>{s.val}</div>
+                    <div className="text-white/30 text-xs mt-0.5">{s.label}</div>
                   </div>
-                  <div className="text-white/35 text-xs mt-0.5">Diaspora Investors</div>
-                </div>
-                <div className="w-px h-8 bg-white/10" />
-                <div>
-                  <div className="text-2xl font-black font-mono" style={{ color: '#f59e0b', textShadow: '0 0 20px rgba(245,158,11,0.4)' }}>
-                    <Counter end={23} />
-                  </div>
-                  <div className="text-white/35 text-xs mt-0.5">Businesses Funded</div>
-                </div>
+                ))}
               </div>
 
             </div>
           </div>
         </div>
 
-        {/* Scroll hint */}
+        {/* Scroll indicator */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5">
-          <div className="w-6 h-9 rounded-full border border-white/20 flex items-start justify-center pt-1.5">
-            <div className="w-1 h-2 rounded-full bg-white/40" style={{ animation: 'scrollDot 2s ease-in-out infinite' }} />
+          <div className="w-5 h-8 rounded-full border border-white/15 flex items-start justify-center pt-1.5">
+            <div className="w-0.5 h-2 rounded-full bg-white/35" style={{ animation: 'scrollDot 2s ease-in-out infinite' }} />
           </div>
+          <span className="text-white/20 text-[10px] tracking-widest uppercase">Scroll</span>
         </div>
       </section>
 
