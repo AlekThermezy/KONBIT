@@ -159,9 +159,9 @@ export default function DealsPage() {
               { label: 'Backers', value: totalBackers > 0 ? String(totalBackers) : '2.4K' },
               { label: 'Money Saved', value: '$42K' },
             ].map((stat) => (
-              <div key={stat.label} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-                <div className="text-3xl font-black text-green-400 mb-1">{stat.value}</div>
-                <div className="text-gray-400 text-sm">{stat.label}</div>
+              <div key={stat.label} className="glass-card rounded-xl p-4 text-center border border-[var(--border-subtle)]">
+                <div className="text-3xl font-black text-glow-green mb-1 font-mono">{stat.value}</div>
+                <div className="text-[var(--text-secondary)] text-sm">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -172,10 +172,10 @@ export default function DealsPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveFilter(tab.id)}
-                className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition ${
+                className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all duration-200 ${
                   activeFilter === tab.id
-                    ? 'bg-green-600 text-white'
-                    : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+                    ? 'bg-[#15803d] text-white shadow-[0_0_20px_rgba(34,197,94,0.35)] border border-green-500/40'
+                    : 'bg-[rgba(255,255,255,0.03)] text-[var(--text-secondary)] hover:text-white hover:bg-[rgba(255,255,255,0.08)] border border-transparent'
                 }`}
               >
                 <span className="mr-2">{tab.icon}</span>
@@ -229,7 +229,7 @@ export default function DealsPage() {
                 <Link
                   key={campaign.id}
                   href={`/deals/${campaign.id}`}
-                  className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-green-500/30 transition-all"
+                  className="group glass-card rounded-2xl overflow-hidden hover:border-[var(--border-glow)] transition-all duration-300 hover:shadow-[0_0_30px_rgba(34,197,94,0.2)]"
                 >
                   <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
                     <span className="text-6xl">{campaign.image}</span>
@@ -257,9 +257,9 @@ export default function DealsPage() {
                         </span>
                         <span className="text-green-400 font-bold">{campaign.percentage}%</span>
                       </div>
-                      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-2 bg-[rgba(255,255,255,0.06)] rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-green-600 to-green-400 rounded-full"
+                          className="h-full bg-gradient-to-r from-[#15803d] to-[#22c55e] rounded-full progress-glow"
                           style={{ width: `${Math.min(campaign.percentage, 100)}%` }}
                         />
                       </div>
@@ -285,14 +285,14 @@ export default function DealsPage() {
 
           {/* CTA */}
           {!user && (
-            <div className="bg-gradient-to-br from-green-900/20 to-green-950/50 border border-green-500/30 rounded-2xl p-8 text-center">
+            <div className="glass-card bg-gradient-to-br from-[#15803d]/20 to-[#0a0a0a] border border-[var(--border-glow)] rounded-2xl p-8 text-center">
               <h2 className="text-2xl font-bold text-white mb-4">Have a Product to Offer?</h2>
               <p className="text-gray-400 mb-6 max-w-xl mx-auto">
                 Haitian businesses can apply to list their products on Konbit Pool. We handle vetting, payment processing, and delivery coordination.
               </p>
               <Link
                 href="/dashboard/onboard"
-                className="inline-block px-8 py-4 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 rounded-xl font-bold text-lg text-black transition-all"
+                className="inline-block px-8 py-4 btn-neon rounded-xl font-bold text-lg text-black transition-all"
               >
                 Launch Your Campaign →
               </Link>

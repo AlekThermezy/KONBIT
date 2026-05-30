@@ -2,39 +2,247 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+/* ─────────────────────────────────────────
+   KONBIT NEON VODOU — Cyberpunk Dark Theme
+   Futuristic yet culturally rich Haiti
+───────────────────────────────────────── */
 
 :root {
-  --background: #050505;
-  --foreground: #ffffff;
+  /* Core palette */
+  --bg-void: #050505;
+  --bg-deep: #0a0a0a;
+  --bg-surface: #111111;
+  --bg-card: #161616;
+  --bg-card-hover: #1a1a1a;
+
+  /* Brand: Matrix Green + Haiti Gold */
+  --green-glow: #00FF00;
+  --green-primary: #22c55e;
+  --green-dim: #15803d;
+  --gold-accent: #F59E0B;
+  --gold-bright: #FCD34D;
+  --amber-soft: #92400E;
+
+  /* Text */
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --text-muted: #475569;
+
+  /* Borders & Effects */
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-glow: rgba(34, 197, 94, 0.35);
+  --border-gold: rgba(245, 158, 11, 0.35);
+
+  /* Glow intensities */
+  --glow-green-sm: 0 0 8px rgba(34, 197, 94, 0.4);
+  --glow-green-md: 0 0 20px rgba(34, 197, 94, 0.35);
+  --glow-green-lg: 0 0 40px rgba(34, 197, 94, 0.25);
+  --glow-gold-sm: 0 0 8px rgba(245, 158, 11, 0.4);
+  --glow-gold-md: 0 0 20px rgba(245, 158, 11, 0.3);
 }
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--text-primary);
+  background: var(--bg-void);
   font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* KONBIT Green Glow Effect */
+/* ── Scanlines overlay (optional, very subtle) ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Green glow effects ── */
 .glow-green {
-  box-shadow: 0 0 30px rgba(34, 197, 94, 0.3);
+  box-shadow: var(--glow-green-md);
 }
 
-/* Gradient Text */
+.glow-green-sm {
+  box-shadow: var(--glow-green-sm);
+}
+
+.glow-gold-sm {
+  box-shadow: var(--glow-gold-sm);
+}
+
+.glow-green-lg {
+  box-shadow: var(--glow-green-lg);
+}
+
+/* Neon text glow */
+.text-glow-green {
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.7), 0 0 30px rgba(34, 197, 94, 0.3);
+}
+
+.text-glow-gold {
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.7), 0 0 30px rgba(245, 158, 11, 0.3);
+}
+
+/* ── Gradient Text ── */
 .gradient-text {
-  background: linear-gradient(135deg, #22c55e 0%, #4ade80 100%);
+  background: linear-gradient(135deg, var(--green-glow) 0%, var(--green-primary) 50%, var(--gold-accent) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Glass Effect */
+.gradient-text-gold {
+  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Glass cards ── */
 .glass {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(17, 17, 17, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+}
+
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-subtle);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--glow-green-md);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--green-dim);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--green-primary);
+}
+
+/* ── Card hover neon border ── */
+.neon-border {
+  position: relative;
+}
+
+.neon-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--green-primary), var(--gold-accent));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+  filter: blur(8px);
+}
+
+.neon-border:hover::after {
+  opacity: 0.3;
+}
+
+/* ── Button neon ── */
+.btn-neon {
+  background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+  box-shadow: var(--glow-green-md);
+  transition: box-shadow 0.3s ease, transform 0.15s ease;
+}
+
+.btn-neon:hover {
+  box-shadow: var(--glow-green-lg), 0 0 60px rgba(34, 197, 94, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-neon:active {
+  transform: translateY(0);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #92400E 0%, #F59E0B 100%);
+  box-shadow: var(--glow-gold-sm);
+}
+
+.btn-gold:hover {
+  box-shadow: var(--glow-gold-md);
+  transform: translateY(-1px);
+}
+
+/* ── Progress bar glow ── */
+.progress-glow {
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+}
+
+/* ── Pulse animation for live indicators ── */
+@keyframes pulse-neon {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.8);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+  }
+}
+
+.pulse-neon {
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+/* ── Float animation ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ── Mono font for data/numbers ── */
+.font-mono {
+  font-family: 'Space Mono', monospace;
+}
+
+/* ── Selection color ── */
+::selection {
+  background: rgba(34, 197, 94, 0.3);
+  color: var(--green-glow);
+}
+
+/* ── Focus visible ── */
+:focus-visible {
+  outline: 2px solid var(--green-primary);
+  outline-offset: 2px;
 }
