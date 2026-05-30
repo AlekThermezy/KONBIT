@@ -7,6 +7,9 @@ import Footer from '@/components/layout/Footer'
 import LeftSidebar from '@/components/layout/LeftSidebar'
 import { getCurrentUser } from '@/lib/auth'
 
+const SB_URL = 'https://dubaqsooeuvfmaxwanwv.supabase.co'
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1YmFxc29vZXV2Zm1heHdhbnd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2MTk3NTYsImV4cCI6MjA5NTE5NTc1Nn0.DFJXG3Xf4SxtByzObx54m8gStxl8LDxLMitb9EFmfR8'
+
 const filterTabs = [
   { id: 'All', label: 'All', icon: '🌐' },
   { id: 'Real Estate', label: 'Real Estate', icon: '🏠' },
@@ -25,259 +28,111 @@ const sortOptions = [
   { id: 'price_high', label: 'Price: High to Low' },
 ]
 
-// Combined campaigns from deals and growth pages
-const dealsCampaigns = [
-  {
-    id: 'kay-ix-prefab',
-    name: 'Pre-fab Housing Kit (2-room)',
-    business: 'Kay Ix Construction',
-    sector: 'Real Estate',
-    location: 'Jacmel, Haiti',
-    retailPrice: 5000,
-    discount: 40,
-    currentPrice: 3000,
-    quantity: 50,
-    sold: 18,
-    delivery: '3-4 months',
-    image: '🏠',
-    status: 'live',
-  },
-  {
-    id: 'coffee-batch',
-    name: 'Haitian Premium Coffee Bundle',
-    business: 'Haitian Brew Co.',
-    sector: 'Agriculture',
-    location: 'Thiotte, Haiti',
-    retailPrice: 120,
-    discount: 40,
-    currentPrice: 72,
-    quantity: 200,
-    sold: 85,
-    delivery: '2-3 months',
-    image: '☕',
-    status: 'live',
-  },
-  {
-    id: 'artisan-textiles',
-    name: 'Handwoven Textile Collection',
-    business: 'SeText Artisans',
-    sector: 'Art',
-    location: 'Savann Pist',
-    retailPrice: 200,
-    discount: 35,
-    currentPrice: 130,
-    quantity: 75,
-    sold: 42,
-    delivery: '1-2 months',
-    image: '🧵',
-    status: 'live',
-  },
-  {
-    id: 'cacao-box',
-    name: 'Artisan Cacao Gift Box',
-    business: 'Ixora Collective',
-    sector: 'Food',
-    location: 'Damascin, Haiti',
-    retailPrice: 85,
-    discount: 40,
-    currentPrice: 51,
-    quantity: 150,
-    sold: 67,
-    delivery: '2-4 weeks',
-    image: '🍫',
-    status: 'live',
-  },
-  {
-    id: 'film-doc',
-    name: 'Haiti Rising Documentary',
-    business: 'Mzero Studios',
-    sector: 'Film & Media',
-    location: 'Port-au-Prince',
-    retailPrice: 75,
-    discount: 25,
-    currentPrice: 56,
-    quantity: 500,
-    sold: 180,
-    delivery: 'Digital delivery',
-    image: '🎬',
-    status: 'live',
-  },
-  {
-    id: 'reforestation',
-    name: 'Reforest Haiti Bundle (10 trees)',
-    business: 'Green Haiti Initiative',
-    sector: 'Reforestation',
-    location: 'MIDI, Haiti',
-    retailPrice: 150,
-    discount: 30,
-    currentPrice: 105,
-    quantity: 300,
-    sold: 95,
-    delivery: 'Certificate delivery',
-    image: '🌳',
-    status: 'live',
-  },
-]
-
-const growthCampaigns = [
-  {
-    id: 'kay-ix-growth',
-    name: 'Kay Ix',
-    business: 'Kay Ix Construction',
-    sector: 'Real Estate',
-    location: 'Jacmel, Haiti',
-    retailPrice: 125000,
-    currentPrice: 87500,
-    target: '$125,000',
-    raised: '$87,500',
-    percentage: 70,
-    tokens: 'KAY001',
-    returns: '11%',
-    daysLeft: 14,
-    image: '🏠',
-    status: 'live',
-  },
-  {
-    id: 'mzero-growth',
-    name: 'Mzero Studios',
-    business: 'Mzero Studios',
-    sector: 'Music',
-    location: 'Port-au-Prince',
-    retailPrice: 75000,
-    currentPrice: 52500,
-    target: '$75,000',
-    raised: '$52,500',
-    percentage: 70,
-    tokens: 'MZS001',
-    returns: '15%',
-    daysLeft: 21,
-    image: '🎵',
-    status: 'live',
-  },
-  {
-    id: 'atis-growth',
-    name: 'Atis Rezistans',
-    business: 'Atis Rezistans',
-    sector: 'Art',
-    location: 'Savann Pist',
-    retailPrice: 40000,
-    currentPrice: 24000,
-    target: '$40,000',
-    raised: '$24,000',
-    percentage: 60,
-    tokens: 'AR001',
-    returns: '9%',
-    daysLeft: 28,
-    image: '🎨',
-    status: 'live',
-  },
-  {
-    id: 'manje-growth',
-    name: 'Manje Lakay',
-    business: 'Manje Lakay',
-    sector: 'Food',
-    location: 'Delmas, PAP',
-    retailPrice: 60000,
-    currentPrice: 42000,
-    target: '$60,000',
-    raised: '$42,000',
-    percentage: 70,
-    tokens: 'MLK001',
-    returns: '12%',
-    daysLeft: 18,
-    image: '🍳',
-    status: 'live',
-  },
-  {
-    id: 'bassins-growth',
-    name: 'Bassins Potagers',
-    business: 'Bassins Potagers',
-    sector: 'Agriculture',
-    location: 'MIDI, Haiti',
-    retailPrice: 45000,
-    currentPrice: 31500,
-    target: '$45,000',
-    raised: '$31,500',
-    percentage: 70,
-    tokens: 'BP001',
-    returns: '14%',
-    daysLeft: 12,
-    image: '🌱',
-    status: 'live',
-  },
-  {
-    id: 'eco-lodges-growth',
-    name: 'Eco Lodges HT',
-    business: 'Eco Lodges HT',
-    sector: 'Tourism',
-    location: 'Cayes, Haiti',
-    retailPrice: 200000,
-    currentPrice: 140000,
-    target: '$200,000',
-    raised: '$140,000',
-    percentage: 70,
-    tokens: 'ELH001',
-    returns: '13%',
-    daysLeft: 35,
-    image: '✈️',
-    status: 'live',
-  },
-]
-
-// Normalize campaigns to a common format
-const normalizeCampaign = (campaign: any, source: 'deals' | 'growth') => {
-  if (source === 'deals') {
-    return {
-      ...campaign,
-      type: 'deals' as const,
-      returns: campaign.discount ? `${campaign.discount}% OFF` : undefined,
-      daysLeft: campaign.delivery,
-      percentage: Math.round((campaign.sold / campaign.quantity) * 100),
-    }
-  }
-  return {
-    ...campaign,
-    type: 'growth' as const,
-    sold: undefined,
-    quantity: undefined,
-    discount: undefined,
-    delivery: campaign.daysLeft ? `${campaign.daysLeft} days left` : undefined,
-  }
+const sectorEmojis: Record<string, string> = {
+  real_estate: '🏠',
+  music: '🎵',
+  art: '🎨',
+  food: '🍳',
+  artisan: '🧵',
+  tech: '💻',
+  agriculture: '🌱',
+  film: '🎬',
+  tourism: '✈️',
 }
-
-const allCampaigns = [
-  ...dealsCampaigns.map(c => normalizeCampaign(c, 'deals')),
-  ...growthCampaigns.map(c => normalizeCampaign(c, 'growth')),
-]
 
 export default function DealsPage() {
   const [activeFilter, setActiveFilter] = useState('All')
   const [sortBy, setSortBy] = useState('popular')
   const [user, setUser] = useState<any>(null)
+  const [campaigns, setCampaigns] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     getCurrentUser().then(u => setUser(u))
+    fetchCampaigns()
   }, [])
 
+  async function fetchCampaigns() {
+    setLoading(true)
+    try {
+      const res = await fetch(
+        `${SB_URL}/rest/v1/campaigns?status=eq.live&select=*,businesses(name,sector,city,country)`,
+        {
+          headers: {
+            apikey: SB_KEY,
+            Authorization: `Bearer ${SB_KEY}`,
+          },
+        }
+      )
+      const data = await res.json()
+      setCampaigns(data || [])
+    } catch (err) {
+      console.error('Failed to fetch campaigns:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Map Supabase campaigns to card format
+  const mappedCampaigns = campaigns.map((c: any) => {
+    const pct = c.raise_goal_cents > 0
+      ? Math.round((c.raised_cents / c.raise_goal_cents) * 100)
+      : 0
+    return {
+      id: c.id,
+      name: c.title,
+      business: c.businesses?.name || 'Unknown',
+      sector: c.businesses?.sector || 'other',
+      location: [c.businesses?.city, c.businesses?.country].filter(Boolean).join(', ') || 'Haiti',
+      target: c.raise_goal_cents,
+      raised: c.raised_cents,
+      percentage: pct,
+      tokens: c.token_symbol,
+      returns: c.token_type === 'revenue_share' && c.revenue_share_pct
+        ? `${c.revenue_share_pct}% revenue share`
+        : c.token_type === 'equity' && c.equity_pct
+        ? `${c.equity_pct}% equity`
+        : c.token_type,
+      daysLeft: c.ends_at
+        ? Math.max(0, Math.ceil((new Date(c.ends_at).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
+        : null,
+      image: sectorEmojis[c.businesses?.sector] || '🌍',
+      type: 'growth' as const,
+    }
+  })
+
   const filteredCampaigns = activeFilter === 'All'
-    ? allCampaigns
-    : allCampaigns.filter(c => c.sector === activeFilter)
+    ? mappedCampaigns
+    : mappedCampaigns.filter((c: any) => {
+        const map: Record<string, string> = {
+          'Real Estate': 'real_estate',
+          'Music': 'music',
+          'Art': 'art',
+          'Food': 'food',
+          'Artisan': 'artisan',
+          'Tech': 'tech',
+        }
+        return c.sector === map[activeFilter]
+      })
 
   const sortedCampaigns = [...filteredCampaigns].sort((a, b) => {
     switch (sortBy) {
       case 'newest':
-        return 0 // maintain original order for now
+        return 0
       case 'ending':
-        return (a.daysLeft || '').localeCompare(b.daysLeft || '')
+        return (a.daysLeft || 999) - (b.daysLeft || 999)
       case 'price_low':
-        return (a.currentPrice || 0) - (b.currentPrice || 0)
+        return (a.raised || 0) - (b.raised || 0)
       case 'price_high':
-        return (b.currentPrice || 0) - (a.currentPrice || 0)
+        return (b.raised || 0) - (a.raised || 0)
       case 'popular':
       default:
         return (b.percentage || 0) - (a.percentage || 0)
     }
   })
+
+  const totalRaised = campaigns.reduce((sum: number, c: any) => sum + (c.raised_cents || 0), 0) / 100
+  const totalBackers = campaigns.reduce((sum: number, c: any) => sum + (c.investor_count || 0), 0)
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -289,19 +144,19 @@ export default function DealsPage() {
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-black mb-4">
-              Your <span className="text-green-500">Portfolio</span>
+              Pre-Fab <span className="text-green-500">Rewards</span> Pool
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Explore vetted investment opportunities and reward-based campaigns from Haitian entrepreneurs. Invest with confidence.
+              Back Haitian businesses and receive quality products at 25-40% below retail. No revenue share — just great deals.
             </p>
           </div>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
             {[
-              { label: 'Active Campaigns', value: String(allCampaigns.length) },
+              { label: 'Active Campaigns', value: String(mappedCampaigns.length) },
               { label: 'Products Delivered', value: '847' },
-              { label: 'Backers', value: '2.4K' },
+              { label: 'Backers', value: totalBackers > 0 ? String(totalBackers) : '2.4K' },
               { label: 'Money Saved', value: '$42K' },
             ].map((stat) => (
               <div key={stat.label} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
@@ -349,79 +204,84 @@ export default function DealsPage() {
           </div>
 
           {/* Campaign Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {sortedCampaigns.map((campaign) => (
-              <Link
-                key={campaign.id}
-                href={`/deals/${campaign.id}`}
-                className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-green-500/30 transition-all"
-              >
-                {/* Image Area */}
-                <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-                  <span className="text-6xl">{campaign.image}</span>
+          {loading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {[1,2,3].map(i => (
+                <div key={i} className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden animate-pulse">
+                  <div className="aspect-video bg-gray-800" />
+                  <div className="p-5 space-y-3">
+                    <div className="h-4 bg-gray-700 rounded w-3/4" />
+                    <div className="h-3 bg-gray-700 rounded w-1/2" />
+                    <div className="h-2 bg-gray-700 rounded" />
+                  </div>
                 </div>
-
-                {/* Content */}
-                <div className="p-5">
-                  {/* Header */}
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="px-2 py-0.5 bg-green-900/30 text-green-400 text-xs rounded-full">
-                      {campaign.sector}
-                    </span>
-                    <span className="px-2 py-0.5 bg-white/10 text-gray-400 text-xs rounded-full">
-                      {campaign.type === 'deals' ? 'Deal' : 'Growth'}
-                    </span>
+              ))}
+            </div>
+          ) : sortedCampaigns.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="text-5xl mb-4">🌍</div>
+              <h3 className="text-xl font-bold text-white mb-2">No campaigns live yet</h3>
+              <p className="text-gray-400">Check back soon — new campaigns launch regularly.</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {sortedCampaigns.map((campaign: any) => (
+                <Link
+                  key={campaign.id}
+                  href={`/deals/${campaign.id}`}
+                  className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-green-500/30 transition-all"
+                >
+                  <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+                    <span className="text-6xl">{campaign.image}</span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-green-400 transition">
-                    {campaign.name}
-                  </h3>
-                  <p className="text-gray-400 text-sm mb-4">by {campaign.business}</p>
-
-                  {/* Progress */}
-                  <div className="mb-4">
-                    <div className="flex justify-between text-xs mb-1">
-                      {campaign.type === 'deals' ? (
-                        <span className="text-gray-400">{campaign.sold}/{campaign.quantity} claimed</span>
-                      ) : (
-                        <span className="text-gray-400">{campaign.raised} raised</span>
-                      )}
-                      <span className="text-green-400 font-bold">
-                        {campaign.type === 'deals' ? campaign.returns : `${campaign.percentage}%`}
+                  <div className="p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-0.5 bg-green-900/30 text-green-400 text-xs rounded-full">
+                        {campaign.sector?.replace('_', ' ')}
+                      </span>
+                      <span className="px-2 py-0.5 bg-white/10 text-gray-400 text-xs rounded-full">
+                        Growth
                       </span>
                     </div>
-                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-gradient-to-r from-green-600 to-green-400 rounded-full"
-                        style={{ width: `${campaign.percentage}%` }}
-                      />
-                    </div>
-                  </div>
 
-                  {/* Price */}
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-gray-500 text-sm line-through">${campaign.retailPrice?.toLocaleString()}</span>
-                      <span className="text-2xl font-black text-white ml-2">${campaign.currentPrice?.toLocaleString()}</span>
+                    <h3 className="text-lg font-bold text-white mb-1 group-hover:text-green-400 transition">
+                      {campaign.name}
+                    </h3>
+                    <p className="text-gray-400 text-sm mb-4">by {campaign.business}</p>
+
+                    <div className="mb-4">
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="text-gray-400">
+                          ${((campaign.raised || 0) / 100).toLocaleString()} raised
+                        </span>
+                        <span className="text-green-400 font-bold">{campaign.percentage}%</span>
+                      </div>
+                      <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-green-600 to-green-400 rounded-full"
+                          style={{ width: `${Math.min(campaign.percentage, 100)}%` }}
+                        />
+                      </div>
                     </div>
-                    <div className="text-right">
-                      {campaign.type === 'deals' ? (
-                        <>
-                          <div className="text-gray-400 text-xs">Est. delivery</div>
-                          <div className="text-white text-sm font-medium">{campaign.delivery}</div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="text-gray-400 text-xs">Returns</div>
-                          <div className="text-green-400 text-sm font-bold">{campaign.returns}</div>
-                        </>
-                      )}
+
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-gray-500 text-sm">Target </span>
+                        <span className="text-lg font-black text-white">
+                          ${((campaign.target || 0) / 100).toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-gray-400 text-xs">Returns</div>
+                        <div className="text-green-400 text-sm font-bold">{campaign.returns}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+                </Link>
+              ))}
+            </div>
+          )}
 
           {/* CTA */}
           {!user && (
