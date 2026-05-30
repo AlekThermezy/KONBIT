@@ -57,11 +57,11 @@ export default function LeftSidebar() {
   return (
     <>
       {/* Fixed Left Sidebar */}
-      <aside className="fixed left-0 top-0 h-screen w-64 bg-black/95 backdrop-blur-md border-r border-white/10 z-40 flex flex-col">
+      <aside className="fixed left-0 top-0 h-screen w-64 bg-[var(--bg-deep)]/95 backdrop-blur-md border-r border-[var(--border-subtle)] z-40 flex flex-col">
         {/* Logo */}
         <div className="px-5 py-5 border-b border-white/10">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center font-black text-black text-sm transition-transform group-hover:scale-110">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#92400E] to-[#F59E0B] flex items-center justify-center font-black text-black text-sm transition-transform group-hover:scale-110 shadow-[0_0_16px_rgba(245,158,11,0.4)]">
               K
             </div>
             <span className="text-xl font-black">
@@ -79,8 +79,8 @@ export default function LeftSidebar() {
               href={item.href}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${
                 isActive(item.href)
-                  ? 'bg-green-600/20 text-green-400 border-l-2 border-green-500 pl-[10px]'
-                  : 'text-gray-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent pl-[10px]'
+                  ? 'bg-[rgba(34,197,94,0.12)] text-[var(--green-primary)] border-l-2 border-[var(--green-primary)] pl-[10px] shadow-[inset_0_0_20px_rgba(34,197,94,0.05)]'
+                  : 'text-[var(--text-secondary)] hover:text-white hover:bg-[rgba(255,255,255,0.04)] border-l-2 border-transparent pl-[10px]'
               }`}
             >
               <span className="text-lg">{item.icon}</span>
