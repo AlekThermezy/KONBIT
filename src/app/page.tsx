@@ -1,7 +1,7 @@
 'use client'
 import Footer from '@/components/layout/Footer'
 import { supabase } from '@/lib/auth'
-import Image from 'next/image'
+import HaitiMapWrapper from '@/components/map/HaitiMapWrapper'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -55,180 +55,165 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="text-2xl font-bold">
-            <span className="text-green-500">KON</span>BIT
-          </div>
-          <div className="flex items-center gap-6">
-            <a href="#growth" className="text-sm text-gray-300 hover:text-white transition">Growth</a>
-            <a href="#learn" className="text-sm text-gray-300 hover:text-white transition">Learn</a>
-            <a href="/mission" className="text-sm text-gray-300 hover:text-white transition">Mission</a>
-            <a href="/about" className="text-sm text-gray-300 hover:text-white transition">About</a>
-            {!user ? (
-              <div className="flex items-center gap-3">
-                <Link href="/signin" className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition border border-white/20 rounded-lg hover:border-white/40">
-                  Sign In
-                </Link>
-                <Link href="/waitlist" className="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm font-medium transition">
-                  Join Waitlist
-                </Link>
-              </div>
-            ) : (
-              <Link href="/dashboard" className="px-4 py-2 bg-green-600 hover:bg-green-500 rounded-lg text-sm font-medium transition">
-                Dashboard →
-              </Link>
-            )}
-          </div>
+    <div className="min-h-screen bg-[var(--bg-void)] text-white">
+      {/* Hero Section - Haiti Map */}
+      <section className="relative min-h-screen overflow-hidden">
+        {/* Full-screen map */}
+        <div className="absolute inset-0 z-0">
+          <HaitiMapWrapper />
         </div>
-      </nav>
 
-      {/* Hero Section - Diaspora Investment Positioning */}
-      <section className="min-h-screen flex items-center justify-center px-6 pt-20 relative overflow-hidden">
-        {/* Dark gradient background with brand colors */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-900/40 via-black to-black" />
-        
-        {/* Hero image */}
-        <div className="absolute inset-0">
-          <Image
-            src="/images/konbit-hero-port-au-prince-2050.png"
-            alt="Port-au-Prince, Haiti 2050"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center opacity-60"
-            quality={85}
-          />
-        </div>
-        
-        {/* Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-green-900/30 via-transparent to-emerald-900/20" />
-        
-        {/* Glowing orb effects */}
-        <div className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-green-500/15 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/3 left-1/4 w-[500px] h-[500px] bg-green-600/10 rounded-full blur-[120px]" />
-        
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          {/* Trust Badges - above headline */}
-          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-8 mb-10">
-            {['Regulated', 'Transparent', 'Diaspora-Owned', 'Impact Verified'].map((badge) => (
-              <div key={badge} className="flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full">
-                <span className="w-2 h-2 bg-green-400 rounded-full" />
-                <span className="text-green-300 text-sm font-medium">{badge}</span>
-              </div>
-            ))}
+        {/* Gradient overlays for readability */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/60 to-black/30 pointer-events-none" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/40 via-transparent to-black/20 pointer-events-none" />
+
+        {/* Top nav - transparent on map */}
+        <nav className="relative z-20 pt-6 px-6">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="text-2xl font-black tracking-tight">
+              <span className="text-[var(--green-primary)]">KON</span><span className="text-white">BIT</span>
+            </div>
+            <div className="flex items-center gap-6">
+              <a href="#growth" className="text-sm text-white/70 hover:text-white transition">Growth</a>
+              <a href="#learn" className="text-sm text-white/70 hover:text-white transition">Learn</a>
+              <a href="/about" className="text-sm text-white/70 hover:text-white transition">About</a>
+              {!user ? (
+                <div className="flex items-center gap-3">
+                  <Link href="/signin" className="px-4 py-2 text-sm font-medium text-white/70 hover:text-white transition border border-white/20 rounded-lg hover:border-white/40">
+                    Sign In
+                  </Link>
+                  <Link href="/waitlist" className="px-4 py-2 btn-neon rounded-lg text-sm font-medium transition text-black">
+                    Join Waitlist
+                  </Link>
+                </div>
+              ) : (
+                <Link href="/dashboard" className="px-4 py-2 btn-neon rounded-lg text-sm font-medium transition text-black">
+                  Dashboard →
+                </Link>
+              )}
+            </div>
           </div>
-          
-          {/* Main Headline */}
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.05] tracking-tight">
-            <span className="text-white">Invest in Haiti&apos;s Future.</span><br />
-            <span className="text-green-400">Build Wealth. Build Home.</span>
-          </h1>
-          
-          {/* Subheadline */}
-          <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-            The diaspora-to-homeland investment platform. Put capital into Haitian businesses, earn financial returns, and document your economic impact &#8212; all verified on-chain.
-          </p>
+        </nav>
 
-          {/* Social Proof */}
-          <div className="flex items-center justify-center gap-3 mb-12">
-            <div className="flex -space-x-2">
-              {['NYC', 'Miami', 'Boston', 'Montreal', 'Paris'].map((city) => (
-                <div key={city} className="w-8 h-8 rounded-full bg-green-600 border-2 border-black flex items-center justify-center text-xs font-bold text-white">
-                  {city.charAt(0)}
+        {/* Hero content overlaid on map */}
+        <div className="relative z-20 flex items-end justify-center min-h-screen pb-24 px-6">
+          <div className="max-w-4xl mx-auto text-center">
+
+            {/* Slogan */}
+            <div className="flex flex-wrap justify-center items-center gap-3 mb-6">
+              <span className="px-4 py-1.5 bg-[rgba(34,197,94,0.15)] border border-[rgba(34,197,94,0.3)] text-[var(--green-primary)] text-xs font-bold rounded-full uppercase tracking-widest">
+                🌍 Live Map
+              </span>
+              {['Regulated', 'On-Chain', 'Diaspora-Owned'].map((badge) => (
+                <div key={badge} className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-full">
+                  <span className="w-1.5 h-1.5 bg-[var(--green-primary)] rounded-full shadow-[0_0_6px_rgba(34,197,94,0.6)]" />
+                  <span className="text-white/70 text-xs font-medium">{badge}</span>
                 </div>
               ))}
             </div>
-            <span className="text-gray-400 text-sm">
-              Join <span className="text-green-400 font-semibold">2,847+</span> diaspora investors from New York, Miami, Boston, Montreal, Paris
-            </span>
-          </div>
 
-          {/* Platform Tabs */}
-          <div className="flex justify-center mb-10">
-            <div className="bg-white/5 backdrop-blur-md rounded-full p-1.5 flex gap-1.5 border border-white/10">
-              <button
-                onClick={() => setActiveTab('growth')}
-                className={`px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-200 ${
-                  activeTab === 'growth'
-                    ? 'bg-gradient-to-r from-green-500 to-emerald-400 text-black shadow-lg shadow-green-500/40'
-                    : 'text-gray-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                KONBIT Growth
-              </button>
-              <button
-                onClick={() => setActiveTab('learn')}
-                className={`px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-200 ${
-                  activeTab === 'learn'
-                    ? 'bg-gradient-to-r from-blue-500 to-cyan-400 text-black shadow-lg shadow-blue-500/40'
-                    : 'text-gray-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                KONBIT Learn
-              </button>
+            {/* Headline */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.02] tracking-tight">
+              <span className="text-white">Invest in Haiti.</span><br />
+              <span className="text-[var(--green-primary)] text-glow-green">Build Wealth. Build Home.</span>
+            </h1>
+
+            {/* Subheadline */}
+            <p className="text-lg md:text-xl text-white/60 mb-10 max-w-2xl mx-auto leading-relaxed">
+              The diaspora-to-homeland investment platform. Watch Haitian businesses come alive across the map — every pin a story, every investment a future built together.
+            </p>
+
+            {/* Platform Tabs */}
+            <div className="flex justify-center mb-10">
+              <div className="glass rounded-full p-1.5 flex gap-1.5 border border-[var(--border-subtle)]">
+                <button
+                  onClick={() => setActiveTab('growth')}
+                  className={`px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-200 ${
+                    activeTab === 'growth'
+                      ? 'bg-[var(--green-primary)] text-black shadow-[var(--glow-green-md)]'
+                      : 'text-white/70 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  KONBIT Growth
+                </button>
+                <button
+                  onClick={() => setActiveTab('learn')}
+                  className={`px-8 py-3.5 rounded-full font-semibold text-sm transition-all duration-200 ${
+                    activeTab === 'learn'
+                      ? 'bg-blue-500 text-black shadow-[0_0_20px_rgba(59,130,246,0.5)]'
+                      : 'text-white/70 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  KONBIT Learn
+                </button>
+              </div>
+            </div>
+
+            {/* Waitlist Form */}
+            {!user && (
+              <div className="glass-card rounded-2xl p-6 max-w-md mx-auto border border-[var(--border-glow)]">
+                {!submitted ? (
+                  <form onSubmit={handleWaitlist} className="space-y-3">
+                    <input
+                      type="text"
+                      placeholder="Your name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      className="w-full px-4 py-3 bg-[rgba(255,255,255,0.05)] border border-[var(--border-subtle)] rounded-lg text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--green-primary)] transition"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className="w-full px-4 py-3 bg-[rgba(255,255,255,0.05)] border border-[var(--border-subtle)] rounded-lg text-white placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--green-primary)] transition"
+                    />
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full py-3.5 btn-neon rounded-lg font-bold text-base transition disabled:opacity-50"
+                    >
+                      {loading ? 'Joining...' : `Join the ${activeTab === 'growth' ? 'Growth' : 'Learn'} Waitlist`}
+                    </button>
+                  </form>
+                ) : (
+                  <div className="text-center py-4">
+                    <div className="text-4xl mb-3">🎉</div>
+                    <h3 className="text-xl font-bold text-[var(--green-primary)] mb-1">You're on the list!</h3>
+                    <p className="text-white/50 text-sm">We'll notify you when KONBIT launches.</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Stats */}
+            <div className="mt-14 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-14">
+              <div className="text-center">
+                <div className="text-3xl font-black font-mono text-[var(--green-primary)] text-glow-green">$12M+</div>
+                <div className="text-white/40 text-xs mt-1">Capital Raised</div>
+              </div>
+              <div className="hidden sm:block w-px bg-white/10 h-8" />
+              <div className="text-center">
+                <div className="text-3xl font-black font-mono text-white">2,847</div>
+                <div className="text-white/40 text-xs mt-1">Diaspora Investors</div>
+              </div>
+              <div className="hidden sm:block w-px bg-white/10 h-8" />
+              <div className="text-center">
+                <div className="text-3xl font-black font-mono text-[var(--gold-accent)]">23</div>
+                <div className="text-white/40 text-xs mt-1">Businesses Funded</div>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Waitlist Form - hidden when logged in */}
-          {!user && (
-            <div className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-8 max-w-md mx-auto shadow-2xl shadow-green-500/10">
-              {!submitted ? (
-                <form onSubmit={handleWaitlist} className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    className="w-full px-4 py-3.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-green-400 focus:bg-white/15 transition"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full px-4 py-3.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-green-400 focus:bg-white/15 transition"
-                  />
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full py-4 bg-gradient-to-r from-green-500 to-emerald-400 hover:from-green-400 hover:to-emerald-300 rounded-lg font-bold text-lg text-black transition-all shadow-lg shadow-green-500/30 hover:shadow-green-500/50 disabled:opacity-50"
-                  >
-                    {loading ? 'Joining...' : `Join the ${activeTab === 'growth' ? 'Growth' : 'Learn'} Waitlist`}
-                  </button>
-                </form>
-              ) : (
-                <div className="text-center py-8">
-                  <div className="text-5xl mb-4">&#127881;</div>
-                  <h3 className="text-2xl font-bold text-green-400 mb-2">You&apos;re on the list!</h3>
-                  <p className="text-gray-300">We&apos;ll notify you when KONBIT launches.</p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Stats */}
-          <div className="mt-20 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-16">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-green-400 tracking-tight">$12M+</div>
-              <div className="text-gray-400 text-sm mt-1">Capital Raised</div>
-            </div>
-            <div className="hidden sm:block w-px bg-white/20 self-stretch h-12" />
-            <div className="text-center">
-              <div className="text-4xl font-bold text-white tracking-tight">847</div>
-              <div className="text-gray-400 text-sm mt-1">Investors</div>
-            </div>
-            <div className="hidden sm:block w-px bg-white/20 self-stretch h-12" />
-            <div className="text-center">
-              <div className="text-4xl font-bold text-green-400 tracking-tight">23</div>
-              <div className="text-gray-400 text-sm mt-1">Businesses Funded</div>
-            </div>
-          </div>
+        {/* Scroll hint */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 animate-bounce">
+          <span className="text-white/30 text-xs">Scroll to explore</span>
+          <svg className="w-4 h-4 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
         </div>
       </section>
 

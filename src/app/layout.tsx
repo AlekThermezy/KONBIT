@@ -1,5 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
+import 'leaflet/dist/leaflet.css'
 
 export const metadata: Metadata = {
   title: 'KONBIT — Konekte, Tèt ansanm, Pou nou vanse',
