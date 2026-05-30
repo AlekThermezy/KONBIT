@@ -1,4 +1,6 @@
-"use client";
+"use client"
+
+declare module 'leaflet.heat'
 
 import { useEffect, useState, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
@@ -82,7 +84,8 @@ export default function HaitiMap() {
     const heatmapModule = await import('leaflet.heat');
     
     L = leaflet.default || leaflet;
-    HeatMap = heatmapModule.default || heatmapModule;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    HeatMap = (heatmapModule as any).default || heatmapModule;
 
     // Center on Haiti
     const map = L.map(mapRef.current, {
