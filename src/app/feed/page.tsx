@@ -211,60 +211,60 @@ export default function FeedPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <LeftSidebar />
-      <Navbar />
+      <div className="min-h-screen bg-[var(--bg-void)] text-white">
+        <LeftSidebar />
+        <Navbar />
 
-      <main className="ml-64 pt-16 pb-16 px-4">
-        <div className="max-w-2xl mx-auto">
+        <main className="ml-64 pt-16 pb-16 px-4">
+          <div className="max-w-2xl mx-auto">
 
-          {/* Header */}
-          <div className="mb-6">
-            <h1 className="text-2xl font-black text-white">
-              {user ? `Good to see you, ${user.name?.split(' ')[0] || 'there'} 👋` : 'Activity Feed'}
-            </h1>
-            <p className="text-gray-400 text-sm mt-1">Track your investments, learning, and opportunities</p>
-          </div>
+            {/* Header */}
+            <div className="mb-6">
+              <h1 className="text-2xl font-black text-white">
+                {user ? `Good to see you, ${user.name?.split(' ')[0] || 'there'} 👋` : 'Activity Feed'}
+              </h1>
+              <p className="text-[var(--text-secondary)] text-sm mt-1">Track your investments, learning, and opportunities</p>
+            </div>
 
-          {/* Quick Actions — LinkedIn/Discord style shortcut bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
-            {QUICK_ACTIONS.map((qa) => (
-              <Link
-                key={qa.id}
-                href={qa.href}
-                className="group bg-white/5 border border-white/10 rounded-xl p-3 hover:border-white/20 transition-all hover:-translate-y-0.5"
-              >
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-lg mb-2 ${
-                  qa.color === 'green' ? 'bg-green-900/40 text-green-400' :
-                  qa.color === 'blue' ? 'bg-blue-900/40 text-blue-400' :
-                  qa.color === 'amber' ? 'bg-amber-900/40 text-amber-400' :
-                  'bg-purple-900/40 text-purple-400'
-                }`}>
-                  {qa.icon}
-                </div>
-                <div className="text-white text-xs font-semibold mb-0.5 group-hover:text-green-400 transition">{qa.label}</div>
-                <div className="text-gray-500 text-xs">{qa.desc}</div>
-              </Link>
-            ))}
-          </div>
+            {/* Quick Actions */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
+              {QUICK_ACTIONS.map((qa) => (
+                <Link
+                  key={qa.id}
+                  href={qa.href}
+                  className="group glass-card rounded-xl p-3 hover:border-[var(--border-glow)] transition-all duration-300 hover:-translate-y-0.5"
+                >
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-lg mb-2 ${
+                    qa.color === 'green' ? 'bg-[rgba(34,197,94,0.15)] text-[var(--green-primary)]' :
+                    qa.color === 'blue' ? 'bg-blue-900/40 text-blue-400' :
+                    qa.color === 'amber' ? 'bg-[rgba(245,158,11,0.15)] text-[var(--gold-accent)]' :
+                    'bg-purple-900/40 text-purple-400'
+                  }`}>
+                    {qa.icon}
+                  </div>
+                  <div className="text-white text-xs font-semibold mb-0.5 group-hover:text-[var(--green-primary)] transition">{qa.label}</div>
+                  <div className="text-[var(--text-muted)] text-xs">{qa.desc}</div>
+                </Link>
+              ))}
+            </div>
 
-          {/* Filter Tabs — LinkedIn/Twitter style */}
-          <div className="flex gap-1 mb-6 bg-white/5 rounded-xl p-1 border border-white/10">
-            {tabs.map((t) => (
-              <button
-                key={t.id}
-                onClick={() => setTab(t.id)}
-                className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-                  tab === t.id
-                    ? 'bg-green-600 text-white shadow-lg shadow-green-500/20'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                <span>{t.icon}</span>
-                <span className="hidden sm:inline">{t.label}</span>
-              </button>
-            ))}
-          </div>
+            {/* Filter Tabs */}
+            <div className="flex gap-1 mb-6 glass rounded-xl p-1 border border-[var(--border-subtle)]">
+              {tabs.map((t) => (
+                <button
+                  key={t.id}
+                  onClick={() => setTab(t.id)}
+                  className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    tab === t.id
+                      ? 'bg-[var(--green-primary)] text-black shadow-[var(--glow-green-md)]'
+                      : 'text-[var(--text-secondary)] hover:text-white hover:bg-[rgba(255,255,255,0.04)]'
+                  }`}
+                >
+                  <span>{t.icon}</span>
+                  <span className="hidden sm:inline">{t.label}</span>
+                </button>
+              ))}
+            </div>
 
           {/* Stories Carousel — Instagram/LinkedIn style */}
           {tab === 'all' && (
@@ -308,15 +308,15 @@ export default function FeedPage() {
           {/* Feed Items */}
           <div className="space-y-3">
             {feed.length === 0 ? (
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center">
+              <div className="glass-card rounded-2xl p-8 text-center border border-[var(--border-subtle)]">
                 <div className="text-3xl mb-3">📭</div>
                 <div className="text-white font-semibold mb-2">Nothing here yet</div>
-                <div className="text-gray-400 text-sm">
+                <div className="text-[var(--text-secondary)] text-sm">
                   {tab === 'all' ? 'Back a campaign or complete a course to get started' :
                    tab === 'mine' ? 'Sign in to see your personal activity' :
                    `No ${tab} activity yet — check back soon`}
                 </div>
-                <Link href="/deals" className="inline-block mt-4 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-xl text-white text-sm font-medium transition">
+                <Link href="/deals" className="inline-block mt-4 px-4 py-2 btn-neon rounded-xl text-sm font-bold text-black transition">
                   Explore Portfolio →
                 </Link>
               </div>
@@ -340,47 +340,47 @@ function FeedCard({ item, user }: { item: FeedItem; user: any }) {
     const c = item.data
     const progress = c.quantity_available > 0 ? ((c.quantity_sold || 0) / c.quantity_available) * 100 : 0
     return (
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-4 hover:border-green-500/30 transition-all">
+      <div className="glass-card rounded-2xl p-4 hover:border-[var(--border-glow)] transition-all duration-300">
         {/* Card header */}
         <div className="flex items-start gap-3 mb-3">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1.5">
-              <span className="bg-green-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wide">Live</span>
-              <span className="text-gray-500 text-xs">{timeAgo(item.created_at)}</span>
-              <span className="text-gray-600 text-xs">·</span>
-              <span className="text-gray-500 text-xs">{c.business_sector}</span>
+              <span className="bg-[var(--green-primary)] text-black text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wide pulse-neon">Live</span>
+              <span className="text-[var(--text-muted)] text-xs">{timeAgo(item.created_at)}</span>
+              <span className="text-[var(--text-muted)] text-xs">·</span>
+              <span className="text-[var(--text-muted)] text-xs">{c.business_sector}</span>
             </div>
             <div className="text-white font-bold text-base">{c.product_name}</div>
-            <div className="text-gray-400 text-sm">{c.business_name}</div>
+            <div className="text-[var(--text-secondary)] text-sm">{c.business_name}</div>
           </div>
           {/* Quick stats */}
           <div className="text-right hidden sm:block">
-            <div className="text-green-400 font-black text-lg">${c.current_price || c.target_amount || '—'}</div>
-            <div className="text-gray-500 text-xs">{c.quantity_sold || 0} sold</div>
+            <div className="text-[var(--green-primary)] font-black text-lg font-mono text-glow-green">${c.current_price || c.target_amount || '—'}</div>
+            <div className="text-[var(--text-muted)] text-xs">{c.quantity_sold || 0} sold</div>
           </div>
         </div>
 
         {c.product_description && (
-          <p className="text-gray-400 text-sm mb-3 line-clamp-2">{c.product_description}</p>
+          <p className="text-[var(--text-secondary)] text-sm mb-3 line-clamp-2">{c.product_description}</p>
         )}
 
         {/* Progress bar */}
         <div className="mb-3">
-          <div className="flex justify-between text-xs text-gray-500 mb-1.5">
+          <div className="flex justify-between text-xs text-[var(--text-muted)] mb-1.5">
             <span>{c.quantity_sold || 0} / {c.quantity_available || '—'} claimed</span>
-            <span className="text-green-400 font-bold">{Math.round(progress)}%</span>
+            <span className="text-[var(--green-primary)] font-bold text-glow-green">{Math.round(progress)}%</span>
           </div>
-          <div className="w-full bg-white/10 rounded-full h-2">
-            <div className="bg-gradient-to-r from-green-600 to-green-400 h-2 rounded-full transition-all" style={{ width: `${Math.min(100, progress)}%` }} />
+          <div className="w-full bg-[rgba(255,255,255,0.06)] rounded-full h-2">
+            <div className="h-full bg-gradient-to-r from-[var(--green-primary)] to-[var(--green-glow)] h-2 rounded-full transition-all progress-glow" style={{ width: `${Math.min(100, progress)}%` }} />
           </div>
         </div>
 
         {/* Action row */}
         <div className="flex items-center gap-2">
-          <Link href={`/deals/${c.id}`} className="flex-1 text-center px-4 py-2.5 bg-green-600 hover:bg-green-700 rounded-xl text-white text-sm font-bold transition">
+          <Link href={`/deals/${c.id}`} className="flex-1 text-center px-4 py-2.5 btn-neon rounded-xl text-white text-sm font-bold transition">
             Invest in this Campaign →
           </Link>
-          <button className="w-10 h-10 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl flex items-center justify-center text-gray-400 hover:text-white transition">
+          <button className="w-10 h-10 glass rounded-xl flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--green-primary)] transition">
             <span>🔖</span>
           </button>
         </div>
@@ -391,24 +391,24 @@ function FeedCard({ item, user }: { item: FeedItem; user: any }) {
   if (item.type === 'deal') {
     const b = item.data
     return (
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-4 hover:border-white/20 transition-all">
+      <div className="glass-card rounded-2xl p-4 hover:border-[var(--border-subtle)] transition-all duration-300">
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-green-600 to-green-700 flex items-center justify-center text-white text-sm font-bold">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--green-primary)] to-[var(--green-dim)] flex items-center justify-center text-black text-sm font-bold shadow-[var(--glow-green-sm)]">
             {(b.users?.name || 'U').charAt(0).toUpperCase()}
           </div>
           <div className="flex-1">
             <div className="text-white text-sm font-semibold">{b.users?.name || 'Someone'} backed a campaign</div>
-            <div className="text-gray-500 text-xs flex items-center gap-1">
+            <div className="text-[var(--text-muted)] text-xs flex items-center gap-1">
               <span>{timeAgo(item.created_at)}</span>
               <span>·</span>
-              <span className="text-green-400 font-medium">{b.quantity || 1} unit{b.quantity !== 1 ? 's' : ''}</span>
+              <span className="text-[var(--green-primary)] font-medium">{b.quantity || 1} unit{b.quantity !== 1 ? 's' : ''}</span>
             </div>
           </div>
-          <div className="text-green-400 font-black text-lg">${Number(b.total_price || 0).toFixed(0)}</div>
+          <div className="text-[var(--green-primary)] font-black text-lg font-mono text-glow-green">${Number(b.total_price || 0).toFixed(0)}</div>
         </div>
-        <Link href={`/deals/${b.campaign_id}`} className="block p-3 bg-white/5 rounded-xl hover:bg-white/10 transition">
+        <Link href={`/deals/${b.campaign_id}`} className="block p-3 glass rounded-xl hover:border-[var(--border-glow)] transition">
           <div className="text-white font-semibold text-sm">{b.product_campaigns?.product_name}</div>
-          <div className="text-gray-400 text-xs mt-0.5">{b.product_campaigns?.business_name} · {b.product_campaigns?.business_sector}</div>
+          <div className="text-[var(--text-secondary)] text-xs mt-0.5">{b.product_campaigns?.business_name} · {b.product_campaigns?.business_sector}</div>
         </Link>
       </div>
     )
@@ -418,31 +418,31 @@ function FeedCard({ item, user }: { item: FeedItem; user: any }) {
     const e = item.data
     const isComplete = e.progress_percent === 100
     return (
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-4 hover:border-blue-500/30 transition-all">
+      <div className="glass-card rounded-2xl p-4 hover:border-blue-500/30 transition-all duration-300">
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center text-white text-sm font-bold">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-sm font-bold shadow-[0_0_8px_rgba(59,130,246,0.4)]">
             {(e.users?.name || 'U').charAt(0).toUpperCase()}
           </div>
           <div className="flex-1">
             <div className="text-white text-sm font-semibold flex items-center gap-1.5">
               {isComplete ? '🎓' : '📖'} {e.users?.name || 'Someone'} {isComplete ? 'completed' : 'is learning'}
             </div>
-            <div className="text-gray-500 text-xs">{timeAgo(item.created_at)}</div>
+            <div className="text-[var(--text-muted)] text-xs">{timeAgo(item.created_at)}</div>
           </div>
           {isComplete && (
-            <span className="bg-blue-600/20 border border-blue-500/30 text-blue-400 text-xs px-2 py-1 rounded-full font-bold">DONE</span>
+            <span className="bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs px-2 py-1 rounded-full font-bold shadow-[0_0_8px_rgba(59,130,246,0.3)]">DONE</span>
           )}
         </div>
-        <Link href={`/learn/courses/${e.course_id}`} className="block p-3 bg-white/5 rounded-xl hover:bg-white/10 transition">
+        <Link href={`/learn/courses/${e.course_id}`} className="block p-3 glass rounded-xl hover:border-blue-500/30 transition">
           <div className="text-white font-semibold text-sm">{e.courses?.title}</div>
           {!isComplete && (
             <div className="mt-2">
-              <div className="flex justify-between text-xs text-gray-500 mb-1">
+              <div className="flex justify-between text-xs text-[var(--text-muted)] mb-1">
                 <span>{e.progress_percent || 0}% complete</span>
-                <Link href={`/learn/courses/${e.course_id}`} className="text-green-400 hover:text-green-300 font-medium">Continue →</Link>
+                <Link href={`/learn/courses/${e.course_id}`} className="text-[var(--green-primary)] hover:text-green-300 font-medium">Continue →</Link>
               </div>
-              <div className="w-full bg-white/10 rounded-full h-1.5">
-                <div className="bg-blue-500 h-1.5 rounded-full transition-all" style={{ width: `${e.progress_percent || 0}%` }} />
+              <div className="w-full bg-[rgba(255,255,255,0.06)] rounded-full h-1.5">
+                <div className="bg-blue-500 h-1.5 rounded-full transition-all shadow-[0_0_8px_rgba(59,130,246,0.5)]" style={{ width: `${e.progress_percent || 0}%` }} />
               </div>
             </div>
           )}
@@ -453,24 +453,24 @@ function FeedCard({ item, user }: { item: FeedItem; user: any }) {
 
   if (item.type === 'campaign_update') {
     const u = item.data
-    const typeConfig: Record<string, { color: string; bg: string; icon: string }> = {
-      milestone: { color: 'text-green-400', bg: 'bg-green-900/30', icon: '🎯' },
-      shipping: { color: 'text-blue-400', bg: 'bg-blue-900/30', icon: '📦' },
-      delay: { color: 'text-amber-400', bg: 'bg-amber-900/30', icon: '⚠️' },
-      complete: { color: 'text-purple-400', bg: 'bg-purple-900/30', icon: '✅' },
+    const typeConfig: Record<string, { color: string; bg: string; icon: string; glow: string }> = {
+      milestone: { color: 'text-[var(--green-primary)]', bg: 'bg-[rgba(34,197,94,0.15)]', icon: '🎯', glow: 'shadow-[var(--glow-green-sm)]' },
+      shipping: { color: 'text-blue-400', bg: 'bg-blue-900/30', icon: '📦', glow: 'shadow-[0_0_8px_rgba(59,130,246,0.4)]' },
+      delay: { color: 'text-[var(--gold-accent)]', bg: 'bg-[rgba(245,158,11,0.15)]', icon: '⚠️', glow: 'shadow-[var(--glow-gold-sm)]' },
+      complete: { color: 'text-purple-400', bg: 'bg-purple-900/30', icon: '✅', glow: 'shadow-[0_0_8px_rgba(168,85,247,0.4)]' },
     }
-    const config = typeConfig[u.update_type] || { color: 'text-gray-400', bg: 'bg-white/5', icon: '📢' }
+    const config = typeConfig[u.update_type] || { color: 'text-[var(--text-secondary)]', bg: 'bg-[rgba(255,255,255,0.03)]', icon: '📢', glow: '' }
     return (
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-4 hover:border-white/20 transition-all">
+      <div className="glass-card rounded-2xl p-4 hover:border-[var(--border-subtle)] transition-all duration-300">
         <div className="flex items-start gap-3 mb-2">
-          <div className={`w-8 h-8 rounded-lg ${config.bg} flex items-center justify-center text-sm flex-shrink-0`}>
+          <div className={`w-8 h-8 rounded-lg ${config.bg} flex items-center justify-center text-sm flex-shrink-0 ${config.glow}`}>
             {config.icon}
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-white font-semibold text-sm">{u.product_campaigns?.business_name}</span>
-              <span className="text-gray-600 text-xs">·</span>
-              <span className="text-gray-500 text-xs">{timeAgo(item.created_at)}</span>
+              <span className="text-[var(--text-muted)] text-xs">·</span>
+              <span className="text-[var(--text-muted)] text-xs">{timeAgo(item.created_at)}</span>
             </div>
             <div className={`inline-flex items-center gap-1 text-xs font-medium ${config.color}`}>
               <span>{u.update_type?.charAt(0).toUpperCase() + u.update_type?.slice(1)}</span>
@@ -478,9 +478,9 @@ function FeedCard({ item, user }: { item: FeedItem; user: any }) {
           </div>
         </div>
         <div className="text-white font-semibold text-sm mb-1 ml-11">{u.title}</div>
-        <p className="text-gray-400 text-sm ml-11 line-clamp-2">{u.content}</p>
+        <p className="text-[var(--text-secondary)] text-sm ml-11 line-clamp-2">{u.content}</p>
         {u.product_campaigns && (
-          <Link href={`/deals/${u.product_campaigns.id}`} className="inline-flex items-center gap-1 text-green-400 text-xs font-medium mt-2 ml-11 hover:text-green-300">
+          <Link href={`/deals/${u.product_campaigns.id}`} className="inline-flex items-center gap-1 text-[var(--green-primary)] text-xs font-medium mt-2 ml-11 hover:text-green-300">
             View campaign →
           </Link>
         )}
@@ -491,33 +491,33 @@ function FeedCard({ item, user }: { item: FeedItem; user: any }) {
   if (item.type === 'inspection_assigned') {
     const j = item.data
     const statusColors: Record<string, string> = {
-      pending: 'bg-amber-900/30 border-amber-500/30 text-amber-400',
-      in_progress: 'bg-blue-900/30 border-blue-500/30 text-blue-400',
-      completed: 'bg-green-900/30 border-green-500/30 text-green-400',
+      pending: 'bg-[rgba(245,158,11,0.15)] border-[rgba(245,158,11,0.3)] text-[var(--gold-accent)] shadow-[var(--glow-gold-sm)]',
+      in_progress: 'bg-blue-500/20 border-blue-500/30 text-blue-400 shadow-[0_0_8px_rgba(59,130,246,0.3)]',
+      completed: 'bg-[rgba(34,197,94,0.15)] border-[rgba(34,197,94,0.3)] text-[var(--green-primary)] shadow-[var(--glow-green-sm)]',
     }
     return (
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-4 hover:border-amber-500/30 transition-all">
+      <div className="glass-card rounded-2xl p-4 hover:border-[rgba(245,158,11,0.3)] transition-all duration-300">
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-600 to-amber-700 flex items-center justify-center text-white text-sm">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[var(--gold-accent)] to-[var(--amber-soft)] flex items-center justify-center text-black text-sm shadow-[var(--glow-gold-sm)]">
             🔍
           </div>
           <div className="flex-1">
             <div className="text-white text-sm font-semibold">New inspection assigned</div>
-            <div className="text-gray-500 text-xs">{timeAgo(item.created_at)}</div>
+            <div className="text-[var(--text-muted)] text-xs">{timeAgo(item.created_at)}</div>
           </div>
           <span className={`text-xs px-2 py-1 rounded-full font-bold border ${statusColors[j.status] || statusColors.pending}`}>
             {j.status?.replace('_', ' ').toUpperCase()}
           </span>
         </div>
-        <Link href={`/jobs`} className="block p-3 bg-white/5 rounded-xl hover:bg-white/10 transition">
+        <Link href={`/jobs`} className="block p-3 glass rounded-xl hover:border-[rgba(245,158,11,0.3)] transition">
           <div className="text-white font-semibold text-sm">{j.businesses?.name || j.title || 'Inspection Job'}</div>
-          <div className="text-gray-400 text-xs mt-0.5 flex items-center gap-2">
+          <div className="text-[var(--text-secondary)] text-xs mt-0.5 flex items-center gap-2">
             <span>{j.location || 'Haiti'}</span>
             {j.due_date && <span>· Due {j.due_date}</span>}
           </div>
         </Link>
         <div className="flex gap-2 mt-2 ml-0">
-          <Link href={`/jobs`} className="flex-1 text-center px-4 py-2 bg-amber-600 hover:bg-amber-700 rounded-xl text-white text-xs font-bold transition">
+          <Link href={`/jobs`} className="flex-1 text-center px-4 py-2 bg-gradient-to-r from-[var(--gold-accent)] to-[var(--amber-soft)] hover:opacity-90 rounded-xl text-black text-xs font-bold transition shadow-[var(--glow-gold-sm)]">
             View Job →
           </Link>
         </div>
@@ -528,23 +528,23 @@ function FeedCard({ item, user }: { item: FeedItem; user: any }) {
   if (item.type === 'investment_return') {
     const b = item.data
     return (
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-4 hover:border-purple-500/30 transition-all">
+      <div className="glass-card rounded-2xl p-4 hover:border-purple-500/30 transition-all duration-300">
         <div className="flex items-center gap-3 mb-3">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-600 to-purple-700 flex items-center justify-center text-white text-sm font-bold">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center text-white text-sm font-bold shadow-[0_0_8px_rgba(168,85,247,0.4)]">
             💰
           </div>
           <div className="flex-1">
             <div className="text-white text-sm font-semibold">Your investment</div>
-            <div className="text-gray-500 text-xs">{timeAgo(item.created_at)}</div>
+            <div className="text-[var(--text-muted)] text-xs">{timeAgo(item.created_at)}</div>
           </div>
-          <div className="text-green-400 font-black text-sm">+${Number(b.total_price || 0).toFixed(0)}</div>
+          <div className="text-[var(--green-primary)] font-black text-sm font-mono text-glow-green">+${Number(b.total_price || 0).toFixed(0)}</div>
         </div>
-        <Link href={`/deals/${b.campaign_id}`} className="block p-3 bg-white/5 rounded-xl hover:bg-white/10 transition">
+        <Link href={`/deals/${b.campaign_id}`} className="block p-3 glass rounded-xl hover:border-purple-500/30 transition">
           <div className="text-white font-semibold text-sm">{b.product_campaigns?.product_name}</div>
-          <div className="text-gray-400 text-xs mt-0.5">{b.product_campaigns?.business_name}</div>
+          <div className="text-[var(--text-secondary)] text-xs mt-0.5">{b.product_campaigns?.business_name}</div>
           <div className="mt-2 flex items-center gap-2">
-            <span className="text-xs text-gray-500">Track delivery</span>
-            <span className="text-green-400 text-xs font-medium hover:text-green-300">View →</span>
+            <span className="text-[var(--text-muted)] text-xs">Track delivery</span>
+            <span className="text-[var(--green-primary)] text-xs font-medium hover:text-green-300">View →</span>
           </div>
         </Link>
       </div>
