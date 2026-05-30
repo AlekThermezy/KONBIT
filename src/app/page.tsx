@@ -57,7 +57,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[var(--bg-void)] text-white">
       {/* Hero Section - Haiti Map */}
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="relative" style={{ height: '100vh' }}>
         {/* Full-screen map */}
         <div className="absolute inset-0 z-0">
           <HaitiMapWrapper />

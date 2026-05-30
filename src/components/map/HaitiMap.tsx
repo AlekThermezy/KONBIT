@@ -93,7 +93,6 @@ export default function HaitiMap() {
       zoom: 7,
       zoomControl: false,
       attributionControl: false,
-      scrollWheelZoom: false,
     });
 
     // Dark tile layer
@@ -185,8 +184,8 @@ export default function HaitiMap() {
   }, []);
 
   return (
-    <div className="relative w-full h-full">
-      <div ref={mapRef} className="w-full h-full" style={{ minHeight: '500px' }} />
+    <div className="relative w-full" style={{ height: '100vh' }}>
+      <div ref={mapRef} className="w-full" style={{ height: '100vh' }} />
       
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-[var(--bg-void)]/80 backdrop-blur-sm z-10">
