@@ -57,7 +57,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[var(--bg-void)] text-white">
       {/* Hero Section - Haiti Map */}
-      <section className="relative" style={{ minHeight: '100vh' }}>
+      <section className="relative overflow-hidden" style={{ height: '100vh' }}>
         {/* Full-screen map */}
         <div className="absolute inset-0 z-0" style={{ height: '100vh', width: '100%' }}>
           <HaitiMapWrapper />
@@ -96,7 +96,7 @@ export default function Home() {
         </nav>
 
         {/* Hero content overlaid on map - pinned to BOTTOM of viewport */}
-        <div className="relative z-20 flex flex-col items-center justify-end w-full" style={{ minHeight: 'calc(100vh - 6rem)', paddingBottom: '6rem' }}>
+        <div className="relative z-20 flex flex-col items-center justify-end w-full" style={{ minHeight: 'calc(100vh - 5rem)', paddingBottom: '3rem' }}>
           <div className="max-w-4xl mx-auto text-center px-6">
 
             {/* Slogan */}
