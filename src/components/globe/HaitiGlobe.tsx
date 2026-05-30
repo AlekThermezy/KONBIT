@@ -4,19 +4,19 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import createGlobe from 'cobe'
 
 // Haiti + major diaspora cities
-const MARKERS = [
+const MARKERS: { location: [number, number]; size: number; label: string; color: [number, number, number] }[] = [
   // Haiti
-  { location: [18.9712, -72.2852] as [number, number], size: 0.12, label: 'Port-au-Prince', color: [0.13, 0.77, 0.37] },
-  { location: [19.7580, -72.2040] as [number, number], size: 0.07, label: 'Cap-Haïtien', color: [0.13, 0.77, 0.37] },
-  { location: [18.2032, -73.7478] as [number, number], size: 0.06, label: 'Les Cayes', color: [0.13, 0.77, 0.37] },
-  { location: [18.2342, -72.5384] as [number, number], size: 0.05, label: 'Jacmel', color: [0.13, 0.77, 0.37] },
+  { location: [18.9712, -72.2852], size: 0.12, label: 'Port-au-Prince', color: [0.13, 0.77, 0.37] },
+  { location: [19.7580, -72.2040], size: 0.07, label: 'Cap-Haïtien', color: [0.13, 0.77, 0.37] },
+  { location: [18.2032, -73.7478], size: 0.06, label: 'Les Cayes', color: [0.13, 0.77, 0.37] },
+  { location: [18.2342, -72.5384], size: 0.05, label: 'Jacmel', color: [0.13, 0.77, 0.37] },
   // Diaspora hubs
-  { location: [25.7617, -80.1918] as [number, number], size: 0.06, label: 'Miami', color: [0.96, 0.62, 0.04] },
-  { location: [40.7128, -74.0060] as [number, number], size: 0.07, label: 'New York', color: [0.96, 0.62, 0.04] },
-  { location: [45.5017, -73.5673] as [number, number], size: 0.06, label: 'Montreal', color: [0.96, 0.62, 0.04] },
-  { location: [48.8566, 2.3522] as [number, number], size: 0.05, label: 'Paris', color: [0.96, 0.62, 0.04] },
-  { location: [51.5074, -0.1278] as [number, number], size: 0.05, label: 'London', color: [0.96, 0.62, 0.04] },
-  { location: [25.2048, 55.2708] as [number, number], size: 0.04, label: 'Dubai', color: [0.96, 0.62, 0.04] },
+  { location: [25.7617, -80.1918], size: 0.06, label: 'Miami', color: [0.96, 0.62, 0.04] },
+  { location: [40.7128, -74.0060], size: 0.07, label: 'New York', color: [0.96, 0.62, 0.04] },
+  { location: [45.5017, -73.5673], size: 0.06, label: 'Montreal', color: [0.96, 0.62, 0.04] },
+  { location: [48.8566, 2.3522], size: 0.05, label: 'Paris', color: [0.96, 0.62, 0.04] },
+  { location: [51.5074, -0.1278], size: 0.05, label: 'London', color: [0.96, 0.62, 0.04] },
+  { location: [25.2048, 55.2708], size: 0.04, label: 'Dubai', color: [0.96, 0.62, 0.04] },
 ]
 
 export default function HaitiGlobe() {
