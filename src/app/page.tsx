@@ -56,8 +56,8 @@ function Badge({ children, glow = 'green' }: { children: React.ReactNode; glow?:
 function GlassCard({ children, className = '', hover = true }: { children: React.ReactNode; className?: string; hover?: boolean }) {
   return (
     <div className={`
-      relative rounded-2xl border border-white/8 bg-white/3 backdrop-blur-sm
-      ${hover ? 'hover:bg-white/6 hover:border-green-500/25 transition-all duration-500 group' : ''}
+      relative rounded-2xl border border-[rgba(255,255,255,0.12)] bg-[#141f16] backdrop-blur-sm
+      ${hover ? 'hover:bg-[#1a2b1d] hover:border-green-500/40 transition-all duration-500 group' : ''}
       ${className}
     `}>
       {children}
@@ -136,7 +136,7 @@ export default function Home() {
   const city = DIASPORA_CITIES[cityIdx]
 
   return (
-    <div className="min-h-screen bg-[#030808] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#080f0a] text-white overflow-x-hidden">
 
       {/* ══ HERO ══════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden" style={{ height: '100vh', minHeight: '700px' }}>
@@ -167,12 +167,12 @@ export default function Home() {
         {/* Left-to-center gradient — lets globe bleed through but text stays readable */}
         <div className="absolute inset-0 pointer-events-none" style={{
           zIndex: 3,
-          background: 'linear-gradient(100deg, #030808 30%, rgba(3,8,8,0.75) 50%, rgba(3,8,8,0.15) 70%, transparent 85%)',
+          background: 'linear-gradient(100deg, #080f0a 28%, rgba(8,15,10,0.80) 48%, rgba(8,15,10,0.18) 68%, transparent 84%)',
         }} />
         {/* Bottom fade */}
         <div className="absolute inset-0 pointer-events-none" style={{
           zIndex: 3,
-          background: 'linear-gradient(to top, #030808 0%, transparent 25%)',
+          background: 'linear-gradient(to top, #080f0a 0%, transparent 28%)',
         }} />
 
         {/* ── NAVBAR ── */}
@@ -304,7 +304,7 @@ export default function Home() {
                   <span className="text-2xl">🎉</span>
                   <div>
                     <p className="font-bold text-green-400 text-sm">You&apos;re on the list!</p>
-                    <p className="text-white/35 text-xs mt-0.5">We&apos;ll notify you at launch.</p>
+                    <p className="text-white/55 text-xs mt-0.5">We&apos;ll notify you at launch.</p>
                   </div>
                 </div>
               )}
@@ -337,14 +337,14 @@ export default function Home() {
       </section>
 
       {/* ── WHY KONBIT ──────────────────────────────────────────────── */}
-      <section className="py-28 px-6" style={{ background: 'linear-gradient(180deg, #030808 0%, #050d08 100%)' }}>
+      <section className="py-28 px-6" style={{ background: 'linear-gradient(180deg, #080f0a 0%, #0a1410 100%)' }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <Badge glow="green" >Why KONBIT</Badge>
             <h2 className="text-4xl md:text-5xl font-black mt-5 mb-4 leading-tight">
               The Platform <span style={{ color: '#22c55e' }}>Built for<br />Diaspora Investors</span>
             </h2>
-            <p className="text-white/40 max-w-xl mx-auto leading-relaxed">
+            <p className="text-white/65 max-w-xl mx-auto leading-relaxed">
               No other platform connects the diaspora directly to Haitian economic development with verified impact.
             </p>
           </div>
@@ -361,7 +361,7 @@ export default function Home() {
               <GlassCard key={item.title} className="p-8">
                 <div className="text-4xl mb-5">{item.icon}</div>
                 <h3 className="font-black text-lg mb-3 text-white group-hover:text-green-400 transition-colors">{item.title}</h3>
-                <p className="text-white/45 text-sm leading-relaxed">{item.desc}</p>
+                <p className="text-white/65 text-sm leading-relaxed">{item.desc}</p>
                 {/* Corner accent on hover */}
                 <div className="absolute bottom-0 right-0 w-12 h-12 rounded-br-2xl overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity">
                   <div className="absolute bottom-0 right-0 w-8 h-8 rounded-br-xl" style={{ background: 'linear-gradient(135deg, transparent 50%, rgba(34,197,94,0.15) 50%)' }} />
@@ -373,14 +373,14 @@ export default function Home() {
       </section>
 
       {/* ── TRUST LAYER ─────────────────────────────────────────────── */}
-      <section className="py-24 px-6" style={{ background: '#020808', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+      <section className="py-24 px-6" style={{ background: '#0a1410', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <Badge glow="gold">🇭🇹 Trusted by the Diaspora</Badge>
             <h2 className="text-4xl md:text-5xl font-black mt-5 mb-4">
               Built with <span style={{ color: '#22c55e' }}>Haitian Expertise</span>
             </h2>
-            <p className="text-white/40 max-w-xl mx-auto">
+            <p className="text-white/65 max-w-xl mx-auto">
               KONBIT is advisor-backed by Haitian diaspora leaders, community organizers, and economic development professionals.
             </p>
           </div>
@@ -401,7 +401,7 @@ export default function Home() {
                   {p.initial}
                 </div>
                 <p className="font-bold text-white text-sm">{p.name}</p>
-                <p className="text-white/35 text-xs mt-1">{p.desc}</p>
+                <p className="text-white/55 text-xs mt-1">{p.desc}</p>
               </GlassCard>
             ))}
           </div>
@@ -416,7 +416,7 @@ export default function Home() {
               <GlassCard key={p.title} className="p-8 text-center">
                 <div className="text-4xl mb-4">{p.icon}</div>
                 <h3 className="font-black text-lg mb-2">{p.title}</h3>
-                <p className="text-white/40 text-sm leading-relaxed">{p.desc}</p>
+                <p className="text-white/65 text-sm leading-relaxed">{p.desc}</p>
               </GlassCard>
             ))}
           </div>
@@ -434,7 +434,7 @@ export default function Home() {
           {/* Partnership CTA */}
           <div className="rounded-2xl p-8 text-center border border-green-500/20" style={{ background: 'linear-gradient(135deg, rgba(22,101,52,0.25), rgba(20,83,45,0.1))' }}>
             <h3 className="text-2xl font-black mb-2">Are you a Haitian diaspora organization?</h3>
-            <p className="text-white/45 mb-6">Partner with KONBIT to bring exclusive investment opportunities to your community.</p>
+            <p className="text-white/65 mb-6">Partner with KONBIT to bring exclusive investment opportunities to your community.</p>
             <a
               href="mailto:partnerships@konbit.io"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-black transition-all hover:scale-105"
@@ -447,14 +447,14 @@ export default function Home() {
       </section>
 
       {/* ── GROWTH SECTION ──────────────────────────────────────────── */}
-      <section id="growth" className="py-28 px-6" style={{ background: 'linear-gradient(180deg, #020808 0%, #040b06 100%)' }}>
+      <section id="growth" className="py-28 px-6" style={{ background: 'linear-gradient(180deg, #0a1410 0%, #0f1a12 100%)' }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <Badge glow="green">KONBIT Growth</Badge>
             <h2 className="text-4xl md:text-5xl font-black mt-5 mb-4">
               Invest in <span style={{ color: '#22c55e' }}>Business Growth</span>
             </h2>
-            <p className="text-white/40 max-w-xl mx-auto">
+            <p className="text-white/65 max-w-xl mx-auto">
               From vacation rentals to recording studios — pre-order real Haitian products at 25–40% below retail while funding the businesses that make them.
             </p>
           </div>
@@ -470,7 +470,7 @@ export default function Home() {
               <GlassCard key={s.title} className="p-6">
                 <div className="text-4xl mb-4">{s.icon}</div>
                 <h3 className="font-black text-base mb-2" style={{ color: s.color }}>{s.title}</h3>
-                <p className="text-white/40 text-sm leading-relaxed">{s.desc}</p>
+                <p className="text-white/65 text-sm leading-relaxed">{s.desc}</p>
                 <div className="mt-5 pt-4 border-t border-white/5">
                   <Link href="/deals" className="text-xs font-bold text-white/30 group-hover:text-white/60 transition-colors flex items-center gap-1">
                     Browse campaigns
@@ -502,7 +502,7 @@ export default function Home() {
                     {step.n}
                   </div>
                   <h4 className="font-black mb-2">{step.title}</h4>
-                  <p className="text-white/40 text-sm leading-relaxed">{step.desc}</p>
+                  <p className="text-white/65 text-sm leading-relaxed">{step.desc}</p>
                 </div>
               ))}
             </div>
@@ -511,14 +511,14 @@ export default function Home() {
       </section>
 
       {/* ── LEARN SECTION ───────────────────────────────────────────── */}
-      <section id="learn" className="py-28 px-6" style={{ background: 'linear-gradient(180deg, #040b06 0%, #020508 100%)' }}>
+      <section id="learn" className="py-28 px-6" style={{ background: 'linear-gradient(180deg, #0f1a12 0%, #0a0f18 100%)' }}>
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <Badge glow="blue">KONBIT Learn</Badge>
             <h2 className="text-4xl md:text-5xl font-black mt-5 mb-4">
               Learn from <span style={{ color: '#60a5fa' }}>Haitian Experts</span>
             </h2>
-            <p className="text-white/40 max-w-xl mx-auto">
+            <p className="text-white/65 max-w-xl mx-auto">
               Courses taught by professionals from Haiti and the diaspora. Smart learning features that actually help you succeed.
             </p>
           </div>
@@ -535,7 +535,7 @@ export default function Home() {
               <GlassCard key={f.title} className="p-6">
                 <div className="text-3xl mb-3">{f.icon}</div>
                 <h3 className="font-black mb-2">{f.title}</h3>
-                <p className="text-white/40 text-sm leading-relaxed">{f.desc}</p>
+                <p className="text-white/65 text-sm leading-relaxed">{f.desc}</p>
               </GlassCard>
             ))}
           </div>
@@ -544,7 +544,7 @@ export default function Home() {
           <div className="rounded-2xl p-10 text-center border border-blue-500/20" style={{ background: 'linear-gradient(135deg, rgba(30,58,138,0.2), rgba(22,101,52,0.15))' }}>
             <div className="text-5xl mb-5">🎁</div>
             <h3 className="text-2xl font-black mb-3">Gift Knowledge</h3>
-            <p className="text-white/45 max-w-xl mx-auto mb-8 leading-relaxed">
+            <p className="text-white/65 max-w-xl mx-auto mb-8 leading-relaxed">
               Sponsor someone in Haiti — or anywhere in the world — to take a course. They learn, you track their progress, and the community grows stronger together.
             </p>
             <Link
@@ -559,13 +559,13 @@ export default function Home() {
       </section>
 
       {/* ── GLOBAL SECTION ──────────────────────────────────────────── */}
-      <section className="py-28 px-6" style={{ background: '#020808' }}>
+      <section className="py-28 px-6" style={{ background: '#080f0a' }}>
         <div className="max-w-4xl mx-auto text-center">
           <Badge glow="gold">All Nations, All People</Badge>
           <h2 className="text-4xl md:text-5xl font-black mt-5 mb-6 leading-tight">
             Built for <span style={{ color: '#22c55e' }}>Every Haitian,<br />Everywhere</span>
           </h2>
-          <p className="text-white/40 text-lg mb-14 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white/65 text-lg mb-14 max-w-2xl mx-auto leading-relaxed">
             Whether you&apos;re in Miami, Montréal, Paris, or Port-au-Prince — you&apos;re welcome here. KONBIT connects the global diaspora with Haiti&apos;s future.
           </p>
 
@@ -578,7 +578,7 @@ export default function Home() {
               <GlassCard key={item.title} className="p-8 text-center">
                 <div className="text-4xl mb-4">{item.icon}</div>
                 <h4 className="font-black mb-2">{item.title}</h4>
-                <p className="text-white/40 text-sm">{item.desc}</p>
+                <p className="text-white/65 text-sm">{item.desc}</p>
               </GlassCard>
             ))}
           </div>

@@ -46,7 +46,7 @@ const HAITI_THETA = (18.9712 * Math.PI) / 180   // ~0.331 rad  (19°N)
 // Phase 1 (1.5–5s)   : eased zoom-out scale 3.2 → 1.1, globe stays on Haiti
 // Phase 2 (5s+)      : gentle auto-rotation begins
 const PHASE_HOLD   = 1500   // ms
-const PHASE_ZOOM   = 3500   // ms
+const PHASE_ZOOM   = 3800   // ms — slightly slower zoom-out
 const SCALE_CLOSE  = 3.2
 const SCALE_FAR    = 1.1
 
@@ -104,19 +104,19 @@ export default function HaitiGlobe() {
       height: widthRef.current * 2,
       phi:    HAITI_PHI,
       theta:  HAITI_THETA,
-      dark:   1,
-      diffuse: 2.2,
-      mapSamples:        22000,
-      mapBrightness:     7.0,   // bright white-green continents
-      mapBaseBrightness: 0.04,  // deep dark ocean
-      baseColor:   [0.02, 0.05, 0.02],
-      markerColor: [0.13, 0.95, 0.45],
-      glowColor:   [0.07, 0.30, 0.12],
+      dark: 1,
+      diffuse: 2.8,             // stronger directional light = better continent definition
+      mapSamples:        24000, // maximum resolution continent edges
+      mapBrightness:     9.5,   // bright chartreuse-white landmasses on deep ocean
+      mapBaseBrightness: 0.06,  // deep Caribbean teal ocean floor
+      baseColor:   [0.02, 0.10, 0.14], // deep teal ocean — Caribbean color
+      markerColor: [0.13, 0.98, 0.50], // bright neon green — Haiti cities
+      glowColor:   [0.10, 0.45, 0.20], // rich green atmosphere
       markers: MARKERS,
       arcs: ARCS,
-      arcColor:  [0.13, 0.90, 0.40],
-      arcWidth:  2,
-      arcHeight: 0.38,
+      arcColor:  [0.25, 0.98, 0.55],   // bright arc trails
+      arcWidth:  2.5,
+      arcHeight: 0.42,
       scale: SCALE_CLOSE,
       opacity: 1.0,
     })
@@ -147,7 +147,7 @@ export default function HaitiGlobe() {
 
       // ── Phase 2: gentle spin ──
       if (phaseRef.current === 2 && !isDragging.current) {
-        phiRef.current += 0.0022
+        phiRef.current += 0.0008   // very gentle drift — meditative pace
       }
 
       globeRef.current?.update({
