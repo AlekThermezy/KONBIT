@@ -7,9 +7,6 @@ import Footer from '@/components/layout/Footer'
 import LeftSidebar from '@/components/layout/LeftSidebar'
 import { getCurrentUser } from '@/lib/auth'
 
-const SB_URL = 'https://dubaqsooeuvfmaxwanwv.supabase.co'
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1YmFxc29vZXV2Zm1heHdhbnd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2MTk3NTYsImV4cCI6MjA5NTE5NTc1Nn0.DFJXG3Xf4SxtByzObx54m8gStxl8LDxLMitb9EFmfR8'
-
 const filterTabs = [
   { id: 'All', label: 'All', icon: '🌐' },
   { id: 'Real Estate', label: 'Real Estate', icon: '🏠' },
@@ -55,8 +52,10 @@ export default function DealsPage() {
   async function fetchCampaigns() {
     setLoading(true)
     try {
+      const SB_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
+      const SB_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
       const res = await fetch(
-        `${SB_URL}/rest/v1/campaigns?status=eq.live&select=*,businesses(name,sector,city,country)`,
+        `${SB_URL}/rest/v1/campaigns?status=eq.live&select=*,businesses(name,sector,city,country)&order=raised_cents.desc`,
         {
           headers: {
             apikey: SB_KEY,
