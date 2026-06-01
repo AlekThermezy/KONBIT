@@ -249,27 +249,6 @@ export default function ReferPage() {
             <ShareButtons referralCode={referralCode} />
           </div>
 
-          {/* Share Link Section */}
-          <div className="bg-gradient-to-br from-green-900/30 to-green-950/50 border border-green-500/20 rounded-2xl p-8 mb-8">
-            <h2 className="text-xl font-bold text-white mb-4">Your Referral Link</h2>
-            <div className="flex gap-3 mb-6">
-              <input
-                type="text"
-                value={inviteLink}
-                readOnly
-                className="flex-1 px-4 py-3 bg-black/50 border border-white/10 rounded-xl text-green-400 font-mono text-sm"
-              />
-              <button
-                onClick={() => navigator.clipboard.writeText(inviteLink)}
-                className="px-6 py-3 bg-green-600 hover:bg-green-500 rounded-xl text-sm font-bold text-black transition"
-              >
-                Copy
-              </button>
-            </div>
-
-            <h3 className="text-sm font-medium text-gray-300 mb-3">Share via</h3>
-            <ShareButtons referralCode={referralCode} />
-          </div>
 
           {/* Invite Form */}
           <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-8">

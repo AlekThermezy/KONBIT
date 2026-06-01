@@ -118,12 +118,19 @@ export default function DictionaryPage() {
       .order('word', { ascending: true })
 
     if (data) {
-      setWords(data)
-      setFiltered(data)
+      // Deduplicate — keep first occurrence of each unique word
+      const seen = new Set<string>()
+      const unique = data.filter((w: Word) => {
+        if (seen.has(w.word)) return false
+        seen.add(w.word)
+        return true
+      })
+      setWords(unique)
+      setFiltered(unique)
       setStats({
-        total: data.length,
-        categories: new Set(data.map((w: any) => w.category)).size,
-        day: Math.max(...data.map((w: any) => w.day_added)),
+        total: unique.length,
+        categories: new Set(unique.map((w: any) => w.category)).size,
+        day: Math.max(...unique.map((w: any) => w.day_added ?? 1)),
       })
     }
   }
