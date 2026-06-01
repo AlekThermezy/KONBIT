@@ -232,21 +232,21 @@ export default function Home() {
               {/* Headline */}
               <h1 className="font-black leading-[1.02] tracking-tight mb-5"
                 style={{ fontSize: 'clamp(2.4rem, 4.5vw, 4.2rem)' }}>
-                <span className="text-white">Invest in Haiti.</span><br />
+                <span className="text-white">Rooted in Haiti.</span><br />
                 <span style={{
                   background: 'linear-gradient(125deg, #22c55e 0%, #4ade80 40%, #f59e0b 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
                 }}>
-                  Build Wealth.<br />Build Home.
+                  Built for<br />the World.
                 </span>
               </h1>
 
               {/* Subheadline */}
               <p className="text-white/50 leading-relaxed mb-8"
                 style={{ fontSize: 'clamp(0.95rem, 1.3vw, 1.1rem)', maxWidth: 420 }}>
-                The diaspora-to-homeland investment platform. Every arc on that globe is a real connection — every city, a community ready to invest in Haiti&apos;s future.
+                The diaspora-to-homeland platform for growth, learning, and impact. Whether you invest, teach, build, or Believe — every arc on that globe is a Haitian connection worth making.
               </p>
 
               {/* Platform tabs */}
@@ -284,18 +284,20 @@ export default function Home() {
                     style={{ background: 'rgba(0,0,0,0.5)', borderColor: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)' }}
                     onFocus={e => { e.target.style.borderColor='#22c55e'; e.target.style.boxShadow='0 0 0 3px rgba(34,197,94,0.12)' }}
                     onBlur={e => { e.target.style.borderColor='rgba(255,255,255,0.1)'; e.target.style.boxShadow='none' }} />
-                  <button type="submit" disabled={loading}
-                    className="py-3.5 rounded-xl font-bold text-sm text-black transition-all disabled:opacity-50 hover:scale-[1.02]"
-                    style={{
-                      background: activeTab === 'growth'
-                        ? 'linear-gradient(135deg, #22c55e, #16a34a)'
-                        : 'linear-gradient(135deg, #3b82f6, #2563eb)',
-                      boxShadow: activeTab === 'growth'
-                        ? '0 0 28px rgba(34,197,94,0.4)'
-                        : '0 0 28px rgba(59,130,246,0.4)',
-                    }}>
-                    {loading ? 'Joining...' : `Join the ${activeTab === 'growth' ? 'Growth' : 'Learn'} Waitlist`}
-                  </button>
+                  <div className="flex gap-2">
+                    <button type="submit" disabled={loading}
+                      className="flex-1 py-3.5 rounded-xl font-bold text-sm text-black transition-all disabled:opacity-50 hover:scale-[1.02]"
+                      style={{
+                        background: activeTab === 'growth'
+                          ? 'linear-gradient(135deg, #22c55e, #16a34a)'
+                          : 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                        boxShadow: activeTab === 'growth'
+                          ? '0 0 28px rgba(34,197,94,0.4)'
+                          : '0 0 28px rgba(59,130,246,0.4)',
+                      }}>
+                      {loading ? 'Joining...' : `Join Waitlist`}
+                    </button>
+                  </div>
                 </form>
               )}
 
@@ -313,8 +315,8 @@ export default function Home() {
               <div className="flex items-center gap-7 mt-8">
                 {[
                   { val: <Counter end={12} prefix="$" suffix="M+" />, label: 'Capital Raised', color: '#22c55e', glow: 'rgba(34,197,94,0.5)' },
-                  { val: <Counter end={2847} />,                      label: 'Investors',      color: '#ffffff', glow: 'none' },
-                  { val: <Counter end={23} />,                        label: 'Funded',         color: '#f59e0b', glow: 'rgba(245,158,11,0.4)' },
+                  { val: <Counter end={2847} />,                      label: 'Diaspora',         color: '#ffffff', glow: 'none' },
+                  { val: <Counter end={1240} />,                        label: 'Learners',        color: '#60a5fa', glow: 'rgba(59,130,246,0.4)' },
                 ].map((s, i) => (
                   <div key={i} className="text-center">
                     <div className="text-xl font-black font-mono" style={{ color: s.color, textShadow: `0 0 16px ${s.glow}` }}>{s.val}</div>
@@ -342,10 +344,10 @@ export default function Home() {
           <div className="text-center mb-16">
             <Badge glow="green" >Why KONBIT</Badge>
             <h2 className="text-4xl md:text-5xl font-black mt-5 mb-4 leading-tight">
-              The Platform <span style={{ color: '#22c55e' }}>Built for<br />Diaspora Investors</span>
+              Rooted in Haiti.<br /><span style={{ color: '#22c55e' }}>Built for Every Haitian.</span>
             </h2>
             <p className="text-white/65 max-w-xl mx-auto leading-relaxed">
-              No other platform connects the diaspora directly to Haitian economic development with verified impact.
+              No other platform connects the global diaspora to Haiti — for growth, learning, and real impact. Whether you have $25 or $25,000, you belong here.
             </p>
           </div>
 
@@ -563,17 +565,17 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <Badge glow="gold">All Nations, All People</Badge>
           <h2 className="text-4xl md:text-5xl font-black mt-5 mb-6 leading-tight">
-            Built for <span style={{ color: '#22c55e' }}>Every Haitian,<br />Everywhere</span>
+            <span style={{ color: '#22c55e' }}>Rooted in Haiti.</span><br />Built for the World.
           </h2>
           <p className="text-white/65 text-lg mb-14 max-w-2xl mx-auto leading-relaxed">
-            Whether you&apos;re in Miami, Montréal, Paris, or Port-au-Prince — you&apos;re welcome here. KONBIT connects the global diaspora with Haiti&apos;s future.
+            Whether you&apos;re in Miami, Montréal, Paris, or Port-au-Prince — you&apos;re welcome here. KONBIT connects the global diaspora with Haiti&apos;s future. Invest, learn, teach, or simply Belong.
           </p>
 
           <div className="grid md:grid-cols-3 gap-4 mb-14">
             {[
-              { icon: '🌐', title: 'Global', desc: 'Haitians in 140+ countries can participate' },
+              { icon: '🌐', title: 'Global', desc: 'Haitians in 140+ countries participate' },
               { icon: '⛓️', title: 'On-Chain', desc: 'Transparent, verifiable transactions on Polygon' },
-              { icon: '🧠', title: 'Smart', desc: 'AI-powered learning that actually works' },
+              { icon: '🎓', title: 'Learn & Grow', desc: 'Courses from Haitian and diaspora professionals' },
             ].map((item) => (
               <GlassCard key={item.title} className="p-8 text-center">
                 <div className="text-4xl mb-4">{item.icon}</div>
