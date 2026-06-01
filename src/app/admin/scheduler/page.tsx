@@ -3,93 +3,9 @@ import Navbar from '@/components/layout/Navbar'
 import SlideSidebar from '@/components/layout/SlideSidebar'
 import LeftSidebar from '@/components/layout/LeftSidebar'
 import Footer from '@/components/layout/Footer'
-
 import { useState, useEffect } from 'react'
 import { getCurrentUser } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
-
-const mockBusinesses = [
-  {
-    id: 'biz-001',
-    name: 'Kay Ix Construction',
-    tier: 'verified',
-    city: 'Jacmel',
-    lastInspection: 'May 18, 2026',
-    nextDue: 'June 15, 2026',
-    windowStart: 'June 13, 2026',
-    windowEnd: 'June 17, 2026',
-    pendingJobs: 0,
-    avgRating: 4.3,
-    streak: 3,
-  },
-  {
-    id: 'biz-002',
-    name: 'Manje Lakay',
-    tier: 'growth',
-    city: 'Delmas, PAP',
-    lastInspection: 'May 10, 2026',
-    nextDue: 'May 25, 2026',
-    windowStart: 'May 23, 2026',
-    windowEnd: 'May 27, 2026',
-    pendingJobs: 1,
-    avgRating: 4.6,
-    streak: 5,
-  },
-  {
-    id: 'biz-003',
-    name: 'Ixora Collective',
-    tier: 'anchor',
-    city: 'Port-au-Prince',
-    lastInspection: 'May 20, 2026',
-    nextDue: 'May 27, 2026',
-    windowStart: 'May 25, 2026',
-    windowEnd: 'May 29, 2026',
-    pendingJobs: 0,
-    avgRating: 4.9,
-    streak: 8,
-  },
-  {
-    id: 'biz-004',
-    name: 'Haitian Brew Co.',
-    tier: 'verified',
-    city: 'Thiotte',
-    lastInspection: 'April 30, 2026',
-    nextDue: 'June 28, 2026',
-    windowStart: 'June 26, 2026',
-    windowEnd: 'June 30, 2026',
-    pendingJobs: 0,
-    avgRating: 4.1,
-    streak: 2,
-  },
-  {
-    id: 'biz-005',
-    name: 'Sejour Haven',
-    tier: 'growth',
-    city: 'Jacmel',
-    lastInspection: 'May 5, 2026',
-    nextDue: 'May 20, 2026',
-    windowStart: 'May 18, 2026',
-    windowEnd: 'May 22, 2026',
-    pendingJobs: 0,
-    avgRating: 4.4,
-    streak: 4,
-  },
-]
-
-const mockInspectors = [
-  { id: 'insp-001', name: 'Jean M.', city: 'Jacmel', available: true, rating: 4.8, activeJobs: 0 },
-  { id: 'insp-002', name: 'Marie L.', city: 'Delmas, PAP', available: true, rating: 4.2, activeJobs: 1 },
-  { id: 'insp-003', name: 'Pierre T.', city: 'Port-au-Prince', available: true, rating: 4.9, activeJobs: 0 },
-  { id: 'insp-004', name: 'Claudine F.', city: 'Thiotte', available: false, rating: 4.5, activeJobs: 1 },
-]
-
-const stats = {
-  totalBusinesses: 47,
-  activeJobs: 12,
-  completedThisWeek: 8,
-  pendingApproval: 5,
-  avgRating: 4.4,
-}
 
 const tierColors: Record<string, string> = {
   free: 'text-gray-400',
@@ -107,8 +23,9 @@ const tierBg: Record<string, string> = {
 
 export default function AdminScheduler() {
   const [user, setUser] = useState<any>(null)
-  const [businesses, setBusinesses] = useState(mockBusinesses)
-  const [inspectors] = useState(mockInspectors)
+  const [businesses, setBusinesses] = useState<any[]>([])
+  const [inspectors, setInspectors] = useState<any[]>([])
+  const [stats, setStats] = useState<any>(null)
   const [selectedBusiness, setSelectedBusiness] = useState<any>(null)
   const [showAssignModal, setShowAssignModal] = useState(false)
   const [filter, setFilter] = useState('all')
@@ -121,36 +38,79 @@ export default function AdminScheduler() {
     })
   }, [])
 
+  useEffect(() => {
+    if (user) {
+      fetchData()
+    }
+  }, [user, filter])
+
+  async function fetchData() {
+    setLoading(true)
+    try {
+      const params = new URLSearchParams({ filter })
+      const res = await fetch(`/api/admin/scheduler?${params}`, {
+        headers: { Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}` }
+      })
+      const data = await res.json()
+      setBusinesses(data.businesses || [])
+
+      // Fetch inspectors separately
+      const { data: insp } = await supabase
+        .from('inspectors')
+        .select('id, name, city, rating, is_available, active_jobs')
+        .order('rating', { ascending: false })
+      setInspectors(insp || [])
+
+      setStats(data.stats || null)
+    } catch (e) {
+      console.error('Failed to fetch scheduler data', e)
+    }
+    setLoading(false)
+  }
+
   const now = new Date()
 
-  const isOverdue = (dueDate: string) => new Date(dueDate) < now
+  const isOverdue = (dueDate: string) => dueDate ? new Date(dueDate) < now : false
   const isDueSoon = (dueDate: string) => {
+    if (!dueDate) return false
     const d = new Date(dueDate)
     const diff = (d.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
     return diff >= 0 && diff <= 5
   }
 
-  const sortedBusinesses = [...businesses].sort((a, b) => {
+  const sortedBusinesses = [...businesses].sort((a: any, b: any) => {
     if (isOverdue(a.nextDue) && !isOverdue(b.nextDue)) return -1
     if (!isOverdue(a.nextDue) && isOverdue(b.nextDue)) return 1
-    return new Date(a.nextDue).getTime() - new Date(b.nextDue).getTime()
+    return new Date(a.nextDue || 0).getTime() - new Date(b.nextDue || 0).getTime()
   })
 
   const filtered = filter === 'all'
     ? sortedBusinesses
-    : sortedBusinesses.filter(b => {
-        if (filter === 'overdue') return isOverdue(b.nextDue)
-        if (filter === 'due_soon') return isDueSoon(b.nextDue)
+    : sortedBusinesses.filter((b: any) => {
+        if (filter === 'overdue') return b.overdue
+        if (filter === 'due_soon') return b.dueSoon
         if (filter === 'pending') return b.pendingJobs > 0
         return b.tier === filter
       })
 
-  const assignInspector = (business: any, inspector: any) => {
-    setBusinesses(prev => prev.map(b =>
-      b.id === business.id ? { ...b, pendingJobs: b.pendingJobs + 1 } : b
-    ))
+  const handleAssign = async (business: any, inspector: any) => {
+    const token = (await supabase.auth.getSession()).data.session?.access_token
+    await fetch('/api/admin/scheduler', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        action: 'assign',
+        scheduleId: business.scheduleId,
+        inspectorId: inspector.id,
+        jobId: business.jobId,
+      })
+    })
     setShowAssignModal(false)
     setSelectedBusiness(null)
+    fetchData()
   }
 
   if (loading) {
@@ -197,11 +157,11 @@ export default function AdminScheduler() {
           {/* Stats */}
           <div className="grid grid-cols-5 gap-4 mb-8">
             {[
-              { label: 'Total Businesses', value: stats.totalBusinesses, color: 'text-white' },
-              { label: 'Active Jobs', value: stats.activeJobs, color: 'text-yellow-400' },
-              { label: 'Completed This Week', value: stats.completedThisWeek, color: 'text-green-400' },
-              { label: 'Pending Approval', value: stats.pendingApproval, color: 'text-blue-400' },
-              { label: 'Avg Rating', value: stats.avgRating, color: 'text-yellow-400' },
+              { label: 'Total Businesses', value: stats?.total || 0, color: 'text-white' },
+              { label: 'Active Jobs', value: stats?.activeJobs || 0, color: 'text-yellow-400' },
+              { label: 'Completed This Week', value: stats?.completedThisWeek || 0, color: 'text-green-400' },
+              { label: 'Pending Approval', value: stats?.pendingApproval || 0, color: 'text-blue-400' },
+              { label: 'Avg Rating', value: stats?.avgRating?.toFixed(1) || '—', color: 'text-yellow-400' },
             ].map(stat => (
               <div key={stat.label} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
                 <div className={`text-2xl font-black ${stat.color} mb-1`}>{stat.value}</div>
@@ -332,11 +292,11 @@ export default function AdminScheduler() {
           <div className="mt-8">
             <h2 className="text-xl font-bold mb-4">Inspector Pool</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {inspectors.map(insp => (
-                <div key={insp.id} className={`bg-white/5 border rounded-2xl p-4 ${insp.available ? 'border-green-500/30' : 'border-white/10 opacity-60'}`}>
+              {inspectors.map((insp: any) => (
+                <div key={insp.id} className={`bg-white/5 border rounded-2xl p-4 ${insp.is_available ? 'border-green-500/30' : 'border-white/10 opacity-60'}`}>
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-lg">
-                      {insp.name.charAt(0)}
+                      {insp.name?.charAt(0) || '?'}
                     </div>
                     <div>
                       <div className="font-bold">{insp.name}</div>
@@ -344,13 +304,13 @@ export default function AdminScheduler() {
                     </div>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${insp.available ? 'bg-green-900/30 text-green-400' : 'bg-white/10 text-gray-400'}`}>
-                      {insp.available ? 'AVAILABLE' : 'BUSY'}
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-bold ${insp.is_available ? 'bg-green-900/30 text-green-400' : 'bg-white/10 text-gray-400'}`}>
+                      {insp.is_available ? 'AVAILABLE' : 'BUSY'}
                     </span>
-                    <span className="text-yellow-400">⭐ {insp.rating}</span>
+                    <span className="text-yellow-400">⭐ {insp.rating?.toFixed(1) || '—'}</span>
                   </div>
                   <div className="text-gray-500 text-xs mt-2">
-                    Active jobs: {insp.activeJobs}
+                    Active jobs: {insp.active_jobs || 0}
                   </div>
                 </div>
               ))}
@@ -377,26 +337,26 @@ export default function AdminScheduler() {
 
             <div className="space-y-3 mb-6">
               <div className="text-sm font-medium text-gray-400 mb-2">SELECT INSPECTOR</div>
-              {inspectors.filter(i => i.available).map(insp => (
+              {inspectors.filter((i: any) => i.is_available).map((insp: any) => (
                 <button
                   key={insp.id}
-                  onClick={() => assignInspector(selectedBusiness, insp)}
+                  onClick={() => handleAssign(selectedBusiness, insp)}
                   className="w-full flex items-center gap-4 p-4 bg-white/5 hover:bg-green-900/20 border border-white/10 hover:border-green-500/30 rounded-xl transition text-left"
                 >
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-lg font-bold">
-                    {insp.name.charAt(0)}
+                    {insp.name?.charAt(0) || '?'}
                   </div>
                   <div className="flex-1">
                     <div className="font-bold">{insp.name}</div>
                     <div className="text-gray-400 text-sm">{insp.city}</div>
                   </div>
                   <div className="text-right">
-                    <div className="text-yellow-400 font-bold">⭐ {insp.rating}</div>
-                    <div className="text-gray-500 text-xs">{insp.activeJobs} active</div>
+                    <div className="text-yellow-400 font-bold">⭐ {insp.rating?.toFixed(1) || '—'}</div>
+                    <div className="text-gray-500 text-xs">{insp.active_jobs || 0} active</div>
                   </div>
                 </button>
               ))}
-              {inspectors.filter(i => i.available).length === 0 && (
+              {inspectors.filter((i: any) => i.is_available).length === 0 && (
                 <div className="text-center py-8 text-gray-400">
                   No inspectors available. Check back later.
                 </div>

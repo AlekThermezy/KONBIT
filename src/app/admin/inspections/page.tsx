@@ -1,80 +1,44 @@
 'use client'
+import { useState, useEffect } from 'react'
 import Navbar from '@/components/layout/Navbar'
 import SlideSidebar from '@/components/layout/SlideSidebar'
 import LeftSidebar from '@/components/layout/LeftSidebar'
 import Footer from '@/components/layout/Footer'
-
-import { useState, useEffect } from 'react'
 import { getCurrentUser } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 
-const sampleReports = [
-  {
-    id: 'rep-001',
-    inspector: 'Jean M.',
-    inspectorRating: 4.8,
-    jobType: 'company_visit',
-    business: 'Kay Ix Construction',
-    location: 'Jacmel',
-    submittedAt: 'May 24, 2026 · 3:45 PM',
-    videoUrl: null,
-    summary: 'Construction site looks active. 4 workers on site, foundation poured, walls going up next week. Materials stored properly. Site manager very cooperative.',
-    rating: 4,
-    findings: { workers: 4, materials: 'organized', quality: 4, communication: 5 },
-    photos: [],
-    payoutAmount: 3500,
-    inspectorBalance: 12500,
-    status: 'pending',
-  },
-  {
-    id: 'rep-002',
-    inspector: 'Marie L.',
-    inspectorRating: 4.2,
-    jobType: 'food_review',
-    business: 'Manje Lakay',
-    location: 'Delmas, PAP',
-    submittedAt: 'May 23, 2026 · 7:30 PM',
-    videoUrl: null,
-    summary: 'Restaurant clean, food arrived in 25 minutes. Griyo was well seasoned. Staff friendly. Only issue: bathroom could be cleaner. Overall recommend.',
-    rating: 4,
-    findings: { foodQuality: 4, serviceSpeed: 3, cleanliness: 3, staff: 5 },
-    photos: [],
-    payoutAmount: 2500,
-    inspectorBalance: 8000,
-    status: 'pending',
-  },
-  {
-    id: 'rep-003',
-    inspector: 'Pierre T.',
-    inspectorRating: 4.9,
-    jobType: 'delivery_verify',
-    business: 'Ixora Collective',
-    location: 'Port-au-Prince',
-    submittedAt: 'May 22, 2026 · 2:15 PM',
-    videoUrl: null,
-    summary: 'Delivery confirmed. 50 boxes received, all in good condition. Packaging intact. Signature obtained. Batch ready for distribution.',
-    rating: 5,
-    findings: { itemCount: 50, condition: 'perfect', packaging: 'intact', signature: true },
-    photos: [],
-    payoutAmount: 2000,
-    inspectorBalance: 5500,
-    status: 'approved',
-  },
-]
+// Icons for job types
+const jobTypeIcons: Record<string, string> = {
+  food_review: '🍽️',
+  company_visit: '🏢',
+  delivery_verify: '📦',
+  quality_check: '✅',
+  compliance: '📋',
+  verification_visit: '🔍',
+}
 
-const pendingStats = {
-  awaitingReview: 8,
-  approved: 24,
-  rejected: 3,
-  paidOut: 19,
+const statusColors: Record<string, { bg: string; text: string }> = {
+  pending: { bg: 'bg-yellow-900/30', text: 'text-yellow-400' },
+  approved: { bg: 'bg-green-900/30', text: 'text-green-400' },
+  rejected: { bg: 'bg-red-900/30', text: 'text-red-400' },
+  paid: { bg: 'bg-blue-900/30', text: 'text-blue-400' },
+}
+
+const borderColors: Record<string, string> = {
+  pending: 'border-yellow-500/30',
+  approved: 'border-green-500/30',
+  rejected: 'border-red-500/30',
+  paid: 'border-blue-500/30',
 }
 
 export default function AdminInspections() {
   const [user, setUser] = useState<any>(null)
-  const [reports, setReports] = useState(sampleReports)
+  const [reports, setReports] = useState<any[]>([])
+  const [stats, setStats] = useState<any>(null)
   const [selectedReport, setSelectedReport] = useState<any>(null)
   const [filter, setFilter] = useState('pending')
   const [loading, setLoading] = useState(true)
+  const [loadingAction, setLoadingAction] = useState<string | null>(null)
 
   useEffect(() => {
     getCurrentUser().then(u => {
@@ -83,24 +47,51 @@ export default function AdminInspections() {
     })
   }, [])
 
-  const approveReport = (reportId: string) => {
-    setReports(prev => prev.map(r => 
-      r.id === reportId ? { ...r, status: 'approved' } : r
-    ))
-    setSelectedReport(null)
+  useEffect(() => {
+    if (user) {
+      fetchReports()
+    }
+  }, [user, filter])
+
+  async function fetchReports() {
+    setLoading(true)
+    try {
+      const params = new URLSearchParams({ status: filter })
+      const res = await fetch(`/api/admin/inspections?${params}`, {
+        headers: { Authorization: `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}` }
+      })
+      const data = await res.json()
+      setReports(data.reports || [])
+      setStats(data.stats || null)
+    } catch (e) {
+      console.error('Failed to fetch reports', e)
+    }
+    setLoading(false)
   }
 
-  const rejectReport = (reportId: string) => {
-    setReports(prev => prev.map(r => 
-      r.id === reportId ? { ...r, status: 'rejected' } : r
-    ))
-    setSelectedReport(null)
-  }
-
-  const markPaid = (reportId: string) => {
-    setReports(prev => prev.map(r => 
-      r.id === reportId ? { ...r, status: 'paid' } : r
-    ))
+  const handleAction = async (action: string, reportId: string) => {
+    setLoadingAction(reportId)
+    try {
+      const token = (await supabase.auth.getSession()).data.session?.access_token
+      const res = await fetch('/api/admin/inspections', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ action, reportId })
+      })
+      const result = await res.json()
+      if (result.success) {
+        setReports(prev => prev.map(r =>
+          r.id === reportId ? { ...r, status: result.status } : r
+        ))
+        setSelectedReport(null)
+      }
+    } catch (e) {
+      console.error('Action failed', e)
+    }
+    setLoadingAction(null)
   }
 
   if (loading) {
@@ -124,7 +115,7 @@ export default function AdminInspections() {
     )
   }
 
-  const filtered = filter === 'all' ? reports : reports.filter(r => r.status === filter)
+  const filtered = filter === 'all' ? reports : reports.filter((r: any) => r.status === filter)
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -149,10 +140,10 @@ export default function AdminInspections() {
           {/* Stats */}
           <div className="grid grid-cols-4 gap-4 mb-8">
             {[
-              { label: 'Awaiting Review', value: pendingStats.awaitingReview, color: 'yellow' },
-              { label: 'Approved', value: pendingStats.approved, color: 'green' },
-              { label: 'Rejected', value: pendingStats.rejected, color: 'red' },
-              { label: 'Paid Out', value: pendingStats.paidOut, color: 'blue' },
+              { label: 'Awaiting Review', value: stats?.pending || 0, color: 'yellow' },
+              { label: 'Approved', value: stats?.approved || 0, color: 'green' },
+              { label: 'Rejected', value: stats?.rejected || 0, color: 'red' },
+              { label: 'Paid Out', value: stats?.paid || 0, color: 'blue' },
             ].map(stat => (
               <div key={stat.label} className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
                 <div className={`text-2xl font-black ${
@@ -202,7 +193,7 @@ export default function AdminInspections() {
                         🔍 {report.inspector} · 📍 {report.location} · {report.submittedAt}
                       </p>
                       <p className="text-gray-500 text-xs mt-1">
-                        Inspector Rating: ⭐ {report.inspectorRating} · Balance: ${(report.inspectorBalance/100).toFixed(2)}
+                        Inspector Rating: ⭐ {report.inspectorRating?.toFixed(1) || '—'}
                       </p>
                     </div>
                   </div>
@@ -250,16 +241,18 @@ export default function AdminInspections() {
                 {report.status === 'pending' && (
                   <div className="flex gap-3">
                     <button
-                      onClick={() => rejectReport(report.id)}
-                      className="flex-1 py-2.5 bg-white/5 hover:bg-red-900/30 border border-red-500/30 rounded-xl font-semibold transition text-red-400"
+                      onClick={() => handleAction('reject', report.id)}
+                      disabled={loadingAction === report.id}
+                      className="flex-1 py-2.5 bg-white/5 hover:bg-red-900/30 border border-red-500/30 rounded-xl font-semibold transition text-red-400 disabled:opacity-50"
                     >
-                      ✗ Reject
+                      {loadingAction === report.id ? '⏳' : '✗'} Reject
                     </button>
                     <button
-                      onClick={() => approveReport(report.id)}
-                      className="flex-1 py-2.5 bg-green-600 hover:bg-green-500 rounded-xl font-bold transition"
+                      onClick={() => handleAction('approve', report.id)}
+                      disabled={loadingAction === report.id}
+                      className="flex-1 py-2.5 bg-green-600 hover:bg-green-500 rounded-xl font-bold transition disabled:opacity-50"
                     >
-                      ✓ Approve
+                      {loadingAction === report.id ? '⏳' : '✓'} Approve
                     </button>
                   </div>
                 )}
@@ -267,10 +260,11 @@ export default function AdminInspections() {
                 {report.status === 'approved' && (
                   <div className="flex gap-3">
                     <button
-                      onClick={() => markPaid(report.id)}
-                      className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold transition"
+                      onClick={() => handleAction('pay', report.id)}
+                      disabled={loadingAction === report.id}
+                      className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold transition disabled:opacity-50"
                     >
-                      💰 Mark as Paid
+                      {loadingAction === report.id ? '⏳' : '💰'} Mark as Paid
                     </button>
                   </div>
                 )}
@@ -317,7 +311,7 @@ export default function AdminInspections() {
                   <div className="text-gray-400 text-sm">Payout</div>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4 text-center">
-                  <div className="text-2xl font-black text-yellow-400">${(selectedReport.inspectorBalance/100).toFixed(0)}</div>
+                  <div className="text-2xl font-black text-yellow-400">—</div>
                   <div className="text-gray-400 text-sm">Balance</div>
                 </div>
               </div>
@@ -348,16 +342,18 @@ export default function AdminInspections() {
 
               <div className="flex gap-3 pt-2">
                 <button
-                  onClick={() => { rejectReport(selectedReport.id); setSelectedReport(null) }}
-                  className="flex-1 py-3 bg-white/5 hover:bg-red-900/30 border border-red-500/30 rounded-xl font-semibold transition text-red-400"
+                  onClick={() => { handleAction('reject', selectedReport.id); setSelectedReport(null) }}
+                  disabled={loadingAction === selectedReport.id}
+                  className="flex-1 py-3 bg-white/5 hover:bg-red-900/30 border border-red-500/30 rounded-xl font-semibold transition text-red-400 disabled:opacity-50"
                 >
-                  ✗ Reject Report
+                  {loadingAction === selectedReport.id ? '⏳' : '✗'} Reject Report
                 </button>
                 <button
-                  onClick={() => { approveReport(selectedReport.id); setSelectedReport(null) }}
-                  className="flex-1 py-3 bg-green-600 hover:bg-green-500 rounded-xl font-bold transition"
+                  onClick={() => { handleAction('approve', selectedReport.id); setSelectedReport(null) }}
+                  disabled={loadingAction === selectedReport.id}
+                  className="flex-1 py-3 bg-green-600 hover:bg-green-500 rounded-xl font-bold transition disabled:opacity-50"
                 >
-                  ✓ Approve Report
+                  {loadingAction === selectedReport.id ? '⏳' : '✓'} Approve Report
                 </button>
               </div>
             </div>
