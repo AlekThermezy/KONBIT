@@ -296,7 +296,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
         <p className="text-center text-gray-500 text-xs mt-6">
           {authMode === 'whatsapp'
             ? '💬 WhatsApp-first signup — recommended for Haiti'
-            : 'Demo mode: Configure Supabase environment variables for production'}
+            : process.env.NODE_ENV === 'development' ? '🔧 Dev mode: using Supabase from .env.local' : null}
         </p>
       </div>
     </div>

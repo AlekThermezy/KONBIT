@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "images": [
+    {
+      "filename": "2010_Haiti_earthquake",
+      "title": "2010 Haiti earthquake",
+      "source_url": "https://en.wikipedia.org/wiki/2010_Haiti_earthquake",
+      "thumb_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Ruins_of_Haiti_National_Palace_-_Port_au_Prince_2012.jpg/1280px-Ruins_of_Haiti_National_Palace_-_Port_au_Prince_2012.jpg",
+      "added_at": "2026-06-01T01:47:09.011473",
+      "search_term": "Haiti landscape"
+    },
+    {
+      "filename": "Haiti",
+      "title": "Haiti",
+      "source_url": "https://en.wikipedia.org/wiki/Haiti",
+      "thumb_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Flag_of_Haiti.svg/1280px-Flag_of_Haiti.svg.png",
+      "added_at": "2026-06-01T01:47:09.235564",
+      "search_term": "Haiti landscape"
+    },
+    {
+      "filename": "Haitians",
+      "title": "Haitians",
+      "source_url": "https://en.wikipedia.org/wiki/Haitians",
+      "thumb_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Map_of_the_Haitian_Diaspora_in_the_World.svg/1280px-Map_of_the_Haitian_Diaspora_in_the_World.svg.png",
+      "added_at": "2026-06-01T01:47:09.345430",
+      "search_term": "Haiti landscape"
+    },
+    {
+      "filename": "Haitian_Vodou",
+      "title": "Haitian Vodou",
+      "source_url": "https://en.wikipedia.org/wiki/Haitian_Vodou",
+      "thumb_url": "https://upload.wikimedia.org/wikipedia/commons/e/e6/VoodooValris.jpg",
+      "added_at": "2026-06-01T01:47:12.246142",
+      "search_term": "Haitian art market"
+    },
+    {
+      "filename": "Haitian_Carnival",
+      "title": "Haitian Carnival",
+      "source_url": "https://en.wikipedia.org/wiki/Haitian_Carnival",
+      "thumb_url": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Haitian_Carnival_%28Kanaval%29.jpg",
+      "added_at": "2026-06-01T01:47:13.820197",
+      "search_term": "Haitian music carnival"
+    },
+    {
+      "filename": "Gingerbread_(architecture)",
+      "title": "Gingerbread (architecture)",
+      "source_url": "https://en.wikipedia.org/wiki/Gingerbread_(architecture)",
+      "thumb_url": "https://upload.wikimedia.org/wikipedia/commons/7/72/Cape_may_pink_victorian.jpg",
+      "added_at": "2026-06-01T02:00:10.201978",
+      "search_term": "Haitian architecture"
+    },
+    {
+      "filename": "National_Palace_(Haiti)",
+      "title": "National Palace (Haiti)",
+      "source_url": "https://en.wikipedia.org/wiki/National_Palace_(Haiti)",
+      "thumb_url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Palacio_presidencial_de_Haiti.jpg",
+      "added_at": "2026-06-01T02:00:10.554525",
+      "search_term": "Haitian architecture"
+    },
+    {
+      "filename": "Shotgun_house",
+      "title": "Shotgun house",
+      "source_url": "https://en.wikipedia.org/wiki/Shotgun_house",
+      "thumb_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/BayouStJohnHeartMarkTires.jpg/1280px-BayouStJohnHeartMarkTires.jpg",
+      "added_at": "2026-06-01T02:00:10.838581",
+      "search_term": "Haitian architecture"
+    },
+    {
+      "filename": "List_of_communes_of_Haiti",
+      "title": "List of communes of Haiti",
+      "source_url": "https://en.wikipedia.org/wiki/List_of_communes_of_Haiti",
+      "thumb_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Coat_of_arms_of_Haiti.svg/1280px-Coat_of_arms_of_Haiti.svg.png",
+      "added_at": "2026-06-01T02:00:12.971175",
+      "search_term": "Ile de la Tortue Haiti"
+    }
+  ],
+  "current": "Haitians",
+  "last_sync": "2026-06-01T02:00:17.089802"
+}

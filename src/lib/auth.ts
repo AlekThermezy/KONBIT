@@ -72,11 +72,11 @@ export async function signUp(email: string, password: string, fullName: string, 
   if (error) throw error
 
   if (data.user) {
-    await createProfile({
+    // Only insert into users table with columns that actually exist
+    await supabase.from('users').upsert({
       id: data.user.id,
       email,
       name: fullName,
-      user_role: "both",
     })
   }
 
