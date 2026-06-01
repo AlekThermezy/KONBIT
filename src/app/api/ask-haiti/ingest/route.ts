@@ -1,13 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const _require = (m: string) => { try { return require(m) } catch { return null } }
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-)
+import { supabase } from '@/lib/supabase'
 
 // Chunk size for RAG (characters)
 const CHUNK_SIZE = 800
@@ -63,7 +55,7 @@ async function fetchAndParsePDF(url: string): Promise<string> {
 
   // Try pdf-parse dynamically (server-only, optional dependency)
   try {
-    const pdfParse = _require('pdf-parse')
+    const pdfParse = require('pdf-parse')
     const data = await pdfParse(Buffer.from(buffer))
     return data.text || ''
   } catch {

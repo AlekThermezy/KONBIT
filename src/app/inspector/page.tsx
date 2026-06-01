@@ -7,12 +7,7 @@ import LeftSidebar from '@/components/layout/LeftSidebar'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { getCurrentUser } from '@/lib/auth'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+import { supabase } from '@/lib/supabase'
 
 const jobTypes = [
   { id: 'food_review', label: '🍽️ Food Review', icon: '🍽️', pay: '$25-35', desc: 'Mystery diner visits' },

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { supabase } from '@/lib/auth'
+import { supabase } from '@/lib/supabase'
 import { User } from '@supabase/supabase-js'
 import dynamic from 'next/dynamic'
 import Footer from '@/components/layout/Footer'

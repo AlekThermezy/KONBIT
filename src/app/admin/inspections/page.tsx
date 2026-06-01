@@ -6,12 +6,7 @@ import Footer from '@/components/layout/Footer'
 
 import { useState, useEffect } from 'react'
 import { getCurrentUser } from '@/lib/auth'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+import { supabase } from '@/lib/supabase'
 
 const sampleReports = [
   {

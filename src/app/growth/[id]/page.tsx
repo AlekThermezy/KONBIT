@@ -6,7 +6,8 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import SlideSidebar from '@/components/layout/SlideSidebar'
 import LeftSidebar from '@/components/layout/LeftSidebar'
-import { getCurrentUser, supabase } from '@/lib/auth'
+import { getCurrentUser } from '@/lib/auth'
+import { supabase } from '@/lib/supabase'
 
 const sectorEmojis: Record<string, string> = {
   real_estate: '🏠', music: '🎵', art: '🎨', food: '🍳',

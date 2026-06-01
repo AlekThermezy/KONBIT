@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { generateOTP, sendWhatsAppOTP } from '@/lib/whatsapp-auth'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-
 export async function POST(request: NextRequest) {
   try {
     const { phone, name } = await request.json()
@@ -19,11 +16,15 @@ export async function POST(request: NextRequest) {
     // Generate OTP
     const otp = generateOTP()
 
-    // Store OTP in database
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+    // Service role client for admin DB operations (bypass RLS for OTP storage)
+    const supabaseAdmin = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString() // 10 min
 
-    await supabase.from('whatsapp_otp').insert({
+    await supabaseAdmin.from('whatsapp_otp').insert({
       phone: formattedPhone,
       otp,
       expires_at: expiresAt,

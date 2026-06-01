@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from '@/lib/supabase'
 import { verifyOTP, getOrCreateWhatsAppUser } from '@/lib/whatsapp-auth'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,7 +11,6 @@ export async function POST(request: NextRequest) {
     }
 
     const formattedPhone = phone.startsWith('+') ? phone : `+${phone}`
-
     // Verify OTP
     const valid = await verifyOTP(formattedPhone, otp)
     if (!valid) {
@@ -26,7 +21,6 @@ export async function POST(request: NextRequest) {
     const user = await getOrCreateWhatsAppUser(formattedPhone, name || 'KONBIT Member')
 
     // Sign in the user via phone OTP
-    const supabase = createClient(supabaseUrl, supabaseAnonKey)
     const { data: sessionData, error: sessionError } = await supabase.auth.signInWithOtp({
       phone: formattedPhone,
     })

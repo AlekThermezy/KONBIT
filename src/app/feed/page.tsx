@@ -27,12 +27,7 @@ import Link from 'next/link'
 import Navbar from '@/components/layout/Navbar'
 import LeftSidebar from '@/components/layout/LeftSidebar'
 import { getCurrentUser } from '@/lib/auth'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-)
+import { supabase } from '@/lib/supabase'
 
 type FeedItem = {
   id: string

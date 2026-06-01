@@ -1,6 +1,6 @@
 // Send WhatsApp notification to a user
-import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
+import { supabase } from '@/lib/supabase'
 
 const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID!
 const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN!
@@ -76,8 +76,6 @@ export async function POST(request: NextRequest) {
     if (!userId || !type) {
       return NextResponse.json({ error: 'userId and type required' }, { status: 400 })
     }
-
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
     // Get user's phone
     const { data: user } = await supabase
