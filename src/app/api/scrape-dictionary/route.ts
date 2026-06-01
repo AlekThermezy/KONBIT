@@ -28,7 +28,7 @@ async function scrapeWordDetail(id: string): Promise<any | null> {
     if (!word) return null
     
     // Extract Kreyòl text from HTML tags
-    const stripHtml = (s: string) => s?.replace(/<[^>]+>/g, '').replace(/&[a-z]+;/gi, '').trim() || ''
+    const stripHtml = (s: string | undefined) => s?.replace(/<[^>]+>/g, '').replace(/&[a-z]+;/gi, '').trim() || ''
     
     return {
       word,
