@@ -19,46 +19,27 @@ ALTER TABLE public.whatsapp_notifications ENABLE ROW LEVEL SECURITY;
 GRANT SELECT, INSERT ON public.whatsapp_notifications TO authenticated;
 GRANT SELECT ON public.whatsapp_notifications TO anon;
 
--- Add policies only if they don't exist
-DO $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Service role full access whatsapp_notifications' AND tablename = 'whatsapp_notifications') THEN
-    CREATE POLICY "Service role full access" ON public.whatsapp_notifications FOR ALL USING (auth.role() = 'service_role');
-  END IF;
-END $$;
+-- Idempotent: drop then recreate each policy
+DROP POLICY IF EXISTS "Service role full access" ON public.whatsapp_notifications;
+CREATE POLICY "Service role full access" ON public.whatsapp_notifications FOR ALL USING (auth.role() = 'service_role');
 
-DO $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Users can view own notifications whatsapp_notifications' AND tablename = 'whatsapp_notifications') THEN
-    CREATE POLICY "Users can view own notifications" ON public.whatsapp_notifications FOR SELECT USING (auth.uid() = user_id);
-  END IF;
-END $$;
+DROP POLICY IF EXISTS "Users can view own notifications" ON public.whatsapp_notifications;
+CREATE POLICY "Users can view own notifications" ON public.whatsapp_notifications FOR SELECT USING (auth.uid() = user_id);
 
 -- =====================================================
 -- FIX 2: RLS on invites table
 -- =====================================================
 ALTER TABLE public.invites ENABLE ROW LEVEL SECURITY;
 
-DO $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Anyone can view invites' AND tablename = 'invites') THEN
-    CREATE POLICY "Anyone can view invites" ON public.invites FOR SELECT USING (true);
-  END IF;
-END $$;
+-- Idempotent: drop then recreate each policy
+DROP POLICY IF EXISTS "Anyone can view invites" ON public.invites;
+CREATE POLICY "Anyone can view invites" ON public.invites FOR SELECT USING (true);
 
-DO $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Authenticated users can create invites' AND tablename = 'invites') THEN
-    CREATE POLICY "Authenticated users can create invites" ON public.invites FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
-  END IF;
-END $$;
+DROP POLICY IF EXISTS "Authenticated users can create invites" ON public.invites;
+CREATE POLICY "Authenticated users can create invites" ON public.invites FOR INSERT WITH CHECK (auth.uid() IS NOT NULL);
 
-DO $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_policies WHERE policyname = 'Users can update own invites' AND tablename = 'invites') THEN
-    CREATE POLICY "Users can update own invites" ON public.invites FOR UPDATE USING (auth.uid() = inviter_id);
-  END IF;
-END $$;
+DROP POLICY IF EXISTS "Users can update own invites" ON public.invites;
+CREATE POLICY "Users can update own invites" ON public.invites FOR UPDATE USING (auth.uid() = inviter_id);
 
 GRANT SELECT, INSERT, UPDATE ON public.invites TO authenticated;
 GRANT SELECT ON public.invites TO anon;
