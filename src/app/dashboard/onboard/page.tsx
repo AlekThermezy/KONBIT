@@ -89,10 +89,35 @@ export default function BusinessOnboardPage() {
       alert('Please agree to the terms')
       return
     }
-    setSubmitting(true)
-    // Simulate API call
-    await new Promise((r) => setTimeout(r, 2000))
-    // In production: POST to Supabase businesses table
+    const { supabase } = await import('@/lib/supabase')
+    
+    const stageMap: Record<string, string> = {
+      'Pre-revenue': 'startup',
+      'Early revenue (< 1 year)': 'startup',
+      'Growing (1-3 years)': 'growth',
+      'Established (3+ years)': 'established',
+    }
+    const sizeMap: Record<string, number> = {
+      'Just me (Sole Prop)': 1,
+      '2-5 employees': 3,
+      '6-15 employees': 10,
+      '16-50 employees': 30,
+      '50+ employees': 75,
+    }
+    
+    const { error: bizError } = await supabase.from('businesses').insert({
+      owner_id: user.id,
+      name: businessName,
+      sector: businessSector,
+      description: businessDescription,
+      city: businessLocation,
+      website,
+      employee_count: sizeMap[businessSize] || null,
+      stage: stageMap[fundingStage] || 'startup',
+    })
+    
+    if (bizError) throw bizError
+    
     setSubmitting(false)
     alert('Application submitted! We\'ll review within 48 hours and get back to you.')
     router.push('/dashboard')

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^2.4.0",
+    "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.106.1",
     "@types/leaflet": "^1.9.21",
     "cobe": "^2.0.1",

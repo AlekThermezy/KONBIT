@@ -26,7 +26,7 @@ export default function InvitePage() {
     // Look up the invite
     supabase
       .from('invites')
-      .select('*, inviter:inviter_id(full_name)')
+      .select('*, inviter:inviter_id(name)')
       .eq('referral_code', referralCode)
       .eq('status', 'pending')
       .single()
@@ -68,7 +68,7 @@ export default function InvitePage() {
     )
   }
 
-  const inviterName = inviteData?.inviter?.full_name || 'A friend'
+  const inviterName = inviteData?.inviter?.name || 'A friend'
 
   return (
     <div className="min-h-screen bg-black text-white">

@@ -156,7 +156,7 @@ export default function FeedPage() {
     if (tab === 'all' || tab === 'inspect') {
       // Inspector job assignments (placeholder — jobs table)
       const { data: jobs } = await supabase
-        .from('inspector_jobs')
+        .from('inspection_jobs')
         .select('*, businesses(name), users(name)')
         .order('created_at', { ascending: false })
         .limit(3)
