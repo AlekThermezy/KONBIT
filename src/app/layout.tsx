@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import 'leaflet/dist/leaflet.css'
+import BackgroundRotator from '@/components/BackgroundRotator'
 
 export const metadata: Metadata = {
   title: 'KONBIT — Konekte, Tèt ansanm, Pou nou vanse',
@@ -53,6 +54,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <BackgroundRotator />
         {children}
       </body>
     </html>
