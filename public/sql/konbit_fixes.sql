@@ -45,19 +45,7 @@ CREATE POLICY "Users can update own invites" ON public.invites
 GRANT SELECT, INSERT, UPDATE ON public.invites TO authenticated;
 GRANT SELECT ON public.invites TO anon;
 
--- =====================================================
--- FIX 3: RLS policies on lita_responses
--- =====================================================
-ALTER TABLE public.lita_responses ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Service role manages lita_responses" ON public.lita_responses
-    FOR ALL USING (auth.role() = 'service_role');
-
-CREATE POLICY "Anyone can read lita_responses" ON public.lita_responses
-    FOR SELECT USING (true);
-
-CREATE POLICY "Anyone can insert lita_responses" ON public.lita_responses
-    FOR INSERT WITH CHECK (true);
 
 -- =====================================================
 -- FIX 4: Add missing columns to users table
