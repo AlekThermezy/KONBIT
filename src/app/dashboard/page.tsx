@@ -288,15 +288,16 @@ export default function BusinessDashboard() {
     let cancelled = false
 
     async function loadData() {
-      const u = await getCurrentUser()
-      if (cancelled) return
-      setUser(u)
-      if (!u) {
-        setLoading(false)
-        return
-      }
+      try {
+        const u = await getCurrentUser()
+        if (cancelled) return
+        setUser(u)
+        if (!u) {
+          setLoading(false)
+          return
+        }
 
-      // 1. Fetch business
+        // 1. Fetch business
       const { data: biz, error: bizError } = await supabase
         .from('businesses')
         .select('*')
@@ -488,6 +489,9 @@ export default function BusinessDashboard() {
       }
 
       if (!cancelled) setLoading(false)
+    } catch {
+      if (!cancelled) setLoading(false)
+    }
     }
 
     loadData()

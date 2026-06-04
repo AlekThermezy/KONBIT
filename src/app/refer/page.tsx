@@ -21,7 +21,9 @@ function InviteForm({ onSuccess }: InviteFormProps) {
   const [user, setUser] = useState<any>(null)
 
   useEffect(() => {
-    getCurrentUser().then(setUser)
+    getCurrentUser()
+      .then(setUser)
+      .catch(() => {})
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -181,12 +183,14 @@ export default function ReferPage() {
       }
       setUser(u)
       setLoading(false)
-    })
+    }).catch(() => setLoading(false))
   }, [router])
 
   useEffect(() => {
     if (user) {
-      getUserInvites(user.id).then(setInvites)
+      getUserInvites(user.id)
+        .then(setInvites)
+        .catch(() => setInvites([]))
     }
   }, [user, refreshKey])
 

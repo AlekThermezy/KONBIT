@@ -38,7 +38,9 @@ export default function LearnPage() {
   const [activeFilter, setActiveFilter] = useState('all')
 
   useEffect(() => {
-    getCurrentUser().then(u => setUser(u))
+    getCurrentUser()
+      .then(u => setUser(u))
+      .catch(() => {})
     fetchCourses()
   }, [])
 

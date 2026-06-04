@@ -81,10 +81,12 @@ export default function DictionaryPage() {
   const [studyStarted, setStudyStarted] = useState(false)
 
   useEffect(() => {
-    getCurrentUser().then((u) => {
-      setUser(u)
-      setLoading(false)
-    })
+    getCurrentUser()
+      .then((u) => {
+        setUser(u)
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
   }, [])
 
   useEffect(() => {
@@ -125,11 +127,16 @@ export default function DictionaryPage() {
   }, [search, activeCategory, activeDifficulty, words])
 
   async function loadWords() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('dictionary_words')
       .select('*')
       .order('day_added', { ascending: true })
       .order('word', { ascending: true })
+
+    if (error) {
+      console.error('Failed to load dictionary words:', error.message)
+      return
+    }
 
     if (data) {
       // Deduplicate — keep first occurrence of each unique word
@@ -151,10 +158,16 @@ export default function DictionaryPage() {
 
   async function loadMasteredWords() {
     if (!user) return
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('user_dictionary')
       .select('word_id')
       .eq('user_id', user.id)
+
+    if (error) {
+      console.error('Failed to load mastered words:', error.message)
+      return
+    }
+
     if (data) {
       setMasteredWordIds(new Set(data.map((d: any) => d.word_id)))
     }
@@ -197,10 +210,13 @@ export default function DictionaryPage() {
     if (!word) return
     // Upsert to user_dictionary to save progress
     if (user) {
-      await supabase.from('user_dictionary').upsert({
+      const { error } = await supabase.from('user_dictionary').upsert({
         user_id: user.id,
         word_id: word.id,
       })
+      if (error) {
+        console.error('Failed to save word progress:', error.message)
+      }
       const next = new Set(masteredWordIds)
       next.add(word.id)
       setMasteredWordIds(next)
@@ -781,12 +797,14 @@ export default function DictionaryPage() {
             {/* Save Button (if logged in) */}
             {user && (
               <button
-                onClick={() => {
-                  // Save to user dictionary
-                  supabase.from('user_dictionary').upsert({
+                onClick={async () => {
+                  const { error } = await supabase.from('user_dictionary').upsert({
                     user_id: user.id,
                     word_id: selectedWord.id,
                   })
+                  if (error) {
+                    console.error('Failed to save word:', error.message)
+                  }
                   alert('Word saved to your dictionary!')
                 }}
                 className="w-full py-3 bg-green-600 hover:bg-green-700 rounded-xl text-white font-medium transition"
