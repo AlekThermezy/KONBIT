@@ -7,9 +7,12 @@ import LeftSidebar from '@/components/layout/LeftSidebar'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { getCurrentUser } from '@/lib/auth'
+import { createClient } from '@supabase/supabase-js'
 
-const SB_URL = 'https://dubaqsooeuvfmaxwanwv.supabase.co'
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1YmFxc29vZXV2Zm1heHdhbnd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2MTk3NTYsImV4cCI6MjA5NTE5NTc1Nn0.DFJXG3Xf4SxtByzObx54m8gStxl8LDxLMitb9EFmfR8'
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+)
 
 const categoryEmojis: Record<string, string> = {
   language: '🗣️', business: '📊', tech: '💻', creative: '🎨',
@@ -42,16 +45,12 @@ export default function LearnPage() {
   async function fetchCourses() {
     setLoading(true)
     try {
-      const res = await fetch(
-        `${SB_URL}/rest/v1/courses?is_published=eq.true&select=*,users(name)`,
-        {
-          headers: {
-            apikey: SB_KEY,
-            Authorization: `Bearer ${SB_KEY}`,
-          },
-        }
-      )
-      const data = await res.json()
+      const { data, error } = await supabase
+        .from('courses')
+        .select('*, users(name)')
+        .eq('is_published', true)
+
+      if (error) throw error
       setCourses(data || [])
     } catch (err) {
       console.error('Failed to fetch courses:', err)
